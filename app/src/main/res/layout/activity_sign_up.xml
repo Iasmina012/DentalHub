@@ -37,7 +37,7 @@
                 android:background="@color/teal_700">
 
                 <ImageView
-                    android:id="@+id/imageView2"
+                    android:id="@+id/imageView"
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:layout_marginTop="20dp"
@@ -53,6 +53,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="20dp"
                     android:textSize="22sp"/>
+
             </LinearLayout>
 
             <RelativeLayout
@@ -64,7 +65,7 @@
                 android:layout_marginLeft="30dp">
 
                 <ImageView
-                    android:id="@+id/imageView_user_icon"
+                    android:id="@+id/imageView_username_icon"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@android:drawable/sym_action_chat"
@@ -72,12 +73,12 @@
                     app:tint="@color/teal_700" />
 
                 <EditText
-                    android:id="@+id/edusername"
+                    android:id="@+id/editText_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/imageView_user_icon"
+                    android:layout_alignBottom="@+id/imageView_username_icon"
                     android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@+id/imageView_user_icon"
+                    android:layout_toRightOf="@+id/imageView_username_icon"
                     android:hint="Username"
                     android:inputType="text"
                     android:paddingLeft="20dp"
@@ -94,7 +95,7 @@
                 android:layout_below="@id/relativeLayout2">
 
                 <ImageView
-                    android:id="@+id/imageView_user_email"
+                    android:id="@+id/imageView_email"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@android:drawable/sym_action_email"
@@ -102,12 +103,12 @@
                     app:tint="@color/teal_700" />
 
                 <EditText
-                    android:id="@+id/edemail"
+                    android:id="@+id/editText_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/imageView_user_email"
+                    android:layout_alignBottom="@+id/imageView_email"
                     android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@+id/imageView_user_email"
+                    android:layout_toRightOf="@+id/imageView_email"
                     android:hint="Email"
                     android:inputType="text|textEmailAddress"
                     android:paddingLeft="20dp"
@@ -126,7 +127,7 @@
                 android:layout_below="@id/relativeLayout3">
 
                 <ImageView
-                    android:id="@+id/imageView_user_pass"
+                    android:id="@+id/imageView_password"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@android:drawable/ic_lock_lock"
@@ -134,12 +135,12 @@
                     app:tint="@color/teal_700"/>
 
                 <EditText
-                    android:id="@+id/edpass"
+                    android:id="@+id/editText_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/imageView_user_pass"
+                    android:layout_alignBottom="@+id/imageView_password"
                     android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@+id/imageView_user_pass"
+                    android:layout_toRightOf="@+id/imageView_password"
                     android:hint="Password"
                     android:inputType="textPassword"
                     android:paddingLeft="20dp"
@@ -157,7 +158,7 @@
                 android:layout_below="@id/relativeLayout4">
 
                 <ImageView
-                    android:id="@+id/imageView_user_repass"
+                    android:id="@+id/imageView_repassword"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@android:drawable/ic_lock_lock"
@@ -165,12 +166,12 @@
                     app:tint="@color/teal_700"/>
 
                 <EditText
-                    android:id="@+id/edrepass"
+                    android:id="@+id/editText_repassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/imageView_user_repass"
+                    android:layout_alignBottom="@+id/imageView_repassword"
                     android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@+id/imageView_user_repass"
+                    android:layout_toRightOf="@+id/imageView_repassword"
                     android:hint="Re-enter Password"
                     android:inputType="textPassword"
                     android:paddingLeft="20dp"
@@ -179,7 +180,7 @@
             </RelativeLayout>
 
             <Button
-                android:id="@+id/button1"
+                android:id="@+id/btn_SignUp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/relativeLayout5"
@@ -192,10 +193,10 @@
                 android:layout_marginTop="15dp"/>
 
             <Button
-                android:id="@+id/btn_Already_Member"
+                android:id="@+id/btn_Login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/button1"
+                android:layout_below="@+id/btn_SignUp"
                 android:layout_centerHorizontal="true"
                 android:textAllCaps="false"
                 android:text="Already a member ? Login Here"
