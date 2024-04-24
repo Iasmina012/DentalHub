@@ -1,6 +1,5 @@
 package com.upt.cti.dentalhub;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.LinearLayout;
@@ -12,8 +11,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import org.checkerframework.checker.nullness.qual.NonNull;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,8 +30,10 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         setAuthListener();
         setAuthInstance();
+
         Info = (LinearLayout)findViewById(R.id.linearlayout1);
         TBD1 = (LinearLayout)findViewById(R.id.linearlayout2);
         TBD2 = (LinearLayout)findViewById(R.id.linearlayout3);
@@ -56,22 +55,25 @@ public class MainActivity extends AppCompatActivity {
                 setUserData(user);
                 getIntent();
             } else {
-                //User is signed out
+                //user is signed out
                 goToLogin();
             }
         };
     }
+
     public void setUserData(FirebaseUser user) {
         mCurrentUserUid = user.getUid();
     }
+
     public void setUsersDatabase() {
         mUserRefDatabase = FirebaseDatabase.getInstance("https://dentalhub-1a0c0-default-rtdb.europe-west1.firebasedatabase.app/").getReference().child("users");
     }
+
     private void goToLogin() {
 
         Intent intent = new Intent(this, Activity_Login.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //Login is a new task
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK); //The old task when coming back to this activity should be cleared so we cannot go back to it
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //login is a new task
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK); //the old task should be cleared so we cannot go back to it
         startActivity(intent);
         overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
 
@@ -91,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        //startActivity(new Intent(getIntent()));
     }
 
     private void logout() {
@@ -103,19 +104,19 @@ public class MainActivity extends AppCompatActivity {
 
         super.onBackPressed();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        //Uncomment the below code to Set the message and title from the strings.xml file
+        //set the message and title from the strings.xml file
         //builder.setMessage(R.string.dialog_message) .setTitle(R.string.dialog_title);
 
-        //Setting message manually and performing action on button click
+        //setting message manually and performing action on button click
         builder.setMessage("Do you want to close this app?")
                 .setCancelable(false)
                 .setPositiveButton("Yes", (dialog, id) -> finish())
                 .setNegativeButton("No", (dialog, id) -> {
-                    //  Action for 'NO' Button
+                    //action for 'NO' Button
                     dialog.cancel();
                 });
 
-        //Creating dialog box
+        //creating dialog box
         AlertDialog alert = builder.create();
 
         alert.show();

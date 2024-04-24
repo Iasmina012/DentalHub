@@ -34,11 +34,11 @@ public class Activity_Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        userEmail = (EditText)findViewById(R.id.user_email);
-        userPassword =(EditText)findViewById(R.id.editText_password);
-        signIn = (Button)findViewById(R.id.btn_SignIn);
-        forgotPassword = (Button)findViewById(R.id.btn_forgot_password);
-        newUser = (Button)findViewById(R.id.btn_new_user);
+        userEmail = (EditText) findViewById(R.id.user_email);
+        userPassword = (EditText) findViewById(R.id.editText_password);
+        signIn = (Button) findViewById(R.id.btn_SignIn);
+        forgotPassword = (Button) findViewById(R.id.btn_forgot_password);
+        newUser = (Button) findViewById(R.id.btn_new_user);
         setAuthInstance();
 
         signIn.setOnClickListener(v -> onLogInUser());
@@ -80,8 +80,8 @@ public class Activity_Login extends AppCompatActivity {
             userPassword.setError(null);
         }
 
-        if (password.isEmpty() || (password.length()<8 || password.matches(pattern))) {
-            userPassword.setError("The password has to be 8 as length!");
+        if (password.isEmpty() || (password.length() < 8 || !password.matches(pattern))) {
+            userPassword.setError("The password must contain at least one lowercase letter, one uppercase letter, one numeric digit, one special character (@#$%^&+=) and have a minimum length of 8 characters!");
             valid = false;
         } else {
             userPassword.setError(null);
@@ -115,7 +115,7 @@ public class Activity_Login extends AppCompatActivity {
 
             progressDialog.dismiss();
 
-            if(task.isSuccessful()){
+            if (task.isSuccessful()) {
                 goToMainActivity();
             } else {
                 Toast.makeText(getApplicationContext(), "" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -133,73 +133,69 @@ public class Activity_Login extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
-        overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
 
     }
 
     private void goToRegisterActivity() {
 
-        Intent i= new Intent(getApplicationContext(),Activity_SignUp.class);
+        Intent i = new Intent(getApplicationContext(), Activity_SignUp.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
-        overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
 
     }
 
     public void forgotYourPassword() {
-
         LayoutInflater li = LayoutInflater.from(Activity_Login.this);
         View promptsView = li.inflate(R.layout.prompt, null);
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Activity_Login.this);
-
         alertDialogBuilder.setView(promptsView);
 
-        final EditText userMail=(EditText)promptsView.findViewById(R.id.editTextDialogUserInput);
-        alertDialogBuilder.setCancelable(false).setPositiveButton("OK", (dialogInterface, i) -> {
+        final EditText userMail = (EditText) promptsView.findViewById(R.id.editTextDialogUserInput);
 
-            email=userMail.getText().toString();
-            mAuth.sendPasswordResetEmail(email);
-
-        }).setNegativeButton("Cancel",
-
-                (dialog, id) -> dialog.cancel());
+        alertDialogBuilder.setCancelable(false)
+                .setPositiveButton("OK", (dialogInterface, i) -> {
+                    String email = userMail.getText().toString();
+                    mAuth.sendPasswordResetEmail(email)
+                            .addOnSuccessListener(aVoid -> {
+                                Toast.makeText(Activity_Login.this, "Reset password email sent successfully", Toast.LENGTH_SHORT).show();
+                            })
+                            .addOnFailureListener(e -> {
+                                Toast.makeText(Activity_Login.this, "Failed to send reset password email: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            });
+                })
+                .setNegativeButton("Cancel", (dialog, id) -> dialog.cancel());
 
         final AlertDialog alertDialog = alertDialogBuilder.create();
-
         alertDialog.show();
 
-        ((AlertDialog)alertDialog).getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
-        userMail.addTextChangedListener(new TextWatcher() {
+        ((AlertDialog) alertDialog).getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
 
+        userMail.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-
                 final Button okButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                String MailId = userMail.toString().trim();
-                if(MailId.isEmpty()) {
-                    //userMail.setError("Enter a valid email address!");
+                String mailId = userMail.getText().toString().trim();
+                if (mailId.isEmpty()) {
+                    userMail.setError("Enter a valid email address!");
                     okButton.setEnabled(false);
                 } else {
-                    //mUserPassWord.setError(null);
+                    userMail.setError(null);
                     okButton.setEnabled(true);
                 }
-
             }
-
         });
-
     }
 
 }

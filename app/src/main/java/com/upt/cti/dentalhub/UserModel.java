@@ -8,6 +8,7 @@ public class UserModel {
 
 
     public UserModel() {
+
     }
 
     public UserModel(String displayName, String email,long createdAt) {
@@ -21,7 +22,6 @@ public class UserModel {
     }
 
     private String getUserEmail() {
-        //Log.e("user email  ", userEmail);
         return email;
     }
 
