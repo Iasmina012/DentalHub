@@ -105,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
         super.onBackPressed();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         //set the message and title from the strings.xml file
+        //add strings.xml
         //builder.setMessage(R.string.dialog_message) .setTitle(R.string.dialog_title);
 
         //setting message manually and performing action on button click
