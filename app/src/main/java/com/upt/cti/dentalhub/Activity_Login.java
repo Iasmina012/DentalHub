@@ -2,7 +2,6 @@ package com.upt.cti.dentalhub;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -149,7 +148,7 @@ public class Activity_Login extends AppCompatActivity {
 
     public void forgotYourPassword() {
         LayoutInflater li = LayoutInflater.from(Activity_Login.this);
-        View promptsView = li.inflate(R.layout.prompt, null);
+        View promptsView = li.inflate(R.layout.prompt_email, null);
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Activity_Login.this);
         alertDialogBuilder.setView(promptsView);

@@ -14,7 +14,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
-    LinearLayout Info;
+    LinearLayout DoctorsInfo;
     LinearLayout TBD1;
     LinearLayout TBD2;
     LinearLayout TBD3;
@@ -34,11 +34,20 @@ public class MainActivity extends AppCompatActivity {
         setAuthListener();
         setAuthInstance();
 
-        Info = (LinearLayout)findViewById(R.id.linearlayout1);
+        DoctorsInfo = (LinearLayout)findViewById(R.id.linearlayout1);
         TBD1 = (LinearLayout)findViewById(R.id.linearlayout2);
         TBD2 = (LinearLayout)findViewById(R.id.linearlayout3);
         TBD3 = (LinearLayout)findViewById(R.id.linearlayout4);
         TBD4 = (LinearLayout)findViewById(R.id.linearlayout5);
+
+        DoctorsInfo.setOnClickListener(v -> {
+            Intent i= new Intent(getApplicationContext(),Activity_DoctorsInfo.class);
+            i.putExtra("table_name","Doctors");
+
+            startActivity(i);
+            overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
+
+        });
 
     }
 
