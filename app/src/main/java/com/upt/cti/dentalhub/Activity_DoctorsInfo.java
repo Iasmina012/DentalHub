@@ -1,7 +1,10 @@
 package com.upt.cti.dentalhub;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.SearchView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,9 +15,10 @@ import java.util.List;
 
 public class Activity_DoctorsInfo extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private SearchView searchView;
     private DoctorAdapter doctorAdapter;
     private List<Doctor> doctorList;
+    private SearchView searchView;
+    private TextView textViewNoResults;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,10 +27,29 @@ public class Activity_DoctorsInfo extends AppCompatActivity {
         setContentView(R.layout.activity_doctors_info);
 
         doctorList = new ArrayList<>();
-        recyclerView = findViewById(R.id.recyclerView);
         doctorAdapter = new DoctorAdapter(doctorList);
+
+        recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(doctorAdapter);
+
+        textViewNoResults = findViewById(R.id.textViewNoResults);
+
+        searchView = findViewById(R.id.searchView);
+        //searchView.clearFocus();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterList(newText);
+                return true;
+            }
+        });
 
         addDoctorsToList();
 
@@ -35,12 +58,34 @@ public class Activity_DoctorsInfo extends AppCompatActivity {
     private void addDoctorsToList() {
 
         doctorList.add(new Doctor(R.drawable.item1,"Dr. John Doe", "Stomatolog", "Luni - Vineri, 08:00 - 16:00","07403030303030", "akm@yahoo.com"));
-        doctorList.add(new Doctor(R.drawable.item1,"Dr. John Doe", "Stomatolog", "Luni - Vineri, 08:00 - 16:00","07403030303030", "akm@yahoo.com"));
-        doctorList.add(new Doctor(R.drawable.item1,"Dr. John Doe", "Stomatolog", "Luni - Vineri, 08:00 - 16:00","07403030303030", "akm@yahoo.com"));
-        doctorList.add(new Doctor(R.drawable.item1,"Dr. John Doe", "Stomatolog", "Luni - Vineri, 08:00 - 16:00","07403030303030", "akm@yahoo.com"));
-        doctorList.add(new Doctor(R.drawable.item1,"Dr. John Doe", "Stomatolog", "Luni - Vineri, 08:00 - 16:00","07403030303030", "akm@yahoo.com"));
+        doctorList.add(new Doctor(R.drawable.item1,"Dr. Ana Doe", "Stomatolog", "Luni - Vineri, 08:00 - 16:00","07403030303030", "akm@yahoo.com"));
+        doctorList.add(new Doctor(R.drawable.item1,"Dr. Maria Doe", "Stomatolog", "Luni - Vineri, 08:00 - 16:00","07403030303030", "akm@yahoo.com"));
+        doctorList.add(new Doctor(R.drawable.item1,"Dr. Daniela Doe", "Stomatolog", "Luni - Vineri, 08:00 - 16:00","07403030303030", "akm@yahoo.com"));
+        doctorList.add(new Doctor(R.drawable.item1,"Dr. Andrei Doe", "Stomatolog", "Luni - Vineri, 08:00 - 16:00","07403030303030", "akm@yahoo.com"));
 
         doctorAdapter.notifyDataSetChanged();
+
+    }
+
+    private void filterList(String text) {
+
+        List<Doctor> filteredList = new ArrayList<>();
+        for(Doctor doctor : doctorList) {
+
+            if (doctor.getName().toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(doctor);
+            }
+        }
+
+        if(filteredList.isEmpty()){
+            Toast.makeText(this, "No doctors found!", Toast.LENGTH_SHORT).show();
+            textViewNoResults.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        } else {
+            textViewNoResults.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            doctorAdapter.setFilteredList(filteredList);
+        }
 
     }
 

@@ -68,4 +68,11 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.ViewHolder
     public int getItemCount() {
         return doctorList.size();
     }
+
+    public void setFilteredList(List<Doctor> filteredList){
+
+        doctorList = filteredList;
+        notifyDataSetChanged();
+
+    }
 }
