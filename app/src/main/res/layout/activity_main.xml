@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -24,7 +25,9 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="160dp"
                 android:layout_height="160dp"
-                android:layout_margin="10dp">
+                android:layout_margin="10dp"
+                app:cardCornerRadius="10dp"
+                android:backgroundTint="@color/teal_700">
 
                 <LinearLayout
                 android:id="@+id/linearlayout1"
@@ -36,21 +39,23 @@
                     <ImageView
                         android:layout_width="64dp"
                         android:layout_height="64dp"
-                        android:padding="10dp"
-                        android:src="@android:drawable/ic_dialog_info" />
+                        android:padding="1dp"
+                        app:tint="@color/white"
+                        android:src="@drawable/docsinfo" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="Doctors Info"
-                        android:textStyle="bold" />
+                        android:text="Our Doctors"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"/>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_margin="10dp"
-                        android:background="@color/teal_700" />
+                        android:background="@color/lightTeal" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -58,7 +63,9 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="160dp"
                 android:layout_height="160dp"
-                android:layout_margin="10dp">
+                android:layout_margin="10dp"
+                app:cardCornerRadius="10dp"
+                android:backgroundTint="@color/teal_700">
 
                 <LinearLayout
                     android:id="@+id/linearlayout2"
@@ -70,21 +77,23 @@
                     <ImageView
                         android:layout_width="64dp"
                         android:layout_height="64dp"
-                        android:padding="10dp"
-                        android:src="@android:drawable/ic_dialog_info" />
+                        android:padding="1dp"
+                        android:src="@drawable/services"
+                        app:tint="@color/white"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="TBD"
-                        android:textStyle="bold" />
+                        android:text="Our Services"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"/>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_margin="10dp"
-                        android:background="@color/teal_700" />
+                        android:background="@color/lightTeal" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -101,7 +110,9 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="160dp"
                 android:layout_height="160dp"
-                android:layout_margin="10dp">
+                android:layout_margin="10dp"
+                app:cardCornerRadius="10dp"
+                android:backgroundTint="@color/teal_700">
 
                 <LinearLayout
                     android:id="@+id/linearlayout3"
@@ -113,21 +124,23 @@
                     <ImageView
                         android:layout_width="64dp"
                         android:layout_height="64dp"
-                        android:padding="10dp"
-                        android:src="@android:drawable/ic_dialog_info" />
+                        android:padding="1dp"
+                        android:src="@drawable/appointment"
+                        app:tint="@color/white"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="TBD"
-                        android:textStyle="bold" />
+                        android:text="Book An Appointment"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"/>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_margin="10dp"
-                        android:background="@color/teal_700" />
+                        android:background="@color/lightTeal" />
 
                 </LinearLayout>
 
@@ -136,7 +149,9 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="160dp"
                 android:layout_height="160dp"
-                android:layout_margin="10dp">
+                android:layout_margin="10dp"
+                app:cardCornerRadius="10dp"
+                android:backgroundTint="@color/teal_700">
 
                 <LinearLayout
                     android:id="@+id/linearlayout4"
@@ -148,21 +163,23 @@
                     <ImageView
                         android:layout_width="64dp"
                         android:layout_height="64dp"
-                        android:padding="10dp"
-                        android:src="@android:drawable/ic_dialog_info" />
+                        android:padding="5dp"
+                        android:src="@drawable/contact"
+                        app:tint="@color/white"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="TBD"
-                        android:textStyle="bold" />
+                        android:text="Contact Us"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"/>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_margin="10dp"
-                        android:background="@color/teal_700" />
+                        android:background="@color/lightTeal" />
 
                 </LinearLayout>
 
@@ -171,16 +188,18 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:clipToPadding="false"
             android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="160dp"
                 android:layout_height="160dp"
-                android:layout_margin="10dp">
+                android:layout_margin="10dp"
+                app:cardCornerRadius="10dp"
+                android:backgroundTint="@color/teal_700">
 
                 <LinearLayout
                     android:id="@+id/linearlayout5"
@@ -192,21 +211,63 @@
                     <ImageView
                         android:layout_width="64dp"
                         android:layout_height="64dp"
-                        android:padding="10dp"
-                        android:src="@android:drawable/ic_dialog_info" />
+                        android:padding="2dp"
+                        android:src="@drawable/symptoms"
+                        app:tint="@color/white"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="TBD"
-                        android:textStyle="bold" />
+                        android:text="Check Your Symptoms "
+                        android:textStyle="bold"
+                        android:textColor="@color/white" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_margin="10dp"
-                        android:background="@color/teal_700" />
+                        android:background="@color/lightTeal" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="10dp"
+                android:backgroundTint="@color/teal_700">
+
+                <LinearLayout
+                    android:id="@+id/linearlayout6"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:padding="1dp"
+                        android:src="@drawable/care"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Teeth Care"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_margin="10dp"
+                        android:background="@color/lightTeal" />
+
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -216,4 +277,3 @@
     </LinearLayout>
 
 </ScrollView>
-

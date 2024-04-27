@@ -68,8 +68,8 @@
                     android:id="@+id/imageView_username_icon"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@android:drawable/sym_action_chat"
-                    android:padding="5dp"
+                    android:src="@drawable/username_icon"
+                    android:padding="8dp"
                     app:tint="@color/teal_700" />
 
                 <EditText
@@ -184,13 +184,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/relativeLayout5"
-                android:text="Sign Up"
-                android:background="@color/teal_700"
-                android:textColor="#fff"
-                android:fontFamily="sans-serif"
                 android:layout_marginLeft="30dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginRight="30dp"
-                android:layout_marginTop="15dp"/>
+                android:text="Sign Up"
+                android:backgroundTint="@color/teal_700"
+                android:textColor="#fff"
+                android:fontFamily="sans-serif"/>
 
             <Button
                 android:id="@+id/btn_Login"
@@ -199,7 +199,7 @@
                 android:layout_below="@+id/btn_SignUp"
                 android:layout_centerHorizontal="true"
                 android:textAllCaps="false"
-                android:text="Already a member ? Login Here"
+                android:text="Already a member? Sign In Here"
                 android:textColor="@color/teal_700"
                 android:backgroundTint="@color/white"
                 android:textSize="13sp"

@@ -66,11 +66,11 @@ public class Activity_DoctorsInfo extends AppCompatActivity {
 
     private void addDoctorsToList() {
 
-        doctorList.add(new Doctor(R.drawable.item1, "Dr. Daniela Pop", "Endodont/Parodontolog", "Luni - Vineri, 08:00 - 16:00", "0721122334", "daniela@gmail.com"));
-        doctorList.add(new Doctor(R.drawable.item1, "Dr. Ana Maria Popescu", "Ortodont", "Luni - Vineri, 09:30 - 17:30", "0723456789", "ana@yahoo.com"));
-        doctorList.add(new Doctor(R.drawable.item1, "Dr. Maria Ionescu", "Implantolog", "Luni - Vineri, 10:30 - 18:30", "0734567890", "maria@yahoo.com"));
-        doctorList.add(new Doctor(R.drawable.item1, "Dr. Andrei Radu", "Pedodont", "Luni - Vineri, 08:30 - 16:30", "0745678901", "andrei@gmail.com"));
-        doctorList.add(new Doctor(R.drawable.item1, "Dr. Elena Popa", "Protetician", "Luni - Vineri, 08:00 - 16:00", "0756789012", "elena@gmail.com"));
+        doctorList.add(new Doctor(R.drawable.item1, "Dr. Daniela Pop", "Endodontist/Periodontist", "Monday - Friday, 08:00 AM - 04:00 PM", "0721122334", "daniela@gmail.com"));
+        doctorList.add(new Doctor(R.drawable.item1, "Dr. Ana Maria Popescu", "Orthodontist", "Monday - Friday, 09:30 AM - 05:30 PM", "0723456789", "ana@yahoo.com"));
+        doctorList.add(new Doctor(R.drawable.item1, "Dr. Maria Ionescu", "Implantologist", "Monday - Friday, 10:30 AM - 06:30 PM", "0734567890", "maria@yahoo.com"));
+        doctorList.add(new Doctor(R.drawable.item1, "Dr. Andrei Radu", "Pedodontist", "Monday - Friday, 08:30 AM - 04:30 PM", "0745678901", "andrei@gmail.com"));
+        doctorList.add(new Doctor(R.drawable.item1, "Dr. Elena Popa", "Prosthodontist", "Monday - Friday, 08:00 AM - 04:00 PM", "0756789012", "elena@gmail.com"));
 
         doctorAdapter.notifyDataSetChanged();
 

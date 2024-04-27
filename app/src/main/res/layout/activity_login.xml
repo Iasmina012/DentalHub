@@ -142,7 +142,7 @@
                     android:layout_marginBottom="15sp"
                     android:backgroundTint="@color/white"
                     android:fontFamily="sans-serif"
-                    android:text="Don't have an account ? Sign Up"
+                    android:text="Don't have an account? Sign Up"
                     android:textAllCaps="false"
                     android:textColor="@color/teal_700"
                     android:textSize="13sp" />

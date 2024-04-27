@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@color/lightTeal"
-            android:layout_marginBottom="15dp"
+            android:layout_marginTop="10dp"
             android:iconifiedByDefault="false"
             app:queryHint="Search for a doctor here ..."/>
 
@@ -31,29 +31,19 @@
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
             android:layout_marginBottom="15dp"
-            android:layout_marginTop="110dp"/>
+            android:layout_marginTop="75dp"/>
 
-        <TextView
-            android:id="@+id/titleTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="@string/doctors"
-            android:padding="1dp"
-            android:layout_below="@id/searchView"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"/>
+
 
         <!-- Doctor List -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/titleTextView"
+            android:layout_below="@id/searchView"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
-            android:layout_marginBottom="15dp"
-            android:layout_marginTop="5dp"/>
+            android:layout_marginBottom="15dp"/>
 
     </RelativeLayout>
 

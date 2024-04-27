@@ -2,6 +2,8 @@ package com.upt.cti.dentalhub;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AlertDialog;
@@ -19,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout TBD2;
     LinearLayout TBD3;
     LinearLayout TBD4;
+    LinearLayout TBD5;
 
     public FirebaseAuth.AuthStateListener mAuthListener;
     public String mCurrentUserUid;
@@ -39,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         TBD2 = findViewById(R.id.linearlayout3);
         TBD3 = findViewById(R.id.linearlayout4);
         TBD4 = findViewById(R.id.linearlayout5);
+        TBD5 = findViewById(R.id.linearlayout6);
 
         DoctorsInfo.setOnClickListener(v -> {
             Intent i= new Intent(getApplicationContext(),Activity_DoctorsInfo.class);
@@ -104,10 +108,6 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
     }
 
-    private void logout() {
-        mAuth.signOut();
-    }
-
     @Override
     public void onBackPressed() {
 
@@ -130,6 +130,30 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog alert = builder.create();
 
         alert.show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        if(item.getItemId()==R.id.action_logout){
+            logout();
+            return true;
+        }
+        //noinspection SimplifiableIfStatement
+
+        return super.onOptionsItemSelected(item);
+    }
+    private void logout() {
+        mAuth.signOut();
     }
 
 }
