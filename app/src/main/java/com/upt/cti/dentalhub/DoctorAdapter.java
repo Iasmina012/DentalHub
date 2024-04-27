@@ -1,9 +1,11 @@
 package com.upt.cti.dentalhub;
 
-import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,8 +14,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+interface OnBookNowClickListener {
+    void onBookNowClick(int position);
+}
+
 public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.ViewHolder> {
     private List<Doctor> doctorList;
+    private OnBookNowClickListener bookNowClickListener;
+
+    public void setOnBookNowClickListener(OnBookNowClickListener listener) {
+        this.bookNowClickListener = listener;
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView nameTextView;
@@ -22,6 +33,8 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.ViewHolder
         TextView phoneNumberTextView;
         TextView emailTextView;
         ImageView doctorImageView;
+
+        Button bookNowButton;
 
         public ViewHolder(View view) {
 
@@ -32,6 +45,14 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.ViewHolder
             phoneNumberTextView = view.findViewById(R.id.textView_phoneNumber);
             emailTextView = view.findViewById(R.id.textView_email);
             doctorImageView = view.findViewById(R.id.imageView_doctor);
+
+
+            bookNowButton = itemView.findViewById(R.id.bookNowButton);
+            bookNowButton.setOnClickListener(v -> {
+                if (bookNowClickListener != null) {
+                    bookNowClickListener.onBookNowClick(getAdapterPosition());
+                }
+            });
 
         }
     }

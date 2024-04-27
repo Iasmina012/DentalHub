@@ -34,11 +34,11 @@ public class MainActivity extends AppCompatActivity {
         setAuthListener();
         setAuthInstance();
 
-        DoctorsInfo = (LinearLayout)findViewById(R.id.linearlayout1);
-        TBD1 = (LinearLayout)findViewById(R.id.linearlayout2);
-        TBD2 = (LinearLayout)findViewById(R.id.linearlayout3);
-        TBD3 = (LinearLayout)findViewById(R.id.linearlayout4);
-        TBD4 = (LinearLayout)findViewById(R.id.linearlayout5);
+        DoctorsInfo = findViewById(R.id.linearlayout1);
+        TBD1 = findViewById(R.id.linearlayout2);
+        TBD2 = findViewById(R.id.linearlayout3);
+        TBD3 = findViewById(R.id.linearlayout4);
+        TBD4 = findViewById(R.id.linearlayout5);
 
         DoctorsInfo.setOnClickListener(v -> {
             Intent i= new Intent(getApplicationContext(),Activity_DoctorsInfo.class);

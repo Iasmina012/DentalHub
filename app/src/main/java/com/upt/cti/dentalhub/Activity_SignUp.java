@@ -39,12 +39,12 @@ public class Activity_SignUp extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        username = (EditText)findViewById(R.id.editText_username);
-        userEmail = (EditText)findViewById(R.id.editText_email);
-        password = (EditText)findViewById(R.id.editText_password);
-        repassword = (EditText)findViewById(R.id.editText_repassword);
-        btn_Sign_Up = (Button)findViewById(R.id.btn_SignUp);
-        btn_Already_Member = (Button)findViewById(R.id.btn_Login);
+        username = findViewById(R.id.editText_username);
+        userEmail = findViewById(R.id.editText_email);
+        password = findViewById(R.id.editText_password);
+        repassword = findViewById(R.id.editText_repassword);
+        btn_Sign_Up = findViewById(R.id.btn_SignUp);
+        btn_Already_Member = findViewById(R.id.btn_Login);
 
         setAuthInstance();
         setDatabaseInstance();
