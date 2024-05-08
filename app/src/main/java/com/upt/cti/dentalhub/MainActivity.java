@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Contact.setOnClickListener(v -> {
-            Intent i = new Intent(getApplicationContext(),Activity_Services.class);
+            Intent i = new Intent(getApplicationContext(),Activity_Contact.class);
             i.putExtra("table_name","Contact");
 
             startActivity(i);

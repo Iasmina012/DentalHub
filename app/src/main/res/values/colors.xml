@@ -14,5 +14,6 @@
     <color name="lightTeal">#b2d8d8</color>
     <color name="darkTeal">#66b2b2</color>
     <color name="transparent">#00000000</color>
+    <color name="grey">#808080</color>
 
 </resources>

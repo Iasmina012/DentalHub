@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -11,6 +15,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DentalHub"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAsUfGM0eSwPw7Mg4CU0x9PSnfbB_zKCy8"/>
+
+        <activity
+            android:name=".Activity_Message"
+            android:exported="false" />
         <activity
             android:name=".Activity_Contact"
             android:exported="false" />
