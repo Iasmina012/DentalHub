@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -32,20 +34,20 @@
                     android:id="@+id/linearlayout1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/teal_700"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:background="@color/teal_700">
 
                     <ImageView
-                        android:id="@+id/imageView"
+                        android:id="@+id/imageViewLogo"
                         android:layout_width="64dp"
                         android:layout_height="64dp"
                         android:layout_marginTop="20dp"
                         android:padding="-1dp"
-                        app:srcCompat="@drawable/app_logo" />
+                        app:srcCompat="@drawable/app_logo"/>
 
                     <TextView
-                        android:id="@+id/textView"
+                        android:id="@+id/textViewLogin"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -53,7 +55,7 @@
                         android:fontFamily="sans-serif-medium"
                         android:text="LOGIN"
                         android:textColor="#fff"
-                        android:textSize="22sp" />
+                        android:textSize="22sp"/>
 
                 </LinearLayout>
 
@@ -66,25 +68,25 @@
                     android:layout_marginRight="30dp">
 
                     <ImageView
-                        android:id="@+id/imageView_email"
+                        android:id="@+id/imageViewEmail"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:padding="5dp"
                         android:src="@android:drawable/sym_action_email"
-                        app:tint="@color/teal_700" />
+                        app:tint="@color/teal_700"/>
 
                     <EditText
-                        android:id="@+id/user_email"
+                        android:id="@+id/editTextUserEmail"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_alignBottom="@+id/imageView_email"
+                        android:layout_alignBottom="@+id/imageViewEmail"
                         android:layout_alignParentTop="true"
-                        android:layout_toRightOf="@+id/imageView_email"
+                        android:layout_toRightOf="@+id/imageViewEmail"
                         android:hint="Email"
                         android:inputType="text|textEmailAddress"
                         android:paddingLeft="20dp"
-                        android:textSize="15sp"
-                        />
+                        android:textSize="15sp"/>
+
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -97,29 +99,29 @@
                     android:layout_marginRight="30dp">
 
                     <ImageView
-                        android:id="@+id/imageView_password"
+                        android:id="@+id/imageViewPassword"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:padding="5dp"
                         android:src="@android:drawable/ic_lock_lock"
-                        app:tint="@color/teal_700" />
+                        app:tint="@color/teal_700"/>
 
                     <EditText
-                        android:id="@+id/editText_password"
+                        android:id="@+id/editTextPassword"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:layout_alignBottom="@+id/imageView_password"
+                        android:layout_alignBottom="@+id/imageViewPassword"
                         android:layout_alignParentTop="true"
-                        android:layout_toRightOf="@+id/imageView_password"
+                        android:layout_toRightOf="@+id/imageViewPassword"
                         android:hint="Password"
                         android:inputType="textPassword"
                         android:paddingLeft="20dp"
-                        android:textSize="15sp" />
+                        android:textSize="15sp"/>
 
                 </RelativeLayout>
 
                 <Button
-                    android:id="@+id/btn_SignIn"
+                    android:id="@+id/buttonSignIn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/relativeLayout3"
@@ -131,10 +133,10 @@
                     android:text="Sign In" />
 
                 <Button
-                    android:id="@+id/btn_new_user"
+                    android:id="@+id/buttonNewUser"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/btn_SignIn"
+                    android:layout_below="@+id/buttonSignIn"
                     android:layout_centerHorizontal="true"
                     android:layout_marginLeft="30dp"
                     android:layout_marginTop="15dp"
@@ -145,13 +147,13 @@
                     android:text="Don't have an account? Sign Up"
                     android:textAllCaps="false"
                     android:textColor="@color/teal_700"
-                    android:textSize="13sp" />
+                    android:textSize="13sp"/>
 
                 <Button
-                    android:id="@+id/btn_forgot_password"
+                    android:id="@+id/buttonForgotPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/btn_new_user"
+                    android:layout_below="@+id/buttonNewUser"
                     android:layout_centerHorizontal="true"
                     android:layout_marginLeft="30dp"
                     android:layout_marginTop="15sp"
@@ -162,7 +164,7 @@
                     android:text="Forgot Password?"
                     android:textAllCaps="false"
                     android:textColor="@color/teal_700"
-                    android:textSize="13sp" />
+                    android:textSize="13sp"/>
 
             </RelativeLayout>
 
@@ -171,5 +173,3 @@
     </RelativeLayout>
 
 </ScrollView>
-
-

@@ -39,10 +39,10 @@ public class Activity_SignUp extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        username = findViewById(R.id.editText_username);
+        username = findViewById(R.id.editTextUsername);
         userEmail = findViewById(R.id.editText_email);
-        password = findViewById(R.id.editText_password);
-        repassword = findViewById(R.id.editText_repassword);
+        password = findViewById(R.id.editTextPassword);
+        repassword = findViewById(R.id.editTextRepassword);
         btn_Sign_Up = findViewById(R.id.btn_SignUp);
         btn_Already_Member = findViewById(R.id.btn_Login);
 
@@ -58,15 +58,14 @@ public class Activity_SignUp extends AppCompatActivity {
         });
 
         btn_Sign_Up.setOnClickListener(v -> onRegisterUser());
+
     }
 
     private void setAuthInstance() {
         mAuth = FirebaseAuth.getInstance();
     }
 
-    private void setDatabaseInstance() {
-        mDatabase = FirebaseDatabase.getInstance("https://dentalhub-1a0c0-default-rtdb.europe-west1.firebasedatabase.app/").getReference();
-    }
+    private void setDatabaseInstance() {mDatabase = FirebaseDatabase.getInstance("https://dentalhub-1a0c0-default-rtdb.europe-west1.firebasedatabase.app/").getReference();}
 
     public boolean validate() {
 
@@ -78,6 +77,7 @@ public class Activity_SignUp extends AppCompatActivity {
         String reEnterPassword = repassword.getText().toString();
 
         String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}";
+
         /*
         (?=.*[0-9]): Cel putin un caracter numeric
         (?=.*[a-z]): Cel putin un caracter litera mica
@@ -159,9 +159,7 @@ public class Activity_SignUp extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(getApplicationContext(), "Connection Error! Please try again later!", Toast.LENGTH_SHORT).show();
-            }
+            public void onCancelled(@NonNull DatabaseError databaseError) {Toast.makeText(getApplicationContext(), "Connection Error! Please try again later!", Toast.LENGTH_SHORT).show();}
         });
         return isTaken;
 
@@ -228,8 +226,6 @@ public class Activity_SignUp extends AppCompatActivity {
         FirebaseDatabase.getInstance("https://dentalhub-1a0c0-default-rtdb.europe-west1.firebasedatabase.app/").getReference("userNames").child(getUserDisplayName()).setValue(true);
 
     }
-    private UserModel buildNewUser() {
-        return new UserModel(getUserDisplayName(), getUserEmail(), new Date().getTime());
-    }
+    private UserModel buildNewUser() {return new UserModel(getUserDisplayName(), getUserEmail(), new Date().getTime());}
 
 }

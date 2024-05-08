@@ -1,7 +1,5 @@
 package com.upt.cti.dentalhub;
 
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +14,7 @@ import java.util.List;
 
 interface OnBookNowClickListener {
     void onBookNowClick(int position);
+
 }
 
 public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.ViewHolder> {
@@ -27,25 +26,24 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+
         TextView nameTextView;
         TextView specializationTextView;
         TextView scheduleTextView;
         TextView phoneNumberTextView;
         TextView emailTextView;
         ImageView doctorImageView;
-
         Button bookNowButton;
 
         public ViewHolder(View view) {
 
             super(view);
-            nameTextView = view.findViewById(R.id.textView_name);
-            specializationTextView = view.findViewById(R.id.textView_specialization);
-            scheduleTextView = view.findViewById(R.id.textView_schedule);
+            nameTextView = view.findViewById(R.id.textViewName);
+            specializationTextView = view.findViewById(R.id.textViewSpecialization);
+            scheduleTextView = view.findViewById(R.id.textViewSchedule);
             phoneNumberTextView = view.findViewById(R.id.textView_phoneNumber);
             emailTextView = view.findViewById(R.id.textView_email);
-            doctorImageView = view.findViewById(R.id.imageView_doctor);
-
+            doctorImageView = view.findViewById(R.id.imageViewDoctor);
 
             bookNowButton = itemView.findViewById(R.id.bookNowButton);
             bookNowButton.setOnClickListener(v -> {
@@ -55,6 +53,7 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.ViewHolder
             });
 
         }
+
     }
 
     public DoctorAdapter(List<Doctor> doctorList) {
@@ -96,4 +95,5 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.ViewHolder
         notifyDataSetChanged();
 
     }
+
 }

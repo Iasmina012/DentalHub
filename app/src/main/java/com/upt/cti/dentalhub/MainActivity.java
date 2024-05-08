@@ -20,8 +20,8 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout Services;
     LinearLayout Appointment;
     LinearLayout Contact;
-    LinearLayout TBD4;
-    LinearLayout TBD5;
+    LinearLayout Symptoms;
+    LinearLayout Care;
 
     public FirebaseAuth.AuthStateListener mAuthListener;
     public String mCurrentUserUid;
@@ -41,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
         Services = findViewById(R.id.linearlayout2);
         Appointment = findViewById(R.id.linearlayout3);
         Contact = findViewById(R.id.linearlayout4);
-        TBD4 = findViewById(R.id.linearlayout5);
-        TBD5 = findViewById(R.id.linearlayout6);
+        Symptoms = findViewById(R.id.linearlayout5);
+        Care = findViewById(R.id.linearlayout6);
 
         DoctorsInfo.setOnClickListener(v -> {
             Intent i = new Intent(getApplicationContext(),Activity_DoctorsInfo.class);
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Appointment.setOnClickListener(v -> {
-            Intent i = new Intent(getApplicationContext(),Activity_Services.class);
+            Intent i = new Intent(getApplicationContext(),Activity_Appointment.class);
             i.putExtra("table_name","Appointment");
 
             startActivity(i);
@@ -74,6 +74,15 @@ public class MainActivity extends AppCompatActivity {
         Contact.setOnClickListener(v -> {
             Intent i = new Intent(getApplicationContext(),Activity_Contact.class);
             i.putExtra("table_name","Contact");
+
+            startActivity(i);
+            overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
+
+        });
+
+        Care.setOnClickListener(v -> {
+            Intent i = new Intent(getApplicationContext(),Activity_Care.class);
+            i.putExtra("table_name","Teeth Care");
 
             startActivity(i);
             overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
@@ -105,9 +114,7 @@ public class MainActivity extends AppCompatActivity {
         mCurrentUserUid = user.getUid();
     }
 
-    public void setUsersDatabase() {
-        mUserRefDatabase = FirebaseDatabase.getInstance("https://dentalhub-1a0c0-default-rtdb.europe-west1.firebasedatabase.app/").getReference().child("users");
-    }
+    public void setUsersDatabase() {mUserRefDatabase = FirebaseDatabase.getInstance("https://dentalhub-1a0c0-default-rtdb.europe-west1.firebasedatabase.app/").getReference().child("users");}
 
     private void goToLogin() {
 
@@ -126,8 +133,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onStart() {
+
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
+
     }
 
     @Override
@@ -157,20 +166,23 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog alert = builder.create();
 
         alert.show();
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+
+        //inflates the menu and adds items to the action bar if it is present
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
+        //handles the action bar item clicks here
+        //the action bar will automatically handle clicks on the Home/Up button, as long as its specified a parent activity in AndroidManifest.xml
         if(item.getItemId()==R.id.action_logout){
             logout();
             return true;
@@ -178,6 +190,7 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
 
         return super.onOptionsItemSelected(item);
+
     }
     private void logout() {
         mAuth.signOut();

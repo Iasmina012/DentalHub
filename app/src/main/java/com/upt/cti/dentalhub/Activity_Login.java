@@ -33,11 +33,11 @@ public class Activity_Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        userEmail = (EditText) findViewById(R.id.user_email);
-        userPassword = (EditText) findViewById(R.id.editText_password);
-        signIn = (Button) findViewById(R.id.btn_SignIn);
-        forgotPassword = (Button) findViewById(R.id.btn_forgot_password);
-        newUser = (Button) findViewById(R.id.btn_new_user);
+        userEmail = findViewById(R.id.editTextUserEmail);
+        userPassword = findViewById(R.id.editTextPassword);
+        signIn = findViewById(R.id.buttonSignIn);
+        forgotPassword = findViewById(R.id.buttonForgotPassword);
+        newUser = findViewById(R.id.buttonNewUser);
         setAuthInstance();
 
         signIn.setOnClickListener(v -> onLogInUser());
@@ -63,6 +63,7 @@ public class Activity_Login extends AppCompatActivity {
         String password = userPassword.getText().toString();
 
         String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}";
+
         /*
         (?=.*[0-9]): Cel putin un caracter numeric
         (?=.*[a-z]): Cel putin un caracter litera mica
@@ -147,13 +148,14 @@ public class Activity_Login extends AppCompatActivity {
     }
 
     public void forgotYourPassword() {
+
         LayoutInflater li = LayoutInflater.from(Activity_Login.this);
         View promptsView = li.inflate(R.layout.prompt_email, null);
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Activity_Login.this);
         alertDialogBuilder.setView(promptsView);
 
-        final EditText userMail = (EditText) promptsView.findViewById(R.id.editTextDialogUserInput);
+        final EditText userMail = promptsView.findViewById(R.id.editTextDialogUserInput);
 
         alertDialogBuilder.setCancelable(false)
                 .setPositiveButton("OK", (dialogInterface, i) -> {
@@ -171,16 +173,14 @@ public class Activity_Login extends AppCompatActivity {
         final AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
 
-        ((AlertDialog) alertDialog).getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
 
         userMail.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
             public void afterTextChanged(Editable editable) {
@@ -195,6 +195,7 @@ public class Activity_Login extends AppCompatActivity {
                 }
             }
         });
+
     }
 
 }

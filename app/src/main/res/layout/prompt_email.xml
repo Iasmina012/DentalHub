@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:padding="10dp">
 
     <TextView
@@ -10,8 +13,7 @@
         android:layout_height="wrap_content"
         android:text="Please type in your email address: "
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/teal_700"
-        />
+        android:textColor="@color/teal_700"/>
 
     <EditText
         android:id="@+id/editTextDialogUserInput"
@@ -20,7 +22,7 @@
         android:inputType="textWebEmailAddress"
         android:hint="Email">
 
-        <requestFocus />
+        <requestFocus/>
 
     </EditText>
 

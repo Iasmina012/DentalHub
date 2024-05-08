@@ -1,15 +1,11 @@
 package com.upt.cti.dentalhub;
 
 public class UserModel {
+
     private String displayName;
     private String email;
     private long createdAt;
     private String mRecipientId;
-
-
-    public UserModel() {
-
-    }
 
     public UserModel(String displayName, String email,long createdAt) {
         this.displayName = displayName;
@@ -45,6 +41,3 @@ public class UserModel {
         this.mRecipientId = recipientId;
     }
 }
-
-
-

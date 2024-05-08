@@ -2,18 +2,18 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp"
-    android:background="@drawable/rounded_bg"
     android:layout_marginLeft="12dp"
     android:layout_marginTop="15dp"
     android:layout_marginRight="12dp"
     android:layout_marginBottom="15sp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:background="@drawable/rounded_bg"
+    android:padding="16dp">
 
     <ImageView
-        android:id="@+id/imageView_doctor"
+        android:id="@+id/imageViewDoctor"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginLeft="12dp"
@@ -28,67 +28,67 @@
         android:focusableInTouchMode="true"/>
 
     <TextView
-        android:id="@+id/textView_name"
+        android:id="@+id/textViewName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@+id/imageViewDoctor"
+        app:layout_constraintTop_toTopOf="@+id/imageViewDoctor"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:fontFamily="sans-serif"
-        app:layout_constraintStart_toEndOf="@+id/imageView_doctor"
-        app:layout_constraintTop_toTopOf="@+id/imageView_doctor"
-        android:layout_marginStart="8dp" />
+        android:fontFamily="sans-serif"/>
 
     <TextView
-        android:id="@+id/textView_specialization"
+        android:id="@+id/textViewSpecialization"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/textViewName"
+        app:layout_constraintTop_toBottomOf="@id/textViewName"
+        android:layout_marginTop="4dp"
         android:textSize="16sp"
-        android:fontFamily="sans-serif"
-        app:layout_constraintStart_toStartOf="@id/textView_name"
-        app:layout_constraintTop_toBottomOf="@id/textView_name"
-        android:layout_marginTop="4dp" />
+        android:fontFamily="sans-serif"/>
 
     <TextView
-        android:id="@+id/textView_schedule"
+        android:id="@+id/textViewSchedule"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/textViewSpecialization"
+        app:layout_constraintTop_toBottomOf="@id/textViewSpecialization"
+        android:layout_marginTop="4dp"
         android:textSize="14sp"
-        android:fontFamily="sans-serif"
-        app:layout_constraintStart_toStartOf="@id/textView_specialization"
-        app:layout_constraintTop_toBottomOf="@id/textView_specialization"
-        android:layout_marginTop="4dp" />
+        android:fontFamily="sans-serif"/>
 
     <TextView
         android:id="@+id/textView_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/textViewSchedule"
+        app:layout_constraintTop_toBottomOf="@id/textViewSchedule"
+        android:layout_marginTop="4dp"
         android:textSize="12sp"
-        android:fontFamily="sans-serif"
-        app:layout_constraintStart_toStartOf="@id/textView_schedule"
-        app:layout_constraintTop_toBottomOf="@id/textView_schedule"
-        android:layout_marginTop="4dp" />
+        android:fontFamily="sans-serif"/>
 
     <TextView
         android:id="@+id/textView_phoneNumber"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textSize="12sp"
-        android:fontFamily="sans-serif"
         app:layout_constraintStart_toStartOf="@id/textView_email"
         app:layout_constraintTop_toBottomOf="@id/textView_email"
-        android:layout_marginTop="4dp" />
+        android:layout_marginTop="4dp"
+        android:textSize="12sp"
+        android:fontFamily="sans-serif"/>
 
     <Button
         android:id="@+id/bookNowButton"
         android:layout_width="77dp"
         android:layout_height="32dp"
         android:layout_marginEnd="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:backgroundTint="@color/teal_700"
         android:fontFamily="sans-serif"
         android:text="Book Now"
         android:textAllCaps="false"
-        android:textSize="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:textSize="8dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

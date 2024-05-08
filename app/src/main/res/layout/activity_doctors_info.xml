@@ -1,41 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
 
         <android.widget.SearchView
             android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@color/lightTeal"
             android:layout_marginTop="10dp"
             android:iconifiedByDefault="false"
+            android:background="@color/lightTeal"
             app:queryHint="Search for a doctor here ..."/>
 
         <TextView
             android:id="@+id/textViewNoResults"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:padding="16dp"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
             android:layout_marginBottom="15dp"
-            android:layout_marginTop="75dp"/>
+            android:layout_marginTop="75dp"
+            android:padding="16dp"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
 
-
-
-        <!-- Doctor List -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"

@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout
+    android:id="@+id/relativeLayout1"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="16dp">
 
     <android.widget.SearchView
@@ -30,9 +33,9 @@
         android:layout_width="match_parent"
         android:layout_height="220dp"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
         android:orientation="vertical"
         android:background="@drawable/rounded_bg"
-        android:layout_marginBottom="10dp"
         android:elevation="4dp">
 
         <RelativeLayout
@@ -51,28 +54,28 @@
                 app:tint="@color/teal_700" />
 
             <TextView
-                android:id="@+id/textViewLocation"
+                android:id="@+id/textViewHeadquarters"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/imageView1"
                 android:layout_alignTop="@+id/imageView1"
+                android:layout_marginStart="10dp"
                 android:paddingStart="10dp"
                 android:text="Headquarters"
                 android:textSize="25sp"
-                android:layout_marginStart="10dp"
                 android:textColor="@color/teal_700"/>
 
             <TextView
                 android:id="@+id/textViewAddress1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textViewLocation"
+                android:layout_below="@+id/textViewHeadquarters"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="4dp"
                 android:layout_toEndOf="@+id/imageView1"
                 android:paddingStart="10dp"
                 android:text="1425 Broadway Suite 22\nNew York, NY 10018"
-                android:textSize="18sp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="4dp"/>
+                android:textSize="18sp"/>
 
         </RelativeLayout>
 
@@ -95,10 +98,10 @@
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/imageView2"
                 android:layout_alignTop="@+id/imageView2"
+                android:layout_marginStart="10dp"
                 android:paddingStart="10dp"
                 android:text="Local Office"
                 android:textSize="25sp"
-                android:layout_marginStart="10dp"
                 android:textColor="@color/teal_700"/>
 
             <TextView
@@ -107,11 +110,11 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewOffice"
                 android:layout_toEndOf="@+id/imageView2"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="4dp"
                 android:paddingStart="10dp"
                 android:text="58 Wall Street Suite 100\nNew York, NY 10005"
-                android:textSize="18sp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="4dp"/>
+                android:textSize="18sp"/>
 
         </RelativeLayout>
 
@@ -122,11 +125,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/fab"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
         android:backgroundTint="@color/teal_700"
         app:tint="@color/white"
         android:elevation="12dp"/>

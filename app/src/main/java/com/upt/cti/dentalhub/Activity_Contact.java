@@ -7,6 +7,7 @@ import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -31,11 +32,12 @@ public class Activity_Contact extends AppCompatActivity implements OnMapReadyCal
     private SearchView searchView;
     private GoogleMap mMap;
     private FloatingActionButton fab;
-
+    private ImageButton closeButton;
     private static final int LOCATION_REQUEST_CODE = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact);
 
@@ -59,7 +61,12 @@ public class Activity_Contact extends AppCompatActivity implements OnMapReadyCal
                 String message = messageField.getText().toString();
                 sendEmail(name, email, message);
                 dialog.dismiss();
+
             });
+
+            ImageButton closeButton = dialog.findViewById(R.id.buttonClose);
+            closeButton.setOnClickListener(v -> dialog.dismiss());
+
         });
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -68,8 +75,10 @@ public class Activity_Contact extends AppCompatActivity implements OnMapReadyCal
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+
                 searchLocation(query);
                 return false;
+
             }
 
             @Override
@@ -82,32 +91,39 @@ public class Activity_Contact extends AppCompatActivity implements OnMapReadyCal
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
         mMap = googleMap;
-        //Set the initial location to "1425 Broadway Suite 22, New York, NY 10018"
+        //sets the initial location to headquarters
         setInitialLocation();
         enableMyLocation();
+
     }
 
     private void setInitialLocation() {
+
         String location = "1425 Broadway Suite 22, New York, NY 10018";
         LatLng latLng = getLocationFromAddress(location);
         if (latLng != null) {
             mMap.addMarker(new MarkerOptions().position(latLng).title("Headquarters"));
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
         }
+
     }
 
     private void searchLocation(String location) {
+
         LatLng latLng = getLocationFromAddress(location);
         if (latLng != null) {
             mMap.addMarker(new MarkerOptions().position(latLng).title("Search Result"));
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
         } else {
-            Toast.makeText(this, "Location not found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Location not found!", Toast.LENGTH_SHORT).show();
         }
+
     }
 
     private LatLng getLocationFromAddress(String strAddress) {
+
         Geocoder coder = new Geocoder(this);
         List<Address> address;
         LatLng p1 = null;
@@ -122,9 +138,11 @@ public class Activity_Contact extends AppCompatActivity implements OnMapReadyCal
             ex.printStackTrace();
         }
         return p1;
+
     }
 
     private void enableMyLocation() {
+
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
                 != android.content.pm.PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
@@ -132,26 +150,31 @@ public class Activity_Contact extends AppCompatActivity implements OnMapReadyCal
         } else {
             mMap.setMyLocationEnabled(true);
         }
+
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == LOCATION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == android.content.pm.PackageManager.PERMISSION_GRANTED) {
                 enableMyLocation();
             } else {
-                Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Location permission denied!", Toast.LENGTH_SHORT).show();
             }
         }
+
     }
 
     private void sendEmail(String name, String email, String message) {
+
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
         emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"iasmina.putina012@yahoo.com"});
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "New message from " + name);
         emailIntent.putExtra(Intent.EXTRA_TEXT, message);
         emailIntent.setType("message/rfc822");
         startActivity(Intent.createChooser(emailIntent, "Send email via..."));
+
     }
 }

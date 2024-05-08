@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white">
@@ -34,7 +35,7 @@
                 android:layout_marginTop="10dp"
                 android:padding="11dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/services01" />
+                android:src="@drawable/services01"/>
 
             <TextView
                 android:id="@+id/textView_title1"

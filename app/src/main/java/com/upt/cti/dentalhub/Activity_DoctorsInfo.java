@@ -3,7 +3,6 @@ package com.upt.cti.dentalhub;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,7 +20,6 @@ public class Activity_DoctorsInfo extends AppCompatActivity {
     private List<Doctor> doctorList;
     private SearchView searchView;
     private TextView textViewNoResults;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +47,10 @@ public class Activity_DoctorsInfo extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+
                 filterList(newText);
                 return true;
+
             }
         });
 
@@ -60,7 +60,6 @@ public class Activity_DoctorsInfo extends AppCompatActivity {
             Intent intent = new Intent(Activity_DoctorsInfo.this, Activity_Appointment.class);
             startActivity(intent);
         });
-
 
     }
 
