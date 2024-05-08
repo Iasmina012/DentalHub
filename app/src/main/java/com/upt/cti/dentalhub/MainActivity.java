@@ -17,9 +17,9 @@ import com.google.firebase.database.FirebaseDatabase;
 public class MainActivity extends AppCompatActivity {
 
     LinearLayout DoctorsInfo;
-    LinearLayout TBD1;
-    LinearLayout TBD2;
-    LinearLayout TBD3;
+    LinearLayout Services;
+    LinearLayout Appointment;
+    LinearLayout Contact;
     LinearLayout TBD4;
     LinearLayout TBD5;
 
@@ -38,15 +38,42 @@ public class MainActivity extends AppCompatActivity {
         setAuthInstance();
 
         DoctorsInfo = findViewById(R.id.linearlayout1);
-        TBD1 = findViewById(R.id.linearlayout2);
-        TBD2 = findViewById(R.id.linearlayout3);
-        TBD3 = findViewById(R.id.linearlayout4);
+        Services = findViewById(R.id.linearlayout2);
+        Appointment = findViewById(R.id.linearlayout3);
+        Contact = findViewById(R.id.linearlayout4);
         TBD4 = findViewById(R.id.linearlayout5);
         TBD5 = findViewById(R.id.linearlayout6);
 
         DoctorsInfo.setOnClickListener(v -> {
-            Intent i= new Intent(getApplicationContext(),Activity_DoctorsInfo.class);
+            Intent i = new Intent(getApplicationContext(),Activity_DoctorsInfo.class);
             i.putExtra("table_name","Doctors");
+
+            startActivity(i);
+            overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
+
+        });
+
+        Services.setOnClickListener(v -> {
+            Intent i = new Intent(getApplicationContext(),Activity_Services.class);
+            i.putExtra("table_name","Services");
+
+            startActivity(i);
+            overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
+
+        });
+
+        Appointment.setOnClickListener(v -> {
+            Intent i = new Intent(getApplicationContext(),Activity_Services.class);
+            i.putExtra("table_name","Appointment");
+
+            startActivity(i);
+            overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
+
+        });
+
+        Contact.setOnClickListener(v -> {
+            Intent i = new Intent(getApplicationContext(),Activity_Services.class);
+            i.putExtra("table_name","Contact");
 
             startActivity(i);
             overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);

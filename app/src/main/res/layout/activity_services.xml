@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:padding="15dp"
+            android:layout_marginTop="1dp"
+            android:background="@drawable/rounded_bg"
+            android:text="Our team wants to share with you the doctor-patient relationship, based on kindness, understanding, and patience, developed through care and professionalism, and realized in personalized treatments for each individual patient's needs."/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginLeft="120dp"
+                android:layout_marginRight="120dp"
+                android:layout_marginTop="10dp"
+                android:padding="11dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/services01" />
+
+            <TextView
+                android:id="@+id/textView_title1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SPECIALIZED CONSULTATION"
+                android:layout_below="@id/imageView1"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:padding="1dp"
+                android:layout_marginTop="1dp"/>
+
+            <TextView
+                android:id="@+id/textView_subtitle1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Surgery consultation\nPeriodontology consultation\nOrthodontics and orthopedics consultation\nImplantology consultation"
+                android:textSize="12sp"
+                android:textColor="@android:color/darker_gray"
+                android:textAlignment="center"
+                android:padding="5dp"
+                android:layout_marginTop="175dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginLeft="120dp"
+                android:layout_marginRight="120dp"
+                android:layout_marginTop="10dp"
+                android:padding="11dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/services02" />
+
+            <TextView
+                android:id="@+id/textView_title2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="DENTAL PROPHYLAXIS"
+                android:layout_below="@id/imageView2"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:padding="1dp"
+                android:layout_marginTop="1dp"/>
+
+            <TextView
+                android:id="@+id/textView_subtitle2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Scaling, air-flow, professional brushing\nSealing of temporary and permanent teeth"
+                android:textSize="12sp"
+                android:textColor="@android:color/darker_gray"
+                android:textAlignment="center"
+                android:padding="5dp"
+                android:layout_marginTop="175dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginLeft="120dp"
+                android:layout_marginRight="120dp"
+                android:layout_marginTop="10dp"
+                android:padding="11dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/services03" />
+
+            <TextView
+                android:id="@+id/textView_title3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="DENTAL AESTHETICS"
+                android:layout_below="@id/imageView3"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:padding="1dp"
+                android:layout_marginTop="1dp"/>
+
+            <TextView
+                android:id="@+id/textView_subtitle3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Teeth whitening\nDirect and indirect dental veneers\nAesthetic light-curing fillings\nCeramic crowns"
+                android:textSize="12sp"
+                android:textColor="@android:color/darker_gray"
+                android:textAlignment="center"
+                android:padding="5dp"
+                android:layout_marginTop="175dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginLeft="120dp"
+                android:layout_marginRight="120dp"
+                android:layout_marginTop="10dp"
+                android:padding="11dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/services04" />
+
+            <TextView
+                android:id="@+id/textView_title4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ORTHODONTICS AND DENTO-FACIAL ORTHOPEDICS"
+                android:layout_below="@id/imageView4"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:padding="1dp"
+                android:layout_marginTop="1dp"/>
+
+            <TextView
+                android:id="@+id/textView_subtitle4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Myofunctional appliances\nRemovable and mobilizable appliances\nFixed dental appliances: metallic, aesthetic"
+                android:textSize="12sp"
+                android:textColor="@android:color/darker_gray"
+                android:textAlignment="center"
+                android:padding="5dp"
+                android:layout_marginTop="175dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginLeft="120dp"
+                android:layout_marginRight="120dp"
+                android:layout_marginTop="10dp"
+                android:padding="11dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/services05" />
+
+            <TextView
+                android:id="@+id/textView_title5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="PEDODONTICS (PEDIATRIC DENTISTRY)"
+                android:layout_below="@id/imageView5"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:padding="1dp"
+                android:layout_marginTop="1dp"/>
+
+            <TextView
+                android:id="@+id/textView_subtitle5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Child prophylaxis\nSealing of grooves and pits in primary teeth\nFillings for primary teeth\nEndodontic treatment of primary teeth\nExtraction of primary teeth"
+                android:textSize="12sp"
+                android:textColor="@android:color/darker_gray"
+                android:textAlignment="center"
+                android:padding="5dp"
+                android:layout_marginTop="175dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginLeft="120dp"
+                android:layout_marginRight="120dp"
+                android:layout_marginTop="10dp"
+                android:padding="11dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/services06" />
+
+            <TextView
+                android:id="@+id/textView_title6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ODONTOTHERAPY"
+                android:layout_below="@id/imageView6"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:padding="1dp"
+                android:layout_marginTop="1dp"/>
+
+            <TextView
+                android:id="@+id/textView_subtitle6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pulp capping\nAesthetic fillings\nDirect veneers"
+                android:textSize="12sp"
+                android:textColor="@android:color/darker_gray"
+                android:textAlignment="center"
+                android:padding="5dp"
+                android:layout_marginTop="175dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginLeft="120dp"
+                android:layout_marginRight="120dp"
+                android:layout_marginTop="10dp"
+                android:padding="11dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/services07" />
+
+            <TextView
+                android:id="@+id/textView_title7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ENDODONTICS"
+                android:layout_below="@id/imageView7"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:padding="1dp"
+                android:layout_marginTop="1dp"/>
+
+            <TextView
+                android:id="@+id/textView_subtitle7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Specific treatments application\nRoot canal treatments\nRoot fillings\nTransdental drainage"
+                android:textSize="12sp"
+                android:textColor="@android:color/darker_gray"
+                android:textAlignment="center"
+                android:padding="5dp"
+                android:layout_marginTop="175dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageView8"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginLeft="120dp"
+                android:layout_marginRight="120dp"
+                android:layout_marginTop="10dp"
+                android:padding="11dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/services08" />
+
+            <TextView
+                android:id="@+id/textView_title8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="PERIODONTOLOGY"
+                android:layout_below="@id/imageView8"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:padding="1dp"
+                android:layout_marginTop="1dp"/>
+
+            <TextView
+                android:id="@+id/textView_subtitle8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Removal of subgingival plaque and tartar\nPeri-implant curettage\nSRP - surface root planing\nSampling for testing pathogens (Periodontitis - Peri-implantitis - Pathogens)"
+                android:textSize="12sp"
+                android:textColor="@android:color/darker_gray"
+                android:textAlignment="center"
+                android:padding="5dp"
+                android:layout_marginTop="175dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageView9"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginLeft="120dp"
+                android:layout_marginRight="120dp"
+                android:layout_marginTop="10dp"
+                android:padding="11dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/services09" />
+
+            <TextView
+                android:id="@+id/textView_title9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="DENTAL PROSTHETICS"
+                android:layout_below="@id/imageView9"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:padding="1dp"
+                android:layout_marginTop="1dp"/>
+
+            <TextView
+                android:id="@+id/textView_subtitle9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Removal of old prosthetic works\nRemovable dentures (telescopic and skeletonized)\nDental crowns or bridges: Metal-ceramic, All-ceramic, Zirconia, Emax\nIndirect fillings - Inlay and Onlay\nCeramic veneers (Veneers)"
+                android:textSize="12sp"
+                android:textColor="@android:color/darker_gray"
+                android:textAlignment="center"
+                android:padding="5dp"
+                android:layout_marginTop="175dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageView10"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginLeft="120dp"
+                android:layout_marginRight="120dp"
+                android:layout_marginTop="10dp"
+                android:padding="11dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/services10" />
+
+            <TextView
+                android:id="@+id/textView_title10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="DENTAL SURGERY"
+                android:layout_below="@id/imageView10"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:padding="1dp"
+                android:layout_marginTop="1dp"/>
+
+            <TextView
+                android:id="@+id/textView_subtitle10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tooth extractions\nSinus lift (elevation of the sinus membrane)\nBone crest remodeling (bone addition + membrane)\nApical resections\nWisdom tooth odontectomy/Impacted tooth exposure\nFrenectomy and frenoplasty\nDrainage with a drainage blade"
+                android:textSize="12sp"
+                android:textColor="@android:color/darker_gray"
+                android:textAlignment="center"
+                android:padding="5dp"
+                android:layout_marginTop="175dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageView11"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginLeft="120dp"
+                android:layout_marginRight="120dp"
+                android:layout_marginTop="10dp"
+                android:padding="11dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/services11" />
+
+            <TextView
+                android:id="@+id/textView_title11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="IMPLANTOLOGY"
+                android:layout_below="@id/imageView11"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:padding="1dp"
+                android:layout_marginTop="1dp"/>
+
+            <TextView
+                android:id="@+id/textView_subtitle11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Alpha Bio dental implants\nImplantium dental implants\nNobel Biocare dental implants"
+                android:textSize="12sp"
+                android:textColor="@android:color/darker_gray"
+                android:textAlignment="center"
+                android:padding="5dp"
+                android:layout_marginTop="175dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageView12"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginLeft="120dp"
+                android:layout_marginRight="120dp"
+                android:layout_marginTop="10dp"
+                android:padding="11dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/services12" />
+
+            <TextView
+                android:id="@+id/textView_title12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="DENTAL RADIOLOGY"
+                android:layout_below="@id/imageView12"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:padding="1dp"
+                android:layout_marginTop="1dp"/>
+
+            <TextView
+                android:id="@+id/textView_subtitle12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Retroalveolar dental X-ray"
+                android:textSize="12sp"
+                android:textColor="@android:color/darker_gray"
+                android:textAlignment="center"
+                android:padding="5dp"
+                android:layout_marginTop="175dp"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</ScrollView>

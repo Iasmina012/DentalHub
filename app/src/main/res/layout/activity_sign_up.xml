@@ -42,7 +42,7 @@
                     android:layout_height="64dp"
                     android:layout_marginTop="20dp"
                     android:padding="-1dp"
-                    app:srcCompat="@drawable/image1" />
+                    app:srcCompat="@drawable/app_logo" />
 
                 <TextView
                     android:layout_width="wrap_content"

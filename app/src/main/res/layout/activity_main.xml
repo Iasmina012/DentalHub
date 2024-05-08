@@ -41,7 +41,7 @@
                         android:layout_height="64dp"
                         android:padding="1dp"
                         app:tint="@color/white"
-                        android:src="@drawable/docsinfo" />
+                        android:src="@drawable/doctors" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -52,7 +52,7 @@
                         android:textColor="@color/white"/>
 
                     <View
-                        android:layout_width="match_parent"
+                        android:layout_width="110dp"
                         android:layout_height="1dp"
                         android:layout_margin="10dp"
                         android:background="@color/lightTeal" />
@@ -90,7 +90,7 @@
                         android:textColor="@color/white"/>
 
                     <View
-                        android:layout_width="match_parent"
+                        android:layout_width="110dp"
                         android:layout_height="1dp"
                         android:layout_margin="10dp"
                         android:background="@color/lightTeal" />
@@ -132,12 +132,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="Book An Appointment"
+                        android:text="Book Appointment"
                         android:textStyle="bold"
                         android:textColor="@color/white"/>
 
                     <View
-                        android:layout_width="match_parent"
+                        android:layout_width="110dp"
                         android:layout_height="1dp"
                         android:layout_margin="10dp"
                         android:background="@color/lightTeal" />
@@ -176,7 +176,7 @@
                         android:textColor="@color/white"/>
 
                     <View
-                        android:layout_width="match_parent"
+                        android:layout_width="110dp"
                         android:layout_height="1dp"
                         android:layout_margin="10dp"
                         android:background="@color/lightTeal" />
@@ -219,12 +219,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="Check Your Symptoms "
+                        android:text="Check Symptoms"
                         android:textStyle="bold"
                         android:textColor="@color/white" />
 
                     <View
-                        android:layout_width="match_parent"
+                        android:layout_width="110dp"
                         android:layout_height="1dp"
                         android:layout_margin="10dp"
                         android:background="@color/lightTeal" />
@@ -263,7 +263,7 @@
                         android:textColor="@color/white"/>
 
                     <View
-                        android:layout_width="match_parent"
+                        android:layout_width="110dp"
                         android:layout_height="1dp"
                         android:layout_margin="10dp"
                         android:background="@color/lightTeal" />
