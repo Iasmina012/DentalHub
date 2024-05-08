@@ -1,9 +1,12 @@
 package com.upt.cti.dentalhub;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -39,10 +42,24 @@ public class Activity_Contact extends AppCompatActivity implements OnMapReadyCal
         searchView = findViewById(R.id.searchView);
         searchView.setQueryHint("Search for an office here ...");
 
-        fab = findViewById(R.id.floatingActionButton);
-        fab.setOnClickListener(v -> {
-            Intent intent = new Intent(Activity_Contact.this, Activity_Message.class);
-            startActivity(intent);
+        findViewById(R.id.floatingActionButton).setOnClickListener(view -> {
+            Dialog dialog = new Dialog(this);
+            dialog.setContentView(R.layout.popup_message);
+            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialog.show();
+
+            FloatingActionButton fab = dialog.findViewById(R.id.floatingActionButton);
+            fab.setOnClickListener(v -> {
+                EditText nameField = dialog.findViewById(R.id.editTextName);
+                EditText emailField = dialog.findViewById(R.id.editTextEmail);
+                EditText messageField = dialog.findViewById(R.id.editTextMessage);
+
+                String name = nameField.getText().toString();
+                String email = emailField.getText().toString();
+                String message = messageField.getText().toString();
+                sendEmail(name, email, message);
+                dialog.dismiss();
+            });
         });
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -60,6 +77,7 @@ public class Activity_Contact extends AppCompatActivity implements OnMapReadyCal
                 return false;
             }
         });
+
     }
 
     @Override
@@ -126,5 +144,14 @@ public class Activity_Contact extends AppCompatActivity implements OnMapReadyCal
                 Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    private void sendEmail(String name, String email, String message) {
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"iasmina.putina012@yahoo.com"});
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "New message from " + name);
+        emailIntent.putExtra(Intent.EXTRA_TEXT, message);
+        emailIntent.setType("message/rfc822");
+        startActivity(Intent.createChooser(emailIntent, "Send email via..."));
     }
 }

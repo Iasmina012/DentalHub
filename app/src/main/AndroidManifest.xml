@@ -21,9 +21,6 @@
             android:value="AIzaSyAsUfGM0eSwPw7Mg4CU0x9PSnfbB_zKCy8"/>
 
         <activity
-            android:name=".Activity_Message"
-            android:exported="false" />
-        <activity
             android:name=".Activity_Contact"
             android:exported="false" />
         <activity
