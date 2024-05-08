@@ -16,6 +16,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Objects;
+
 
 public class Activity_Login extends AppCompatActivity {
 
@@ -24,7 +26,6 @@ public class Activity_Login extends AppCompatActivity {
     Button signIn;
     Button forgotPassword;
     Button newUser;
-    private String email;
     private FirebaseAuth mAuth;
 
     @Override
@@ -118,7 +119,7 @@ public class Activity_Login extends AppCompatActivity {
             if (task.isSuccessful()) {
                 goToMainActivity();
             } else {
-                Toast.makeText(getApplicationContext(), "" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), " " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                 userPassword.setText("");
                 userPassword.requestFocus();
             }
@@ -161,12 +162,8 @@ public class Activity_Login extends AppCompatActivity {
                 .setPositiveButton("OK", (dialogInterface, i) -> {
                     String email = userMail.getText().toString();
                     mAuth.sendPasswordResetEmail(email)
-                            .addOnSuccessListener(aVoid -> {
-                                Toast.makeText(Activity_Login.this, "Reset password email sent successfully", Toast.LENGTH_SHORT).show();
-                            })
-                            .addOnFailureListener(e -> {
-                                Toast.makeText(Activity_Login.this, "Failed to send reset password email: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                            });
+                            .addOnSuccessListener(aVoid -> Toast.makeText(Activity_Login.this, "Reset password email sent successfully", Toast.LENGTH_SHORT).show())
+                            .addOnFailureListener(e -> Toast.makeText(Activity_Login.this, "Failed to send reset password email: " + e.getMessage(), Toast.LENGTH_SHORT).show());
                 })
                 .setNegativeButton("Cancel", (dialog, id) -> dialog.cancel());
 

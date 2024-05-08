@@ -26,13 +26,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 public class Activity_Contact extends AppCompatActivity implements OnMapReadyCallback {
 
-    private SearchView searchView;
     private GoogleMap mMap;
-    private FloatingActionButton fab;
-    private ImageButton closeButton;
     private static final int LOCATION_REQUEST_CODE = 101;
 
     @Override
@@ -41,13 +39,13 @@ public class Activity_Contact extends AppCompatActivity implements OnMapReadyCal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact);
 
-        searchView = findViewById(R.id.searchView);
+        SearchView searchView = findViewById(R.id.searchView);
         searchView.setQueryHint("Search for an office here ...");
 
         findViewById(R.id.floatingActionButton).setOnClickListener(view -> {
             Dialog dialog = new Dialog(this);
             dialog.setContentView(R.layout.popup_message);
-            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            Objects.requireNonNull(dialog.getWindow()).setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             dialog.show();
 
             FloatingActionButton fab = dialog.findViewById(R.id.floatingActionButton);
@@ -70,6 +68,7 @@ public class Activity_Contact extends AppCompatActivity implements OnMapReadyCal
         });
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        assert mapFragment != null;
         mapFragment.getMapAsync(this);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -90,7 +89,7 @@ public class Activity_Contact extends AppCompatActivity implements OnMapReadyCal
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(@NonNull GoogleMap googleMap) {
 
         mMap = googleMap;
         //sets the initial location to headquarters
@@ -171,7 +170,7 @@ public class Activity_Contact extends AppCompatActivity implements OnMapReadyCal
 
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
         emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"iasmina.putina012@yahoo.com"});
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "New message from " + name);
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "New message from " + name + " (" + email + ")");
         emailIntent.putExtra(Intent.EXTRA_TEXT, message);
         emailIntent.setType("message/rfc822");
         startActivity(Intent.createChooser(emailIntent, "Send email via..."));

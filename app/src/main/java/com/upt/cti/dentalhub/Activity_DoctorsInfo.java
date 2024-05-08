@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
+//import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,7 +18,6 @@ public class Activity_DoctorsInfo extends AppCompatActivity {
     private RecyclerView recyclerView;
     private DoctorAdapter doctorAdapter;
     private List<Doctor> doctorList;
-    private SearchView searchView;
     private TextView textViewNoResults;
 
     @Override
@@ -35,7 +34,7 @@ public class Activity_DoctorsInfo extends AppCompatActivity {
         recyclerView.setAdapter(doctorAdapter);
 
         textViewNoResults = findViewById(R.id.textViewNoResults);
-        searchView = findViewById(R.id.searchView);
+        SearchView searchView = findViewById(R.id.searchView);
         searchView.clearFocus();
         searchView.setQueryHint("Search for a doctor here ...");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){

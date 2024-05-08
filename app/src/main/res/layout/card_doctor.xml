@@ -16,7 +16,7 @@
         android:id="@+id/imageViewDoctor"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp"
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -89,6 +89,6 @@
         android:fontFamily="sans-serif"
         android:text="Book Now"
         android:textAllCaps="false"
-        android:textSize="8dp"/>
+        android:textSize="8sp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

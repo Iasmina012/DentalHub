@@ -21,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class Activity_SignUp extends AppCompatActivity {
 
@@ -120,7 +121,7 @@ public class Activity_SignUp extends AppCompatActivity {
     private void onRegisterUser() {
 
         String name = username.getText().toString();
-        Log.d("Name", "" + name);
+        Log.d("Name", " " + name);
         boolean exist = retreiveUserNames(name);
 
         if (!validate()) {
@@ -144,15 +145,15 @@ public class Activity_SignUp extends AppCompatActivity {
                 for(DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                     String existingUsername = userSnapshot.getKey();
 
-                    Log.d("Ex",""+sUserName);
-                    Log.d("Shot ", "" + existingUsername);
+                    Log.d("Ex"," "+sUserName);
+                    Log.d("Shot ", " " + existingUsername);
 
                     if(sUserName.equals(existingUsername)) {
                         isTaken = true;
                         Log.d("BooleanShot ", "" + isTaken);
                         break;
                     }
-                    else if(!(sUserName.equals(existingUsername))) {
+                    else {
                         isTaken = false;
                     }
                 }
@@ -187,10 +188,10 @@ public class Activity_SignUp extends AppCompatActivity {
             progressDialog.dismiss();
 
             if(task.isSuccessful()) {
-                onAuthSuccess(task.getResult().getUser());
+                onAuthSuccess(Objects.requireNonNull(task.getResult().getUser()));
             }
             else {
-                Toast.makeText(getApplicationContext(), "" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), " " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
