@@ -1,87 +1,41 @@
 package com.upt.cti.dentalhub;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.List;
 
-interface OnBookNowClickListener {
-    void onBookNowClick(int position);
-
-}
-
-public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.ViewHolder> {
+public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.DoctorViewHolder> {
     private List<Doctor> doctorList;
-    private OnBookNowClickListener bookNowClickListener;
+    private LayoutInflater inflater;
+    private OnBookNowClickListener listener;
 
-    public void setOnBookNowClickListener(OnBookNowClickListener listener) {
-        this.bookNowClickListener = listener;
+    public interface OnBookNowClickListener {
+        void onBookNowClick(int position);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-
-        TextView nameTextView;
-        TextView specializationTextView;
-        TextView scheduleTextView;
-        TextView phoneNumberTextView;
-        TextView emailTextView;
-        ImageView doctorImageView;
-        Button bookNowButton;
-
-        public ViewHolder(View view) {
-
-            super(view);
-            nameTextView = view.findViewById(R.id.textViewName);
-            specializationTextView = view.findViewById(R.id.textViewSpecialization);
-            scheduleTextView = view.findViewById(R.id.textViewSchedule);
-            phoneNumberTextView = view.findViewById(R.id.textView_phoneNumber);
-            emailTextView = view.findViewById(R.id.textView_email);
-            doctorImageView = view.findViewById(R.id.imageViewDoctor);
-
-            bookNowButton = itemView.findViewById(R.id.bookNowButton);
-            bookNowButton.setOnClickListener(v -> {
-                if (bookNowClickListener != null) {
-                    bookNowClickListener.onBookNowClick(getAdapterPosition());
-                }
-            });
-
-        }
-
-    }
-
-    public DoctorAdapter(List<Doctor> doctorList) {
+    public DoctorAdapter(List<Doctor> doctorList, Context context) {
         this.doctorList = doctorList;
+        this.inflater = LayoutInflater.from(context);
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_doctor, parent, false);
-        return new ViewHolder(itemView);
-
+    public DoctorViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = inflater.inflate(R.layout.card_doctor, parent, false);
+        return new DoctorViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
-        Doctor doctor = doctorList.get(position);
-
-        holder.nameTextView.setText(doctor.getName());
-        holder.specializationTextView.setText(doctor.getSpecialization());
-        holder.scheduleTextView.setText(doctor.getSchedule());
-        holder.phoneNumberTextView.setText(doctor.getPhoneNumber());
-        holder.emailTextView.setText(doctor.getEmail());
-        holder.doctorImageView.setImageResource(R.drawable.item1);
-
+    public void onBindViewHolder(@NonNull DoctorViewHolder holder, int position) {
+        Doctor currentDoctor = doctorList.get(position);
+        holder.bind(currentDoctor);
     }
 
     @Override
@@ -89,11 +43,45 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.ViewHolder
         return doctorList.size();
     }
 
-    public void setFilteredList(List<Doctor> filteredList){
-
-        doctorList = filteredList;
+    public void setFilteredList(List<Doctor> filteredList) {
+        this.doctorList = filteredList;
         notifyDataSetChanged();
-
     }
 
+    public void setOnBookNowClickListener(OnBookNowClickListener listener) {
+        this.listener = listener;
+    }
+
+    class DoctorViewHolder extends RecyclerView.ViewHolder {
+        private ImageView imageViewDoctor;
+        private TextView textViewName, textViewSpecialization, textViewSchedule, textViewEmail, textViewPhoneNumber;
+        private Button bookNowButton;
+
+        DoctorViewHolder(View itemView) {
+            super(itemView);
+            imageViewDoctor = itemView.findViewById(R.id.imageViewDoctor);
+            textViewName = itemView.findViewById(R.id.textViewName);
+            textViewSpecialization = itemView.findViewById(R.id.textViewSpecialization);
+            textViewSchedule = itemView.findViewById(R.id.textViewSchedule);
+            textViewEmail = itemView.findViewById(R.id.textView_email);
+            textViewPhoneNumber = itemView.findViewById(R.id.textView_phoneNumber);
+            bookNowButton = itemView.findViewById(R.id.bookNowButton);
+
+            bookNowButton.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                if (listener != null && position != RecyclerView.NO_POSITION) {
+                    listener.onBookNowClick(position);
+                }
+            });
+        }
+
+        void bind(Doctor doctor) {
+            imageViewDoctor.setImageResource(doctor.getImageResource());
+            textViewName.setText(doctor.getName());
+            textViewSpecialization.setText(doctor.getSpecialization());
+            textViewSchedule.setText(doctor.getSchedule());
+            textViewEmail.setText(doctor.getEmail());
+            textViewPhoneNumber.setText(doctor.getPhoneNumber());
+        }
+    }
 }
