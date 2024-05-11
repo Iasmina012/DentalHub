@@ -23,7 +23,9 @@ public class Activity_Services extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.servicesRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        initializeData();
+
+        addServices();
+
         ServicesAdapter adapter = new ServicesAdapter(servicesItems);
         recyclerView.setAdapter(adapter);
 
@@ -35,7 +37,7 @@ public class Activity_Services extends AppCompatActivity {
 
     }
 
-    private void initializeData() {
+    private void addServices() {
 
         servicesItems = new ArrayList<>();
         servicesItems = new ArrayList<>();

@@ -36,7 +36,7 @@ public class CardFragment extends Fragment {
         View view = inflater.inflate(R.layout.card_fragment, container, false);
         TextView titleTextView = view.findViewById(R.id.titleTextView);
         TextView descriptionTextView = view.findViewById(R.id.descriptionTextView);
-        ImageView imageView = view.findViewById(R.id.imageView);
+        ImageView imageView = view.findViewById(R.id.imageViewDevice);
 
         Bundle args = getArguments();
         if (args != null) {

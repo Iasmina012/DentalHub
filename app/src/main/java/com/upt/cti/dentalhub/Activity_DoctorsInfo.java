@@ -46,7 +46,7 @@ public class Activity_DoctorsInfo extends AppCompatActivity {
             }
         });
 
-        addDoctorsToList();
+        addDoctors();
 
         doctorAdapter.setOnBookNowClickListener(position -> {
             Intent intent = new Intent(Activity_DoctorsInfo.this, Activity_Appointment.class);
@@ -54,7 +54,7 @@ public class Activity_DoctorsInfo extends AppCompatActivity {
         });
     }
 
-    private void addDoctorsToList() {
+    private void addDoctors() {
         doctorList.add(new Doctor(R.drawable.doctor01, "Dr. Daniela Pop", "Endodontist/Periodontist", "Monday - Friday, 08:00 AM - 04:00 PM", "0721122334", "daniela@gmail.com"));
         doctorList.add(new Doctor(R.drawable.doctor02, "Dr. Ana Maria Popescu", "Orthodontist", "Monday - Friday, 09:30 AM - 05:30 PM", "0723456789", "ana@yahoo.com"));
         doctorList.add(new Doctor(R.drawable.doctor04, "Dr. Maria Ionescu", "Implantologist", "Monday - Friday, 10:30 AM - 06:30 PM", "0734567890", "maria@yahoo.com"));

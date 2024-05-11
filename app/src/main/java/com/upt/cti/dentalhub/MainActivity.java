@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout Services;
     LinearLayout Appointment;
     LinearLayout Contact;
+    LinearLayout Tech;
     LinearLayout Symptoms;
     LinearLayout Care;
 
@@ -41,8 +42,9 @@ public class MainActivity extends AppCompatActivity {
         Services = findViewById(R.id.linearlayout2);
         Appointment = findViewById(R.id.linearlayout3);
         Contact = findViewById(R.id.linearlayout4);
-        Symptoms = findViewById(R.id.linearlayout5);
-        Care = findViewById(R.id.linearlayout6);
+        Tech = findViewById(R.id.linearlayout5);
+        Symptoms = findViewById(R.id.linearlayout6);
+        Care = findViewById(R.id.linearlayout7);
 
         DoctorsInfo.setOnClickListener(v -> {
             Intent i = new Intent(getApplicationContext(),Activity_DoctorsInfo.class);
@@ -74,6 +76,15 @@ public class MainActivity extends AppCompatActivity {
         Contact.setOnClickListener(v -> {
             Intent i = new Intent(getApplicationContext(),Activity_Contact.class);
             i.putExtra("table_name","Contact");
+
+            startActivity(i);
+            overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
+
+        });
+
+        Tech.setOnClickListener(v -> {
+            Intent i = new Intent(getApplicationContext(),Activity_Tech.class);
+            i.putExtra("table_name","Technologies");
 
             startActivity(i);
             overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);

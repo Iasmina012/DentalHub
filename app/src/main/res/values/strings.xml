@@ -43,6 +43,7 @@
     <string name="contact_us">Contact Us</string>
     <string name="check_symptoms">Check Symptoms</string>
     <string name="teeth_care">Teeth Care</string>
+    <string name="technologies">Technologies</string>
     <!-- Content Description -->
     <string name="doctors_icon_description">Doctors Icon</string>
     <string name="services_icon_description">Services Icon</string>
@@ -50,6 +51,7 @@
     <string name="contact_icon_description">Contact Icon</string>
     <string name="symptoms_icon_description">Symptoms Checker Icon</string>
     <string name="care_icon_description">Dental Care Icon</string>
+    <string name="tech_icon_description">Technologies Icon</string>
 
     <!-- Doctors -->
     <string name="doctor_image_description">Doctor\'s Image</string>
@@ -88,6 +90,11 @@
     <string name="close_button_description">Close Button</string>
     <string name="fab_description">Send Message Floating Action Button</string>
     <string name="location_icon_description">Location Icon</string>
+
+    <!-- Technologies -->
+    <string name="device_name">Device Name</string>
+    <string name="device_description">About the device</string>
+    <string name="image_description">Image of the Device</string>
 
     <!-- Symptom Checker -->
 

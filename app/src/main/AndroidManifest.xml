@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -17,53 +15,44 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DentalHub"
         tools:targetApi="31">
-
+        <activity
+            android:name=".Activity_Tech"
+            android:exported="false" />
         <activity
             android:name=".Activity_Care"
-            android:exported="false"/>
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAsUfGM0eSwPw7Mg4CU0x9PSnfbB_zKCy8"/>
+            android:value="AIzaSyAsUfGM0eSwPw7Mg4CU0x9PSnfbB_zKCy8" />
 
         <activity
             android:name=".Activity_Contact"
-            android:exported="false"/>
-
+            android:exported="false" />
         <activity
             android:name=".Activity_Services"
-            android:exported="false"/>
-
+            android:exported="false" />
         <activity
             android:name=".Activity_Appointment"
-            android:exported="false"/>
-
+            android:exported="false" />
         <activity
             android:name=".Activity_DoctorsInfo"
-            android:exported="false"/>
-
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="false"/>
-
+            android:exported="false" />
         <activity
             android:name=".Activity_SignUp"
-            android:exported="false"/>
-
+            android:exported="false" />
         <activity
             android:name=".Activity_Login"
             android:exported="true">
-
             <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
     </application>
 
 </manifest>
