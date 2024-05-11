@@ -73,7 +73,7 @@ public class Activity_DoctorsInfo extends AppCompatActivity {
         }
 
         if (filteredList.isEmpty()) {
-            textViewNoResults.setText("No doctors found!");
+            textViewNoResults.setText(getString(R.string.no_doctors_found));
             textViewNoResults.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
         } else {

@@ -10,7 +10,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -44,12 +44,13 @@
                         android:layout_height="64dp"
                         android:layout_marginTop="20dp"
                         android:padding="-1dp"
-                        app:srcCompat="@drawable/app_logo"/>
+                        app:srcCompat="@drawable/app_logo"
+                        android:contentDescription="@string/app_logo_description"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="REGISTER"
+                        android:text="@string/register"
                         android:fontFamily="sans-serif-medium"
                         android:textColor="#fff"
                         android:layout_marginTop="10dp"
@@ -72,7 +73,8 @@
                         android:layout_height="40dp"
                         android:src="@drawable/username_icon"
                         android:padding="8dp"
-                        app:tint="@color/teal_700"/>
+                        app:tint="@color/teal_700"
+                        android:contentDescription="@string/username_icon_description"/>
 
                     <EditText
                         android:id="@+id/editTextUsername"
@@ -80,10 +82,12 @@
                         android:layout_height="wrap_content"
                         android:layout_alignBottom="@+id/imageViewUsername"
                         android:layout_alignParentTop="true"
-                        android:layout_toRightOf="@+id/imageViewUsername"
-                        android:hint="Username"
+                        android:layout_toEndOf="@+id/imageViewUsername"
+                        android:hint="@string/username_hint"
+                        android:autofillHints="@string/autofill_username"
                         android:inputType="text"
-                        android:paddingLeft="20dp"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
                         android:textSize="15sp"/>
 
                 </RelativeLayout>
@@ -103,7 +107,8 @@
                         android:layout_height="40dp"
                         android:src="@android:drawable/sym_action_email"
                         android:padding="5dp"
-                        app:tint="@color/teal_700"/>
+                        app:tint="@color/teal_700"
+                        android:contentDescription="@string/email_icon_description"/>
 
                     <EditText
                         android:id="@+id/editText_email"
@@ -111,10 +116,12 @@
                         android:layout_height="wrap_content"
                         android:layout_alignBottom="@+id/imageViewEmail"
                         android:layout_alignParentTop="true"
-                        android:layout_toRightOf="@+id/imageViewEmail"
-                        android:hint="Email"
+                        android:layout_toEndOf="@+id/imageViewEmail"
+                        android:hint="@string/email_hint"
+                        android:autofillHints="@string/autofill_email"
                         android:inputType="text|textEmailAddress"
-                        android:paddingLeft="20dp"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
                         android:textSize="15sp"/>
 
                 </RelativeLayout>
@@ -134,7 +141,8 @@
                         android:layout_height="40dp"
                         android:src="@android:drawable/ic_lock_lock"
                         android:padding="5dp"
-                        app:tint="@color/teal_700"/>
+                        app:tint="@color/teal_700"
+                        android:contentDescription="@string/password_icon_description"/>
 
                     <EditText
                         android:id="@+id/editTextPassword"
@@ -142,10 +150,12 @@
                         android:layout_height="wrap_content"
                         android:layout_alignBottom="@+id/imageViewPassword"
                         android:layout_alignParentTop="true"
-                        android:layout_toRightOf="@+id/imageViewPassword"
-                        android:hint="Password"
+                        android:layout_toEndOf="@+id/imageViewPassword"
+                        android:hint="@string/password_hint"
+                        android:autofillHints="@string/autofill_password"
                         android:inputType="textPassword"
-                        android:paddingLeft="20dp"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
                         android:textSize="15sp"/>
 
                 </RelativeLayout>
@@ -160,23 +170,26 @@
                     android:layout_below="@id/relativeLayout4">
 
                     <ImageView
-                        android:id="@+id/imageViewRepassword"
+                        android:id="@+id/imageViewPasswordConfirmation"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@android:drawable/ic_lock_lock"
                         android:padding="5dp"
-                        app:tint="@color/teal_700"/>
+                        app:tint="@color/teal_700"
+                        android:contentDescription="@string/password_confirmation_icon_description"/>
 
                     <EditText
-                        android:id="@+id/editTextRepassword"
+                        android:id="@+id/editTextPasswordConfirmation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/imageViewRepassword"
+                        android:layout_alignBottom="@+id/imageViewPasswordConfirmation"
                         android:layout_alignParentTop="true"
-                        android:layout_toRightOf="@+id/imageViewRepassword"
-                        android:hint="Re-enter Password"
+                        android:layout_toEndOf="@+id/imageViewPasswordConfirmation"
+                        android:hint="@string/re_enter_password"
+                        android:autofillHints="@string/autofill_password_confirmation"
                         android:inputType="textPassword"
-                        android:paddingLeft="20dp"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
                         android:textSize="15sp"/>
 
                 </RelativeLayout>
@@ -189,7 +202,7 @@
                     android:layout_marginLeft="30dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="30dp"
-                    android:text="Sign Up"
+                    android:text="@string/sign_up"
                     android:backgroundTint="@color/teal_700"
                     android:textColor="#fff"
                     android:fontFamily="sans-serif"/>
@@ -201,7 +214,7 @@
                     android:layout_below="@+id/btn_SignUp"
                     android:layout_centerHorizontal="true"
                     android:textAllCaps="false"
-                    android:text="Already a member? Sign In Here"
+                    android:text="@string/already_member"
                     android:textColor="@color/teal_700"
                     android:backgroundTint="@color/white"
                     android:textSize="13sp"

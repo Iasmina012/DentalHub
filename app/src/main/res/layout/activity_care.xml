@@ -43,7 +43,8 @@
         android:visibility="invisible"
         app:layout_constraintEnd_toStartOf="@id/tabLayout"
         app:layout_constraintBottom_toBottomOf="@id/tabLayout"
-        app:layout_constraintTop_toTopOf="@id/tabLayout"/>
+        app:layout_constraintTop_toTopOf="@id/tabLayout"
+        android:contentDescription="@string/left_arrow_description"/>
 
     <ImageView
         android:id="@+id/rightArrow"
@@ -53,6 +54,7 @@
         android:visibility="invisible"
         app:layout_constraintStart_toEndOf="@id/tabLayout"
         app:layout_constraintBottom_toBottomOf="@id/tabLayout"
-        app:layout_constraintTop_toTopOf="@id/tabLayout"/>
+        app:layout_constraintTop_toTopOf="@id/tabLayout"
+        android:contentDescription="@string/right_arrow_description"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

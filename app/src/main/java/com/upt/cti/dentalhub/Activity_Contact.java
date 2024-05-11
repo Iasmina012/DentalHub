@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -134,7 +135,7 @@ public class Activity_Contact extends AppCompatActivity implements OnMapReadyCal
             Address location = address.get(0);
             p1 = new LatLng(location.getLatitude(), location.getLongitude());
         } catch (IOException ex) {
-            ex.printStackTrace();
+            Log.e("LocationError", "Failed to get location from address!", ex);
         }
         return p1;
 

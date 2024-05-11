@@ -51,7 +51,8 @@
                 android:layout_height="40dp"
                 android:src="@drawable/location"
                 android:padding="5dp"
-                app:tint="@color/teal_700"/>
+                app:tint="@color/teal_700"
+                android:contentDescription="@string/location_icon_description"/>
 
             <TextView
                 android:id="@+id/textViewHeadquarters"
@@ -61,7 +62,8 @@
                 android:layout_alignTop="@+id/imageView1"
                 android:layout_marginStart="10dp"
                 android:paddingStart="10dp"
-                android:text="Headquarters"
+                android:paddingEnd="10dp"
+                android:text="@string/headquarters"
                 android:textSize="25sp"
                 android:textColor="@color/teal_700"/>
 
@@ -74,7 +76,8 @@
                 android:layout_marginTop="4dp"
                 android:layout_toEndOf="@+id/imageView1"
                 android:paddingStart="10dp"
-                android:text="1425 Broadway Suite 22\nNew York, NY 10018"
+                android:paddingEnd="10dp"
+                android:text="@string/headquarters_address"
                 android:textSize="18sp"/>
 
         </RelativeLayout>
@@ -90,7 +93,8 @@
                 android:layout_height="40dp"
                 android:src="@drawable/location"
                 android:padding="5dp"
-                app:tint="@color/teal_700" />
+                app:tint="@color/teal_700"
+                android:contentDescription="@string/location_icon_description"/>
 
             <TextView
                 android:id="@+id/textViewOffice"
@@ -100,7 +104,8 @@
                 android:layout_alignTop="@+id/imageView2"
                 android:layout_marginStart="10dp"
                 android:paddingStart="10dp"
-                android:text="Local Office"
+                android:paddingEnd="10dp"
+                android:text="@string/local_office"
                 android:textSize="25sp"
                 android:textColor="@color/teal_700"/>
 
@@ -113,7 +118,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="4dp"
                 android:paddingStart="10dp"
-                android:text="58 Wall Street Suite 100\nNew York, NY 10005"
+                android:paddingEnd="10dp"
+                android:text="@string/local_office_address"
                 android:textSize="18sp"/>
 
         </RelativeLayout>
@@ -132,6 +138,7 @@
         android:src="@drawable/fab"
         android:backgroundTint="@color/teal_700"
         app:tint="@color/white"
-        android:elevation="12dp"/>
+        android:elevation="12dp"
+        android:contentDescription="@string/fab_description"/>
 
 </RelativeLayout>

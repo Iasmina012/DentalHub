@@ -55,7 +55,6 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.DoctorView
     class DoctorViewHolder extends RecyclerView.ViewHolder {
         private ImageView imageViewDoctor;
         private TextView textViewName, textViewSpecialization, textViewSchedule, textViewEmail, textViewPhoneNumber;
-        private Button bookNowButton;
 
         DoctorViewHolder(View itemView) {
             super(itemView);
@@ -65,7 +64,7 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.DoctorView
             textViewSchedule = itemView.findViewById(R.id.textViewSchedule);
             textViewEmail = itemView.findViewById(R.id.textView_email);
             textViewPhoneNumber = itemView.findViewById(R.id.textView_phoneNumber);
-            bookNowButton = itemView.findViewById(R.id.bookNowButton);
+            Button bookNowButton = itemView.findViewById(R.id.bookNowButton);
 
             bookNowButton.setOnClickListener(v -> {
                 int position = getAdapterPosition();

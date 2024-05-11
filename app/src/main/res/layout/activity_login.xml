@@ -44,7 +44,8 @@
                         android:layout_height="64dp"
                         android:layout_marginTop="20dp"
                         android:padding="-1dp"
-                        app:srcCompat="@drawable/app_logo"/>
+                        app:srcCompat="@drawable/app_logo"
+                        android:contentDescription="@string/app_logo_description"/>
 
                     <TextView
                         android:id="@+id/textViewLogin"
@@ -53,7 +54,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="20dp"
                         android:fontFamily="sans-serif-medium"
-                        android:text="LOGIN"
+                        android:text="@string/login"
                         android:textColor="#fff"
                         android:textSize="22sp"/>
 
@@ -73,7 +74,8 @@
                         android:layout_height="40dp"
                         android:padding="5dp"
                         android:src="@android:drawable/sym_action_email"
-                        app:tint="@color/teal_700"/>
+                        app:tint="@color/teal_700"
+                        android:contentDescription="@string/email_icon_description"/>
 
                     <EditText
                         android:id="@+id/editTextUserEmail"
@@ -81,10 +83,12 @@
                         android:layout_height="match_parent"
                         android:layout_alignBottom="@+id/imageViewEmail"
                         android:layout_alignParentTop="true"
-                        android:layout_toRightOf="@+id/imageViewEmail"
-                        android:hint="Email"
+                        android:layout_toEndOf="@+id/imageViewEmail"
                         android:inputType="text|textEmailAddress"
-                        android:paddingLeft="20dp"
+                        android:hint="@string/email_hint"
+                        android:autofillHints="@string/autofill_email"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
                         android:textSize="15sp"/>
 
                 </RelativeLayout>
@@ -104,7 +108,8 @@
                         android:layout_height="40dp"
                         android:padding="5dp"
                         android:src="@android:drawable/ic_lock_lock"
-                        app:tint="@color/teal_700"/>
+                        app:tint="@color/teal_700"
+                        android:contentDescription="@string/password_icon_description"/>
 
                     <EditText
                         android:id="@+id/editTextPassword"
@@ -112,10 +117,12 @@
                         android:layout_height="50dp"
                         android:layout_alignBottom="@+id/imageViewPassword"
                         android:layout_alignParentTop="true"
-                        android:layout_toRightOf="@+id/imageViewPassword"
-                        android:hint="Password"
+                        android:layout_toEndOf="@+id/imageViewPassword"
+                        android:hint="@string/password_hint"
+                        android:autofillHints="@string/autofill_password"
                         android:inputType="textPassword"
-                        android:paddingLeft="20dp"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
                         android:textSize="15sp"/>
 
                 </RelativeLayout>
@@ -130,7 +137,7 @@
                     android:layout_marginRight="30dp"
                     android:backgroundTint="@color/teal_700"
                     android:fontFamily="sans-serif"
-                    android:text="Sign In" />
+                    android:text="@string/sign_in"/>
 
                 <Button
                     android:id="@+id/buttonNewUser"
@@ -144,7 +151,7 @@
                     android:layout_marginBottom="15sp"
                     android:backgroundTint="@color/white"
                     android:fontFamily="sans-serif"
-                    android:text="Don't have an account? Sign Up"
+                    android:text="@string/new_user_prompt"
                     android:textAllCaps="false"
                     android:textColor="@color/teal_700"
                     android:textSize="13sp"/>
@@ -161,7 +168,7 @@
                     android:layout_marginBottom="15sp"
                     android:backgroundTint="@color/white"
                     android:fontFamily="sans-serif"
-                    android:text="Forgot Password?"
+                    android:text="@string/forgot_password"
                     android:textAllCaps="false"
                     android:textColor="@color/teal_700"
                     android:textSize="13sp"/>

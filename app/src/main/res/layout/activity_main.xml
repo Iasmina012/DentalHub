@@ -10,10 +10,8 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <LinearLayout
@@ -42,13 +40,14 @@
                         android:layout_height="64dp"
                         android:padding="1dp"
                         app:tint="@color/white"
-                        android:src="@drawable/doctors"/>
+                        android:src="@drawable/doctors"
+                        android:contentDescription="@string/doctors_icon_description"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="Our Doctors"
+                        android:text="@string/our_doctors"
                         android:textStyle="bold"
                         android:textColor="@color/white"/>
 
@@ -81,13 +80,14 @@
                         android:layout_height="64dp"
                         android:padding="1dp"
                         android:src="@drawable/services"
-                        app:tint="@color/white"/>
+                        app:tint="@color/white"
+                        android:contentDescription="@string/services_icon_description"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="Our Services"
+                        android:text="@string/our_services"
                         android:textStyle="bold"
                         android:textColor="@color/white"/>
 
@@ -129,13 +129,14 @@
                         android:layout_height="64dp"
                         android:padding="1dp"
                         android:src="@drawable/appointment"
-                        app:tint="@color/white"/>
+                        app:tint="@color/white"
+                        android:contentDescription="@string/appointment_icon_description"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="Book Appointment"
+                        android:text="@string/book_appointment"
                         android:textStyle="bold"
                         android:textColor="@color/white"/>
 
@@ -168,15 +169,17 @@
                         android:layout_height="64dp"
                         android:padding="5dp"
                         android:src="@drawable/contact"
-                        app:tint="@color/white"/>
+                        app:tint="@color/white"
+                        android:contentDescription="@string/contact_icon_description"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="Contact Us"
+                        android:text="@string/contact_us"
                         android:textStyle="bold"
-                        android:textColor="@color/white"/>
+                        android:textColor="@color/white"
+                        android:contentDescription="@string/contact_us"/>
 
                     <View
                         android:layout_width="110dp"
@@ -216,13 +219,14 @@
                         android:layout_height="64dp"
                         android:padding="2dp"
                         android:src="@drawable/symptoms"
-                        app:tint="@color/white"/>
+                        app:tint="@color/white"
+                        android:contentDescription="@string/symptoms_icon_description"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="Check Symptoms"
+                        android:text="@string/check_symptoms"
                         android:textStyle="bold"
                         android:textColor="@color/white"/>
 
@@ -254,13 +258,14 @@
                         android:layout_width="64dp"
                         android:layout_height="64dp"
                         android:padding="1dp"
-                        android:src="@drawable/care"/>
+                        android:src="@drawable/care"
+                        android:contentDescription="@string/care_icon_description"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="Teeth Care"
+                        android:text="@string/teeth_care"
                         android:textStyle="bold"
                         android:textColor="@color/white"/>
 

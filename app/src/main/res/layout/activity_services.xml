@@ -31,7 +31,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:text="Welcome"
+                    android:text="@string/welcome"
                     android:textAlignment="center"
                     android:textSize="24sp"
                     android:textStyle="bold"
@@ -43,13 +43,14 @@
                     android:layout_height="150dp"
                     android:src="@drawable/teeth_helper"
                     android:layout_marginBottom="8dp"
-                    android:layout_gravity="center_horizontal"/>
+                    android:layout_gravity="center_horizontal"
+                    android:contentDescription="@string/teeth_helper_description" />
 
                 <TextView
                     android:id="@+id/textViewDescription"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Our team wants to share with you the doctor-patient relationship, based on kindness, understanding, and patience, developed through care and professionalism, and realized in personalized treatments for each individual patient's needs."
+                    android:text="@string/description"
                     android:textSize="14sp"
                     android:textAlignment="center"
                     android:textColor="@color/darkTeal"/>
@@ -64,7 +65,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/teal_700"
             android:fontFamily="sans-serif"
-            android:text="Book Now An Appointment"
+            android:text="@string/book_now_appointment"
             android:layout_gravity="center_horizontal"/>
 
         <androidx.cardview.widget.CardView

@@ -8,9 +8,11 @@ public class UserModel {
     private String mRecipientId;
 
     public UserModel(String displayName, String email,long createdAt) {
+
         this.displayName = displayName;
         this.email = email;
         this.createdAt = createdAt;
+
     }
 
     public long getCreatedAt() {
@@ -40,4 +42,5 @@ public class UserModel {
     public void setRecipientId(String recipientId) {
         this.mRecipientId = recipientId;
     }
+
 }

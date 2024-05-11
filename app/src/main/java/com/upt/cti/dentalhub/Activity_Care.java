@@ -15,7 +15,6 @@ import java.util.Objects;
 public class Activity_Care extends AppCompatActivity {
 
     private ViewPager2 viewPager;
-    private TabLayout tabLayout;
     private ImageView leftArrow;
     private ImageView rightArrow;
 
@@ -25,27 +24,25 @@ public class Activity_Care extends AppCompatActivity {
         setContentView(R.layout.activity_care);
 
         viewPager = findViewById(R.id.viewPager);
-        tabLayout = findViewById(R.id.tabLayout);
+        TabLayout tabLayout = findViewById(R.id.tabLayout);
         leftArrow = findViewById(R.id.leftArrow);
         rightArrow = findViewById(R.id.rightArrow);
 
         viewPager.setAdapter(new CardFragmentAdapter(this));
 
         new TabLayoutMediator(tabLayout, viewPager,
-                (tab, position) -> {}).attach();
+                (tab, position) -> {
+                }).attach();
 
-        // Setează listenerii pentru săgețile de navigare
         setupNavigationArrows();
 
-        // Setează inițial vizibilitatea săgeților
         updateArrowsVisibility();
     }
 
     private void setupNavigationArrows() {
-        leftArrow.setOnClickListener(v -> viewPager.setCurrentItem(viewPager.getCurrentItem() - 1));
-        rightArrow.setOnClickListener(v -> viewPager.setCurrentItem(viewPager.getCurrentItem() + 1));
+        leftArrow.setOnClickListener(v -> viewPager.setCurrentItem(viewPager.getCurrentItem() - 1, true));
+        rightArrow.setOnClickListener(v -> viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true));
 
-        // Adaugă un callback pentru schimbarea paginii pentru a actualiza vizibilitatea săgeților
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
@@ -62,4 +59,5 @@ public class Activity_Care extends AppCompatActivity {
         leftArrow.setVisibility(currentItem > 0 ? View.VISIBLE : View.INVISIBLE);
         rightArrow.setVisibility(currentItem < totalItems - 1 ? View.VISIBLE : View.INVISIBLE);
     }
+
 }

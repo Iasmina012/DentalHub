@@ -25,7 +25,8 @@
         android:clipToPadding="false"
         android:clipChildren="false"
         android:focusable="true"
-        android:focusableInTouchMode="true"/>
+        android:focusableInTouchMode="true"
+        android:contentDescription="@string/doctor_image_description" />
 
     <TextView
         android:id="@+id/textViewName"
@@ -87,7 +88,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:backgroundTint="@color/teal_700"
         android:fontFamily="sans-serif"
-        android:text="Book Now"
+        android:text="@string/book_now"
         android:textAllCaps="false"
         android:textSize="8sp"/>
 

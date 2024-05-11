@@ -1,5 +1,102 @@
 <resources>
 
+    <!-- App Title -->
     <string name="app_name">DentalHub</string>
+
+    <!-- Logout Menu -->
+    <string name="action_logout">Logout</string>
+
+    <!-- Login -->
+    <string name="login">LOGIN</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="new_user_prompt">Don\'t have an account? Sign Up</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <!-- Content Description -->
+    <string name="email_icon_description">Email Icon</string>
+    <string name="password_icon_description">Password Icon</string>
+    <string name="app_logo_description">App Logo</string>
+    <!-- Autofill hints -->
+    <string name="autofill_email">emailAddress</string>
+    <string name="autofill_password">password</string>
+    <!-- Prompt Email Password Recovery-->
+    <string name="email_prompt">Please type in your email address:</string>
+
+    <!-- SignUp -->
+    <string name="register">REGISTER</string>
+    <string name="username_hint">Username</string>
+    <string name="re_enter_password">Re-enter Password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="already_member">Already a member? Sign in here</string>
+    <!-- Content Description -->
+    <string name="username_icon_description">Username Icon</string>
+    <string name="password_confirmation_icon_description">Password Confirmation Icon</string>
+    <!-- Autofill hints -->
+    <string name="autofill_username">username</string>
+    <string name="autofill_password_confirmation">newPasswordConfirmation</string>
+
+    <!-- Main Page -->
+    <string name="our_doctors">Our Doctors</string>
+    <string name="our_services">Our Services</string>
+    <string name="book_appointment">Book Appointment</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="check_symptoms">Check Symptoms</string>
+    <string name="teeth_care">Teeth Care</string>
+    <!-- Content Description -->
+    <string name="doctors_icon_description">Doctors Icon</string>
+    <string name="services_icon_description">Services Icon</string>
+    <string name="appointment_icon_description">Appointments Icon</string>
+    <string name="contact_icon_description">Contact Icon</string>
+    <string name="symptoms_icon_description">Symptoms Checker Icon</string>
+    <string name="care_icon_description">Dental Care Icon</string>
+
+    <!-- Doctors -->
+    <string name="doctor_image_description">Doctor\'s Image</string>
+    <string name="book_now">Book Now</string>
+    <string name="no_doctors_found">No doctors found!</string>
+
+    <!-- Services -->
+    <string name="welcome">Welcome</string>
+    <string name="book_now_appointment">Book Now An Appointment</string>
+    <!-- Content Description -->
+    <string name="teeth_helper_description">Team\'s Motto Icon</string>
+    <string name="description">Our team wants to share with you the doctor-patient relationship, based on kindness, understanding, and patience, developed through care and professionalism, and realized in personalized treatments for each individual patient\'s needs.</string>
+    <!-- Card Service  -->
+    <!-- Content Description -->
+    <string name="service_icon_description">Service\'s Icon</string>
+
+    <!-- Appointment -->
+
+
+    <!-- Contact -->
+    <string name="search_hint">Search for an office here …</string>
+    <string name="headquarters">Headquarters</string>
+    <string name="headquarters_address">1425 Broadway Suite 22\nNew York, NY 10018</string>
+    <string name="local_office">Local Office</string>
+    <string name="local_office_address">58 Wall Street Suite 100\nNew York, NY 10005</string>
+    <!-- PopUp Message -->
+    <string name="email">Email</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="name_hint">Name</string>
+    <string name="message_hint">Message</string>
+    <string name="office_email">dental@office.com</string>
+    <string name="phone_number1">+40 (256) 867 346</string>
+    <string name="phone_number2">+40 (758) 364 567</string>
+    <string name="close_button">Close</string>
+    <!-- Content Description -->
+    <string name="close_button_description">Close Button</string>
+    <string name="fab_description">Send Message Floating Action Button</string>
+    <string name="location_icon_description">Location Icon</string>
+
+    <!-- Symptom Checker -->
+
+
+    <!-- Care -->
+    <!-- Content Description -->
+    <string name="left_arrow_description">Swipe or click left (arrow) for the previous tab</string>
+    <string name="right_arrow_description">Swipe or click right (arrow) for the next tab</string>
+    <!-- Card Fragment -->
+    <string name="dental_article_icon_description">Dental Care Article\'s Image</string>
 
 </resources>

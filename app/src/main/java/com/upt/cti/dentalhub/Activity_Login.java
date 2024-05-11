@@ -99,6 +99,7 @@ public class Activity_Login extends AppCompatActivity {
     private void onLogInUser() {
 
         if (!validate()) {
+            //nothing happens
         } else {
             logIn(getUserEmail(), getUserPassword());
         }

@@ -43,7 +43,7 @@ public class Activity_SignUp extends AppCompatActivity {
         username = findViewById(R.id.editTextUsername);
         userEmail = findViewById(R.id.editText_email);
         password = findViewById(R.id.editTextPassword);
-        repassword = findViewById(R.id.editTextRepassword);
+        repassword = findViewById(R.id.editTextPasswordConfirmation);
         btn_Sign_Up = findViewById(R.id.btn_SignUp);
         btn_Already_Member = findViewById(R.id.btn_Login);
 

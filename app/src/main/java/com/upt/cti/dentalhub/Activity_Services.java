@@ -13,9 +13,6 @@ import java.util.List;
 
 public class Activity_Services extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private ServicesAdapter adapter;
-    private Button buttonBookNow;
     private List<Services> servicesItems;
 
     @Override
@@ -24,13 +21,13 @@ public class Activity_Services extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_services);
 
-        recyclerView = findViewById(R.id.servicesRecyclerView);
+        RecyclerView recyclerView = findViewById(R.id.servicesRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         initializeData();
-        adapter = new ServicesAdapter(servicesItems);
+        ServicesAdapter adapter = new ServicesAdapter(servicesItems);
         recyclerView.setAdapter(adapter);
 
-        buttonBookNow = findViewById(R.id.buttonBook);
+        Button buttonBookNow = findViewById(R.id.buttonBook);
         buttonBookNow.setOnClickListener(v -> {
             Intent intent = new Intent(Activity_Services.this, Activity_Appointment.class);
             startActivity(intent);
