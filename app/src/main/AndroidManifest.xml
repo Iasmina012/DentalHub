@@ -16,6 +16,21 @@
         android:theme="@style/Theme.DentalHub"
         tools:targetApi="31">
         <activity
+            android:name=".Activity_ViewAppointment"
+            android:exported="false" />
+        <activity
+            android:name=".Activity_SelectInsurance"
+            android:exported="false" />
+        <activity
+            android:name=".Activity_SelectDateTime"
+            android:exported="false" />
+        <activity
+            android:name=".Activity_SelectService"
+            android:exported="false" />
+        <activity
+            android:name=".Activity_SelectDentist"
+            android:exported="false" />
+        <activity
             android:name=".Activity_Tech"
             android:exported="false" />
         <activity
@@ -33,7 +48,7 @@
             android:name=".Activity_Services"
             android:exported="false" />
         <activity
-            android:name=".Activity_Appointment"
+            android:name=".Activity_ConfirmationAppointment"
             android:exported="false" />
         <activity
             android:name=".Activity_DoctorsInfo"

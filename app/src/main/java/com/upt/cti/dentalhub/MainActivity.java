@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Appointment.setOnClickListener(v -> {
-            Intent i = new Intent(getApplicationContext(),Activity_Appointment.class);
+            Intent i = new Intent(getApplicationContext(), Activity_SelectDentist.class);
             i.putExtra("table_name","Appointment");
 
             startActivity(i);

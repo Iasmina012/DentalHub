@@ -3,8 +3,10 @@
     <!-- App Title -->
     <string name="app_name">DentalHub</string>
 
+
     <!-- Logout Menu -->
     <string name="action_logout">Logout</string>
+
 
     <!-- Login -->
     <string name="login">LOGIN</string>
@@ -23,6 +25,7 @@
     <!-- Prompt Email Password Recovery-->
     <string name="email_prompt">Please type in your email address:</string>
 
+
     <!-- SignUp -->
     <string name="register">REGISTER</string>
     <string name="username_hint">Username</string>
@@ -35,6 +38,7 @@
     <!-- Autofill hints -->
     <string name="autofill_username">username</string>
     <string name="autofill_password_confirmation">newPasswordConfirmation</string>
+
 
     <!-- Main Page -->
     <string name="our_doctors">Our Doctors</string>
@@ -53,22 +57,34 @@
     <string name="care_icon_description">Dental Care Icon</string>
     <string name="tech_icon_description">Technologies Icon</string>
 
+
     <!-- Doctors -->
     <string name="doctor_image_description">Doctor\'s Image</string>
     <string name="book_now">Book Now</string>
     <string name="no_doctors_found">No doctors found!</string>
+
 
     <!-- Services -->
     <string name="welcome">Welcome</string>
     <string name="book_now_appointment">Book Now An Appointment</string>
     <!-- Content Description -->
     <string name="teeth_helper_description">Team\'s Motto Icon</string>
-    <string name="description">Our team wants to share with you the doctor-patient relationship, based on kindness, understanding, and patience, developed through care and professionalism, and realized in personalized treatments for each individual patient\'s needs.</string>
+    <string name="description">Our team is eager to discuss the doctor-patient relationship with you, emphasizing the importance of kindness, understanding, and patience. This relationship is cultivated through professional care and results in personalized treatments tailored to meet the unique needs of each patient.</string>
     <!-- Card Service  -->
     <!-- Content Description -->
     <string name="service_icon_description">Service\'s Icon</string>
 
+
     <!-- Appointment -->
+    <string name="date_time">Select Date and Time</string>
+    <string name="doctor">Select Doctor</string>
+    <string name="insurance">Select Insurance Type</string>
+    <string name="service">Which service are you looking for?</string>
+    <string name="thanks_booking">Thanks for booking!</string>
+    <string name="appointment_info">You booked an appointment with Dr. Name on Date at Time"</string>
+    <string name="my_appointment_button">VIEW MY APPOINTMENTS</string>
+    <string name="next_button">Next</string>
+    <string name="back">Back</string>
 
 
     <!-- Contact -->
@@ -91,10 +107,12 @@
     <string name="fab_description">Send Message Floating Action Button</string>
     <string name="location_icon_description">Location Icon</string>
 
+
     <!-- Technologies -->
     <string name="device_name">Device Name</string>
     <string name="device_description">About the device</string>
     <string name="image_description">Image of the Device</string>
+
 
     <!-- Symptom Checker -->
 
