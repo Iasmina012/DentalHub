@@ -13,6 +13,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -160,20 +165,19 @@ public class Activity_Login extends AppCompatActivity {
         final EditText userMail = promptsView.findViewById(R.id.editTextDialogUserInput);
 
         alertDialogBuilder.setCancelable(false)
-                .setPositiveButton("OK", (dialogInterface, i) -> {
-                    String email = userMail.getText().toString();
-                    mAuth.sendPasswordResetEmail(email)
-                            .addOnSuccessListener(aVoid -> Toast.makeText(Activity_Login.this, "Reset password email sent successfully", Toast.LENGTH_SHORT).show())
-                            .addOnFailureListener(e -> Toast.makeText(Activity_Login.this, "Failed to send reset password email: " + e.getMessage(), Toast.LENGTH_SHORT).show());
-                })
+                .setPositiveButton("OK", null)
                 .setNegativeButton("Cancel", (dialog, id) -> dialog.cancel());
 
         final AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
 
-        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+        //initially disable the OK button
+        final Button okButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        okButton.setEnabled(false);
 
+        //add text watcher to the email field to enable/disable the OK button
         userMail.addTextChangedListener(new TextWatcher() {
+
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
@@ -182,18 +186,58 @@ public class Activity_Login extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                final Button okButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                String mailId = userMail.getText().toString().trim();
-                if (mailId.isEmpty()) {
+
+                String email = userMail.getText().toString().trim();
+                if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     userMail.setError("Enter a valid email address!");
                     okButton.setEnabled(false);
                 } else {
                     userMail.setError(null);
                     okButton.setEnabled(true);
                 }
+
             }
         });
 
+        //set the positive button click listener
+        okButton.setOnClickListener(v -> {
+            String email = userMail.getText().toString().trim();
+            if (!email.isEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                checkEmailExistsAndSendReset(email, alertDialog);
+            } else {
+                userMail.setError("Enter a valid email address!");
+            }
+        });
+
+    }
+
+    private void checkEmailExistsAndSendReset(String email, AlertDialog alertDialog) {
+
+        DatabaseReference usersRef = FirebaseDatabase.getInstance("https://dentalhub-1a0c0-default-rtdb.europe-west1.firebasedatabase.app").getReference("users");
+        usersRef.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.exists()) {
+                    //email exists, send the reset email
+                    mAuth.sendPasswordResetEmail(email)
+                            .addOnSuccessListener(aVoid -> {
+                                Toast.makeText(Activity_Login.this, "Reset password email sent successfully", Toast.LENGTH_SHORT).show();
+                                alertDialog.dismiss();
+                            })
+                            .addOnFailureListener(e -> Toast.makeText(Activity_Login.this, "Failed to send reset password email: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                } else {
+                    //email does not exist
+                    Toast.makeText(Activity_Login.this, "No account found with this email address", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(Activity_Login.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 }
