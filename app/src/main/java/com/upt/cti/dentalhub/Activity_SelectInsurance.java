@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RadioButton;
 import android.widget.Toast;
@@ -85,6 +86,15 @@ public class Activity_SelectInsurance extends AppCompatActivity {
         for (String insurance : insurances) {
             RadioButton radioButton = new RadioButton(this);
             radioButton.setText(insurance);
+
+            radioButton.setTextSize(20);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+            params.setMargins(0, 0, 0, 18);
+            radioButton.setLayoutParams(params);
+
             radioGroupInsurance.addView(radioButton);
         }
 

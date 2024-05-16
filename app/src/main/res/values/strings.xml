@@ -92,8 +92,6 @@
     <string name="book_an_appointment">Book An Appointment</string>
     <string name="no_appointments_found">You have no appointments yet.</string>
     <string name="welcome_simple">Welcome!</string>
-    <string name="welcome_comma">Welcome, </string>
-    <string name="exclamation_mark">!</string>
     <string name="time_left">In x days</string>
     <string name="doctor">Doctor</string>
     <string name="service">Service</string>

@@ -3,6 +3,7 @@ package com.upt.cti.dentalhub;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -51,6 +52,15 @@ public class Activity_SelectLocation extends AppCompatActivity {
         for (String location : locations) {
             RadioButton radioButton = new RadioButton(this);
             radioButton.setText(location);
+
+            radioButton.setTextSize(20);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+            params.setMargins(0, 0, 0, 18);
+            radioButton.setLayoutParams(params);
+
             radioGroupLocations.addView(radioButton);
         }
 

@@ -49,14 +49,14 @@ public class Activity_SelectAppointments extends AppCompatActivity {
                     if (dataSnapshot.exists()) {
                         String displayName = dataSnapshot.child("displayName").getValue(String.class);
                         if (displayName != null) {
-                            textViewWelcome.setText(R.string.welcome_comma + displayName + R.string.exclamation_mark);
+                            textViewWelcome.setText("Welcome, " + displayName + "!");
                         } else {
                             Log.d(TAG, "Username not found.");
-                            textViewWelcome.setText(R.string.welcome_simple);
+                            textViewWelcome.setText("Welcome!");
                         }
                     } else {
                         Log.d(TAG, "User data not found.");
-                        textViewWelcome.setText(R.string.welcome_simple);
+                        textViewWelcome.setText("Welcome!");
                     }
 
                 }
@@ -64,13 +64,13 @@ public class Activity_SelectAppointments extends AppCompatActivity {
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    textViewWelcome.setText(R.string.welcome_simple);
+                    textViewWelcome.setText("Welcome!");
                     Log.e(TAG, "Database error: " + databaseError.getMessage());
 
                 }
             });
         } else {
-            textViewWelcome.setText(R.string.welcome_simple);
+            textViewWelcome.setText("Welcome!");
         }
 
         buttonBookAppointment.setOnClickListener(v -> {
