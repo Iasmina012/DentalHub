@@ -1,42 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:padding="16dp"
+    android:layout_margin="12dp"
+    android:background="@drawable/rounded_bg">
+
+    <TextView
+        android:id="@+id/textViewLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/time_left"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp"/>
 
     <TextView
         android:id="@+id/textViewDentist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Dentist"
-        android:textSize="16sp"
+        android:textSize="18sp"
+        android:text="@string/doctor"
         android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/textViewService"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Service"/>
-
-    <TextView
-        android:id="@+id/textViewDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Date"/>
-
-    <TextView
-        android:id="@+id/textViewTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Time"/>
+        android:textSize="15sp"
+        android:text="@string/service"
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/textViewInsurance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Insurance"/>
+        android:textSize="15sp"
+        android:text="@string/insurance"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="16dp">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/calendar"
+            android:padding="1dp"
+            app:tint="@color/darkTeal"/>
+
+        <TextView
+            android:id="@+id/textViewDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/date"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="8dp">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/clock"
+            android:padding="10dp"
+            app:tint="@color/darkTeal"/>
+
+        <TextView
+            android:id="@+id/textViewTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/time"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="8dp">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/location"
+            android:padding="8dp"
+            app:tint="@color/darkTeal"/>
+
+        <TextView
+            android:id="@+id/textViewLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/location"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonReschedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reschedule"
+        android:layout_marginTop="16dp"
+        android:textColor="@android:color/white"/>
 
 </LinearLayout>

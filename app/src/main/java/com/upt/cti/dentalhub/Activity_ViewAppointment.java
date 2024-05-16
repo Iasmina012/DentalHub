@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,6 +39,7 @@ public class Activity_ViewAppointment extends AppCompatActivity {
 
         recyclerViewAppointments = findViewById(R.id.recyclerViewAppointments);
         textViewNoAppointments = findViewById(R.id.textViewNoAppointments);
+
         db = FirebaseDatabase.getInstance("https://dentalhub-1a0c0-default-rtdb.europe-west1.firebasedatabase.app").getReference().child("appointments");
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
@@ -48,7 +51,7 @@ public class Activity_ViewAppointment extends AppCompatActivity {
         }
 
         appointmentList = new ArrayList<>();
-        adapter = new AppointmentAdapter(appointmentList);
+        adapter = new AppointmentAdapter(appointmentList, this);
         recyclerViewAppointments.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewAppointments.setAdapter(adapter);
 
@@ -61,14 +64,14 @@ public class Activity_ViewAppointment extends AppCompatActivity {
         db.orderByChild("userId").equalTo(currentUser.getUid())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         appointmentList.clear();
                         if (dataSnapshot.exists()) {
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                 Appointment currentAppointment = snapshot.getValue(Appointment.class);
                                 if (currentAppointment != null) {
                                     appointmentList.add(currentAppointment);
-                                    Log.d(TAG, "Appointment added: " + currentAppointment.toString());
+                                    Log.d(TAG, "Appointment added: " + currentAppointment);
                                 }
                             }
                         } else {
@@ -88,11 +91,10 @@ public class Activity_ViewAppointment extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
                         Log.e(TAG, "Database error: " + databaseError.getMessage());
                     }
                 });
 
     }
-
 }

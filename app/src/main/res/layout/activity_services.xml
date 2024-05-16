@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/teal_700"
             android:fontFamily="sans-serif"
-            android:text="@string/book_now_appointment"
+            android:text="@string/book_now_an_appointment_button"
             android:layout_gravity="center_horizontal"/>
 
         <androidx.cardview.widget.CardView

@@ -49,7 +49,7 @@ public class Activity_DoctorsInfo extends AppCompatActivity {
         addDoctors();
 
         doctorAdapter.setOnBookNowClickListener(position -> {
-            Intent intent = new Intent(Activity_DoctorsInfo.this, Activity_SelectDentist.class);
+            Intent intent = new Intent(Activity_DoctorsInfo.this, Activity_SelectLocation.class);
             startActivity(intent);
         });
     }

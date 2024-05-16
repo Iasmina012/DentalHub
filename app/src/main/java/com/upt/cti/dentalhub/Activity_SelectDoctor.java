@@ -5,22 +5,27 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.RadioButton;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Activity_SelectDentist extends AppCompatActivity {
+public class Activity_SelectDoctor extends AppCompatActivity {
 
     private RadioGroup radioGroupDentists;
     private Button buttonNext, buttonBack;
+    private String selectedLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select_dentist);
+        setContentView(R.layout.activity_select_doctor);
 
         radioGroupDentists = findViewById(R.id.radioGroupDentists);
         buttonNext = findViewById(R.id.buttonNext);
         buttonBack = findViewById(R.id.buttonBack);
+
+        Intent intent = getIntent();
+        selectedLocation = intent.getStringExtra("selectedLocation");
 
         addDentistOptions();
 
@@ -35,9 +40,12 @@ public class Activity_SelectDentist extends AppCompatActivity {
                 RadioButton selectedRadioButton = findViewById(selectedId);
                 String selectedDentist = selectedRadioButton.getText().toString();
 
-                Intent intent = new Intent(Activity_SelectDentist.this, Activity_SelectService.class);
-                intent.putExtra("selectedDentist", selectedDentist);
-                startActivity(intent);
+                Intent nextIntent = new Intent(Activity_SelectDoctor.this, Activity_SelectService.class);
+                nextIntent.putExtra("selectedDentist", selectedDentist);
+                nextIntent.putExtra("selectedLocation", selectedLocation);
+                startActivity(nextIntent);
+            } else {
+                Toast.makeText(Activity_SelectDoctor.this, "Please select a dentist!", Toast.LENGTH_SHORT).show();
             }
         });
 

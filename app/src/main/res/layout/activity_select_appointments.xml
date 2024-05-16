@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/imageViewUser"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/username_icon"
+        app:tint="@color/lightTeal"
+        android:contentDescription="@string/username_icon_description"
+        android:scaleType="centerCrop"/>
+
+    <TextView
+        android:id="@+id/textViewWelcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/welcome_simple"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:textColor="@color/darkTeal"
+        android:layout_marginBottom="32dp"
+        android:layout_marginTop="32dp"/>
+
+    <Button
+        android:id="@+id/buttonBookAppointment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:padding="20dp"
+        android:text="@string/book_an_appointment"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"/>
+
+    <Button
+        android:id="@+id/buttonViewAppointment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:padding="20dp"
+        android:text="@string/view_my_appointments_button"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"/>
+
+</LinearLayout>

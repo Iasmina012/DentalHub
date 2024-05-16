@@ -24,7 +24,7 @@ public class Activity_ConfirmationAppointment extends AppCompatActivity {
         String appointmentDate = intent.getStringExtra("selectedDate");
         String appointmentTime = intent.getStringExtra("selectedTime");
 
-        String confirmationText = "You booked an appointment with " + dentistName + " on " + appointmentDate + " at " + appointmentTime;
+        String confirmationText = "You booked an appointment with " + dentistName + " on " + appointmentDate + " at " + appointmentTime + ".";
         textViewConfirmation.setText(confirmationText);
 
         buttonGoToAppointment.setOnClickListener(v -> {

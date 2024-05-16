@@ -43,7 +43,7 @@
     <!-- Main Page -->
     <string name="our_doctors">Our Doctors</string>
     <string name="our_services">Our Services</string>
-    <string name="book_appointment">Book Appointment</string>
+    <string name="book_appointment">Appointments</string>
     <string name="contact_us">Contact Us</string>
     <string name="check_symptoms">Check Symptoms</string>
     <string name="teeth_care">Teeth Care</string>
@@ -60,13 +60,16 @@
 
     <!-- Doctors -->
     <string name="doctor_image_description">Doctor\'s Image</string>
-    <string name="book_now">Book Now</string>
+    <string name="book_now_button">Book Now</string>
     <string name="no_doctors_found">No doctors found!</string>
+    <!-- Card Doctor -->
+    <string name="specialization">Specialization</string>
+    <string name="schedule">Schedule</string>
 
 
     <!-- Services -->
     <string name="welcome">Welcome</string>
-    <string name="book_now_appointment">Book Now An Appointment</string>
+    <string name="book_now_an_appointment_button">Book Now An Appointment</string>
     <!-- Content Description -->
     <string name="teeth_helper_description">Team\'s Motto Icon</string>
     <string name="description">Our team is eager to discuss the doctor-patient relationship with you, emphasizing the importance of kindness, understanding, and patience. This relationship is cultivated through professional care and results in personalized treatments tailored to meet the unique needs of each patient.</string>
@@ -76,16 +79,28 @@
 
 
     <!-- Appointment -->
-    <string name="date_time">Select Date and Time</string>
-    <string name="doctor">Select Doctor</string>
-    <string name="insurance">Select Insurance Type</string>
-    <string name="service">Which service are you looking for?</string>
+    <string name="select_location">Select Location</string>
+    <string name="select_doctor">Select Doctor</string>
+    <string name="select_service">Which service are you looking for?</string>
+    <string name="select_date_time">Select Date and Time</string>
+    <string name="select_insurance">Select Insurance Type</string>
     <string name="thanks_booking">Thanks for booking!</string>
-    <string name="appointment_info">You booked an appointment with Dr. Name on Date at Time"</string>
-    <string name="my_appointment_button">VIEW MY APPOINTMENTS</string>
+    <string name="appointment_details">You booked an appointment with Dr. Name on Date at Time."</string>
+    <string name="view_my_appointments_button">VIEW MY APPOINTMENTS</string>
     <string name="next_button">Next</string>
-    <string name="back">Back</string>
-
+    <string name="back_button">Back</string>
+    <string name="book_an_appointment">Book An Appointment</string>
+    <string name="no_appointments_found">You have no appointments yet.</string>
+    <string name="welcome_simple">Welcome!</string>
+    <string name="welcome_comma">Welcome, </string>
+    <string name="exclamation_mark">!</string>
+    <string name="time_left">In x days</string>
+    <string name="doctor">Doctor</string>
+    <string name="service">Service</string>
+    <string name="insurance">Insurance Type</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="location">Location</string>
 
     <!-- Contact -->
     <string name="search_hint">Search for an office here …</string>
@@ -122,6 +137,9 @@
     <string name="left_arrow_description">Swipe or click left (arrow) for the previous tab</string>
     <string name="right_arrow_description">Swipe or click right (arrow) for the next tab</string>
     <!-- Card Fragment -->
+    <string name="title">Title</string>
+    <string name="text">Text</string>
     <string name="dental_article_icon_description">Dental Care Article\'s Image</string>
+
 
 </resources>

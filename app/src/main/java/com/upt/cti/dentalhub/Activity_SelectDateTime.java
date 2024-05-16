@@ -56,6 +56,7 @@ public class Activity_SelectDateTime extends AppCompatActivity {
             intent.putExtra("selectedTime", selectedTime);
             intent.putExtra("selectedDentist", getIntent().getStringExtra("selectedDentist"));
             intent.putExtra("selectedService", getIntent().getStringExtra("selectedService"));
+            intent.putExtra("selectedLocation", getIntent().getStringExtra("selectedLocation"));
             startActivity(intent);
         });
 

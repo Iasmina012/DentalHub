@@ -31,7 +31,7 @@ public class Activity_Services extends AppCompatActivity {
 
         Button buttonBookNow = findViewById(R.id.buttonBook);
         buttonBookNow.setOnClickListener(v -> {
-            Intent intent = new Intent(Activity_Services.this, Activity_SelectDentist.class);
+            Intent intent = new Intent(Activity_Services.this, Activity_SelectLocation.class);
             startActivity(intent);
         });
 

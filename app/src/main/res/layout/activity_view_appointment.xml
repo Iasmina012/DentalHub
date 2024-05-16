@@ -11,8 +11,10 @@
         android:id="@+id/textViewNoAppointments"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No appointments yet."
-        android:textSize="18sp"
+        android:text="@string/no_appointments_found"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
         android:visibility="gone"/>
 
     <androidx.recyclerview.widget.RecyclerView

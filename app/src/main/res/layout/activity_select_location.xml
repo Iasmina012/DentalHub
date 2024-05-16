@@ -10,30 +10,31 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/doctor"
+        android:text="@string/select_location"
         android:textSize="18sp"
         android:textAlignment="center"
         android:textStyle="bold"
         android:padding="10dp"/>
 
     <RadioGroup
-        android:id="@+id/radioGroupDentists"
+        android:id="@+id/radioGroupLocations"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_weight="1"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center">
+        android:gravity="center"
+        android:layout_marginTop="20dp">
 
         <Button
             android:id="@+id/buttonBack"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/back"
+            android:text="@string/back_button"
             android:layout_margin="8dp"/>
 
         <Button

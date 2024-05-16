@@ -24,7 +24,7 @@ public class Activity_SelectInsurance extends AppCompatActivity {
     private DatabaseReference db;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
-    private String selectedDentist, selectedService, selectedDate, selectedTime, selectedInsurance;
+    private String selectedDentist, selectedService, selectedDate, selectedTime, selectedInsurance, selectedLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class Activity_SelectInsurance extends AppCompatActivity {
         currentUser = mAuth.getCurrentUser();
 
         if (currentUser == null) {
-            Toast.makeText(this, "User not authenticated!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "User is not authenticated!", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
@@ -53,6 +53,7 @@ public class Activity_SelectInsurance extends AppCompatActivity {
         selectedService = intent.getStringExtra("selectedService");
         selectedDate = intent.getStringExtra("selectedDate");
         selectedTime = intent.getStringExtra("selectedTime");
+        selectedLocation = intent.getStringExtra("selectedLocation");
 
         addInsuranceOptions();
 
@@ -74,11 +75,13 @@ public class Activity_SelectInsurance extends AppCompatActivity {
             }
         });
 
+        buttonBack.setOnClickListener(v -> onBackPressed());
+
     }
 
     private void addInsuranceOptions() {
 
-        String[] insurances = {"National Health Insurance Fund", "Groupama", "NN", "Medicover", "UltraMED", "Euraxess", "Raiffeisen" ,"Generali", "No Insurance"};
+        String[] insurances = {"National Health Insurance Fund", "Groupama", "NN", "Medicover", "UltraMED", "Euraxess", "Raiffeisen", "Generali", "No Insurance"};
         for (String insurance : insurances) {
             RadioButton radioButton = new RadioButton(this);
             radioButton.setText(insurance);
@@ -91,6 +94,7 @@ public class Activity_SelectInsurance extends AppCompatActivity {
 
         String appointmentId = db.child("appointments").push().getKey();
         Map<String, Object> appointment = new HashMap<>();
+        appointment.put("location", selectedLocation);
         appointment.put("dentist", selectedDentist);
         appointment.put("service", selectedService);
         appointment.put("date", selectedDate);
@@ -105,9 +109,11 @@ public class Activity_SelectInsurance extends AppCompatActivity {
                         Log.d(TAG, "Appointment booked successfully");
 
                         Intent intent = new Intent(Activity_SelectInsurance.this, Activity_ConfirmationAppointment.class);
+                        appointment.put("location", selectedLocation);
                         intent.putExtra("selectedDentist", selectedDentist);
                         intent.putExtra("selectedDate", selectedDate);
                         intent.putExtra("selectedTime", selectedTime);
+                        intent.putExtra("selectedLocation", selectedLocation);
                         startActivity(intent);
                     })
                     .addOnFailureListener(e -> {
