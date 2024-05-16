@@ -58,8 +58,29 @@ public class Activity_Contact extends AppCompatActivity implements OnMapReadyCal
                 String name = nameField.getText().toString();
                 String email = emailField.getText().toString();
                 String message = messageField.getText().toString();
-                sendEmail(name, email, message);
-                dialog.dismiss();
+
+                if (name.isEmpty()) {
+                    nameField.setError("Enter your name!");
+                } else {
+                    nameField.setError(null);
+                }
+
+                if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    emailField.setError("Enter a valid email address!");
+                } else {
+                    emailField.setError(null);
+                }
+
+                if (message.isEmpty()) {
+                    messageField.setError("Enter your message!");
+                } else {
+                    messageField.setError(null);
+                }
+
+                if (!name.isEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() && !message.isEmpty()) {
+                    sendEmail(name, email, message);
+                    dialog.dismiss();
+                }
 
             });
 
