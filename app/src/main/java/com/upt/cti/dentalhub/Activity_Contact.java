@@ -33,6 +33,7 @@ public class Activity_Contact extends AppCompatActivity implements OnMapReadyCal
 
     private GoogleMap mMap;
     private static final int LOCATION_REQUEST_CODE = 101;
+    private boolean locationNotFoundShown = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +95,7 @@ public class Activity_Contact extends AppCompatActivity implements OnMapReadyCal
         mapFragment.getMapAsync(this);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
             @Override
             public boolean onQueryTextSubmit(String query) {
 
@@ -103,9 +105,7 @@ public class Activity_Contact extends AppCompatActivity implements OnMapReadyCal
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
+            public boolean onQueryTextChange(String newText) {return false;}
         });
 
     }
@@ -133,12 +133,14 @@ public class Activity_Contact extends AppCompatActivity implements OnMapReadyCal
 
     private void searchLocation(String location) {
 
+        locationNotFoundShown = false;
         LatLng latLng = getLocationFromAddress(location);
         if (latLng != null) {
             mMap.addMarker(new MarkerOptions().position(latLng).title("Search Result"));
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+            locationNotFoundShown = false;
         } else {
-            Toast.makeText(this, "Location not found!", Toast.LENGTH_SHORT).show();
+            showLocationNotFoundMessage();
         }
 
     }
@@ -150,7 +152,7 @@ public class Activity_Contact extends AppCompatActivity implements OnMapReadyCal
         LatLng p1 = null;
         try {
             address = coder.getFromLocationName(strAddress, 5);
-            if (address == null) {
+            if (address == null || address.isEmpty()) {
                 return null;
             }
             Address location = address.get(0);
@@ -159,6 +161,17 @@ public class Activity_Contact extends AppCompatActivity implements OnMapReadyCal
             Log.e("LocationError", "Failed to get location from address!", ex);
         }
         return p1;
+
+    }
+
+    private void showLocationNotFoundMessage() {
+
+        if (!locationNotFoundShown) {
+            //cand apas pe tastatura apare o data, cand apas pe enter apare de 2 ori
+            //!de verificat!
+            runOnUiThread(() -> Toast.makeText(this, "Location not found!", Toast.LENGTH_SHORT).show());
+            locationNotFoundShown = true;
+        }
 
     }
 
@@ -198,4 +211,5 @@ public class Activity_Contact extends AppCompatActivity implements OnMapReadyCal
         startActivity(Intent.createChooser(emailIntent, "Send email via..."));
 
     }
+
 }
