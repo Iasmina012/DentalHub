@@ -65,11 +65,13 @@ public class Activity_ViewAppointment extends AppCompatActivity {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                         appointmentList.clear();
                         if (dataSnapshot.exists()) {
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                 Appointment currentAppointment = snapshot.getValue(Appointment.class);
                                 if (currentAppointment != null) {
+                                    currentAppointment.setAppointmentId(snapshot.getKey());
                                     appointmentList.add(currentAppointment);
                                     Log.d(TAG, "Appointment added: " + currentAppointment);
                                 }
@@ -88,6 +90,7 @@ public class Activity_ViewAppointment extends AppCompatActivity {
                             adapter.notifyDataSetChanged();
                             Log.d(TAG, "Appointments loaded, count: " + appointmentList.size());
                         }
+
                     }
 
                     @Override
@@ -97,4 +100,5 @@ public class Activity_ViewAppointment extends AppCompatActivity {
                 });
 
     }
+
 }

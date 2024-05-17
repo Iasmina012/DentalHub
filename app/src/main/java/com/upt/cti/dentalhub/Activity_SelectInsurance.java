@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,6 +26,7 @@ public class Activity_SelectInsurance extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     private String selectedDentist, selectedService, selectedDate, selectedTime, selectedInsurance, selectedLocation;
+    private String appointmentId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +56,18 @@ public class Activity_SelectInsurance extends AppCompatActivity {
         selectedDate = intent.getStringExtra("selectedDate");
         selectedTime = intent.getStringExtra("selectedTime");
         selectedLocation = intent.getStringExtra("selectedLocation");
+        selectedInsurance = intent.getStringExtra("selectedInsurance");
+        appointmentId = intent.getStringExtra("appointmentId");
 
         addInsuranceOptions();
 
         for (int i = 0; i < radioGroupInsurance.getChildCount(); i++) {
             RadioButton radioButton = (RadioButton) radioGroupInsurance.getChildAt(i);
             radioButton.setTextSize(20);
+
+            if (radioButton.getText().toString().equals(selectedInsurance)) {
+                radioButton.setChecked(true);
+            }
         }
 
         buttonBook.setOnClickListener(v -> {
@@ -86,7 +93,6 @@ public class Activity_SelectInsurance extends AppCompatActivity {
         for (String insurance : insurances) {
             RadioButton radioButton = new RadioButton(this);
             radioButton.setText(insurance);
-
             radioButton.setTextSize(20);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -94,7 +100,6 @@ public class Activity_SelectInsurance extends AppCompatActivity {
             );
             params.setMargins(0, 0, 0, 18);
             radioButton.setLayoutParams(params);
-
             radioGroupInsurance.addView(radioButton);
         }
 
@@ -102,7 +107,16 @@ public class Activity_SelectInsurance extends AppCompatActivity {
 
     private void bookAppointment() {
 
-        String appointmentId = db.child("appointments").push().getKey();
+        if (appointmentId == null) {
+            //generate a new appointment ID for new appointments
+            appointmentId = db.child("appointments").push().getKey();
+            if (appointmentId == null) {
+                Toast.makeText(this, "Failed to generate appointment ID!", Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "Failed to generate appointment ID");
+                return;
+            }
+        }
+
         Map<String, Object> appointment = new HashMap<>();
         appointment.put("location", selectedLocation);
         appointment.put("dentist", selectedDentist);
@@ -112,28 +126,22 @@ public class Activity_SelectInsurance extends AppCompatActivity {
         appointment.put("insurance", selectedInsurance);
         appointment.put("userId", currentUser.getUid());
 
-        if (appointmentId != null) {
-            db.child("appointments").child(appointmentId).setValue(appointment)
-                    .addOnSuccessListener(aVoid -> {
-                        Toast.makeText(Activity_SelectInsurance.this, "Appointment booked successfully", Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, "Appointment booked successfully");
+        db.child("appointments").child(appointmentId).setValue(appointment)
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(Activity_SelectInsurance.this, "Appointment booked successfully!", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "Appointment booked successfully");
 
-                        Intent intent = new Intent(Activity_SelectInsurance.this, Activity_ConfirmationAppointment.class);
-                        appointment.put("location", selectedLocation);
-                        intent.putExtra("selectedDentist", selectedDentist);
-                        intent.putExtra("selectedDate", selectedDate);
-                        intent.putExtra("selectedTime", selectedTime);
-                        intent.putExtra("selectedLocation", selectedLocation);
-                        startActivity(intent);
-                    })
-                    .addOnFailureListener(e -> {
-                        Toast.makeText(Activity_SelectInsurance.this, "Failed to book appointment", Toast.LENGTH_SHORT).show();
-                        Log.e(TAG, "Failed to book appointment", e);
-                    });
-        } else {
-            Toast.makeText(Activity_SelectInsurance.this, "Failed to generate appointment ID", Toast.LENGTH_SHORT).show();
-            Log.e(TAG, "Failed to generate appointment ID");
-        }
+                    Intent intent = new Intent(Activity_SelectInsurance.this, Activity_ConfirmationAppointment.class);
+                    intent.putExtra("selectedDentist", selectedDentist);
+                    intent.putExtra("selectedDate", selectedDate);
+                    intent.putExtra("selectedTime", selectedTime);
+                    intent.putExtra("selectedLocation", selectedLocation);
+                    startActivity(intent);
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(Activity_SelectInsurance.this, "Failed to book appointment!", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "Failed to book appointment", e);
+                });
 
     }
 

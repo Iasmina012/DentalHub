@@ -63,6 +63,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
         holder.buttonReschedule.setOnClickListener(v -> {
             Intent intent = new Intent(context, Activity_SelectLocation.class);
+            intent.putExtra("appointmentId", appointment.getAppointmentId());
             intent.putExtra("selectedDentist", appointment.getDentist());
             intent.putExtra("selectedService", appointment.getService());
             intent.putExtra("selectedDate", appointment.getDate());
@@ -75,11 +76,9 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     }
 
     @Override
-    public int getItemCount() {
-        return appointmentList.size();
-    }
+    public int getItemCount() { return appointmentList.size(); }
 
-    public class AppointmentViewHolder extends RecyclerView.ViewHolder {
+    public static class AppointmentViewHolder extends RecyclerView.ViewHolder {
 
         public TextView textViewDentist, textViewService, textViewDate, textViewTime, textViewInsurance, textViewLocation, textViewLeft;
         public Button buttonReschedule;
@@ -99,5 +98,4 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         }
 
     }
-
 }

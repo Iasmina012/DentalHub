@@ -9,12 +9,14 @@ import android.widget.GridLayout;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import android.util.Log;
 
 public class Activity_SelectService extends AppCompatActivity {
 
     private Button buttonNext, buttonBack;
     private String selectedService;
     private String selectedLocation;
+    private String appointmentId;
     private GridLayout gridLayout;
     private Button previouslySelectedButton;
 
@@ -28,17 +30,30 @@ public class Activity_SelectService extends AppCompatActivity {
         buttonBack = findViewById(R.id.buttonBack);
         gridLayout = findViewById(R.id.gridLayoutServices);
 
-        selectedLocation = getIntent().getStringExtra("selectedLocation");
+        Intent intent = getIntent();
+        selectedLocation = intent.getStringExtra("selectedLocation");
+        appointmentId = intent.getStringExtra("appointmentId");
+        selectedService = intent.getStringExtra("selectedService");
+
+        if (appointmentId != null) {
+            Log.d("Activity_SelectService", "Appointment ID received: " + appointmentId);
+        } else {
+            Log.e("Activity_SelectService", "Failed to retrieve appointment ID");
+        }
 
         addServiceButtons();
 
         buttonNext.setOnClickListener(v -> {
             if (selectedService != null) {
-                Intent intent = new Intent(Activity_SelectService.this, Activity_SelectDateTime.class);
-                intent.putExtra("selectedService", selectedService);
-                intent.putExtra("selectedDentist", getIntent().getStringExtra("selectedDentist"));
-                intent.putExtra("selectedLocation", selectedLocation);
-                startActivity(intent);
+                Intent nextIntent = new Intent(Activity_SelectService.this, Activity_SelectDateTime.class);
+                nextIntent.putExtra("selectedService", selectedService);
+                nextIntent.putExtra("selectedDentist", getIntent().getStringExtra("selectedDentist"));
+                nextIntent.putExtra("selectedLocation", selectedLocation);
+                nextIntent.putExtra("appointmentId", appointmentId);
+                nextIntent.putExtra("selectedDate", getIntent().getStringExtra("selectedDate"));
+                nextIntent.putExtra("selectedTime", getIntent().getStringExtra("selectedTime"));
+                nextIntent.putExtra("selectedInsurance", getIntent().getStringExtra("selectedInsurance"));
+                startActivity(nextIntent);
             } else {
                 Toast.makeText(Activity_SelectService.this, "Please select a service!", Toast.LENGTH_SHORT).show();
             }
@@ -66,7 +81,6 @@ public class Activity_SelectService extends AppCompatActivity {
         };
 
         for (String service : services) {
-
             Button button = new Button(this);
             button.setText(service);
             button.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_bg));
@@ -94,6 +108,9 @@ public class Activity_SelectService extends AppCompatActivity {
 
             gridLayout.addView(button);
 
+            if (service.equals(selectedService)) {
+                highlightSelectedButton(button);
+            }
         }
 
     }
