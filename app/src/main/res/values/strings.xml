@@ -128,7 +128,10 @@
 
 
     <!-- Symptom Checker -->
-
+    <string name="symptom">Symptom</string>
+    <string name="get_results_button">Get Results</string>
+    <string name="diagnosis_results">Diagnosis Results</string>
+    <string name="result">You may have...</string>
 
     <!-- Care -->
     <!-- Content Description -->

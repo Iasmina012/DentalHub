@@ -91,6 +91,15 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+        Symptoms.setOnClickListener(v -> {
+            Intent i = new Intent(getApplicationContext(),Activity_SelectSymptoms.class);
+            i.putExtra("table_name","Symptoms Checker");
+
+            startActivity(i);
+            overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
+
+        });
+
         Care.setOnClickListener(v -> {
             Intent i = new Intent(getApplicationContext(),Activity_Care.class);
             i.putExtra("table_name","Teeth Care");
