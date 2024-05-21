@@ -81,7 +81,7 @@ public class Activity_SelectDateTime extends BaseActivity {
             Intent nextIntent = new Intent(Activity_SelectDateTime.this, Activity_SelectInsurance.class);
             nextIntent.putExtra("selectedDate", selectedDate);
             nextIntent.putExtra("selectedTime", selectedTime);
-            nextIntent.putExtra("selectedDentist", getIntent().getStringExtra("selectedDentist"));
+            nextIntent.putExtra("selectedDoctor", getIntent().getStringExtra("selectedDoctor"));
             nextIntent.putExtra("selectedService", getIntent().getStringExtra("selectedService"));
             nextIntent.putExtra("selectedLocation", getIntent().getStringExtra("selectedLocation"));
             nextIntent.putExtra("appointmentId", appointmentId);

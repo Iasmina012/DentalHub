@@ -47,7 +47,7 @@ public class Activity_SelectLocation extends BaseActivity {
                 Intent nextIntent = new Intent(Activity_SelectLocation.this, Activity_SelectDoctor.class);
                 nextIntent.putExtra("selectedLocation", selectedLocation);
                 nextIntent.putExtra("appointmentId", appointmentId);
-                nextIntent.putExtra("selectedDentist", getIntent().getStringExtra("selectedDentist"));
+                nextIntent.putExtra("selectedDoctor", getIntent().getStringExtra("selectedDoctor"));
                 nextIntent.putExtra("selectedService", getIntent().getStringExtra("selectedService"));
                 nextIntent.putExtra("selectedDate", getIntent().getStringExtra("selectedDate"));
                 nextIntent.putExtra("selectedTime", getIntent().getStringExtra("selectedTime"));

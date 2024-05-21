@@ -46,7 +46,7 @@ public class Activity_SelectService extends BaseActivity {
             if (selectedService != null) {
                 Intent nextIntent = new Intent(Activity_SelectService.this, Activity_SelectDateTime.class);
                 nextIntent.putExtra("selectedService", selectedService);
-                nextIntent.putExtra("selectedDentist", getIntent().getStringExtra("selectedDentist"));
+                nextIntent.putExtra("selectedDoctor", getIntent().getStringExtra("selectedDoctor"));
                 nextIntent.putExtra("selectedLocation", selectedLocation);
                 nextIntent.putExtra("appointmentId", appointmentId);
                 nextIntent.putExtra("selectedDate", getIntent().getStringExtra("selectedDate"));

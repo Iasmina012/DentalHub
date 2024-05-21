@@ -42,7 +42,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     public void onBindViewHolder(@NonNull AppointmentViewHolder holder, int position) {
 
         Appointment appointment = appointmentList.get(position);
-        holder.textViewDentist.setText(appointment.getDentist());
+        holder.textViewDoctor.setText(appointment.getDoctor());
         holder.textViewService.setText(appointment.getService());
         holder.textViewDate.setText(appointment.getDate());
         holder.textViewTime.setText(appointment.getTime());
@@ -64,7 +64,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         holder.buttonReschedule.setOnClickListener(v -> {
             Intent intent = new Intent(context, Activity_SelectLocation.class);
             intent.putExtra("appointmentId", appointment.getAppointmentId());
-            intent.putExtra("selectedDentist", appointment.getDentist());
+            intent.putExtra("selectedDoctor", appointment.getDoctor());
             intent.putExtra("selectedService", appointment.getService());
             intent.putExtra("selectedDate", appointment.getDate());
             intent.putExtra("selectedTime", appointment.getTime());
@@ -80,13 +80,13 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
     public static class AppointmentViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView textViewDentist, textViewService, textViewDate, textViewTime, textViewInsurance, textViewLocation, textViewLeft;
+        public TextView textViewDoctor, textViewService, textViewDate, textViewTime, textViewInsurance, textViewLocation, textViewLeft;
         public Button buttonReschedule;
 
         public AppointmentViewHolder(View itemView) {
 
             super(itemView);
-            textViewDentist = itemView.findViewById(R.id.textViewDentist);
+            textViewDoctor = itemView.findViewById(R.id.textViewDoctor);
             textViewService = itemView.findViewById(R.id.textViewService);
             textViewDate = itemView.findViewById(R.id.textViewDate);
             textViewTime = itemView.findViewById(R.id.textViewTime);

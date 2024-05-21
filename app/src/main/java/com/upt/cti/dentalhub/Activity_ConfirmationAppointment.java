@@ -20,11 +20,11 @@ public class Activity_ConfirmationAppointment extends AppCompatActivity {
         ImageView buttonClose = findViewById(R.id.buttonClose);
 
         Intent intent = getIntent();
-        String dentistName = intent.getStringExtra("selectedDentist");
+        String doctorName = intent.getStringExtra("selectedDoctor");
         String appointmentDate = intent.getStringExtra("selectedDate");
         String appointmentTime = intent.getStringExtra("selectedTime");
 
-        String confirmationText = "You booked an appointment with " + dentistName + " on " + appointmentDate + " at " + appointmentTime + ".";
+        String confirmationText = "You booked an appointment with " + doctorName + " on " + appointmentDate + " at " + appointmentTime + ".";
         textViewConfirmation.setText(confirmationText);
 
         buttonGoToAppointment.setOnClickListener(v -> {

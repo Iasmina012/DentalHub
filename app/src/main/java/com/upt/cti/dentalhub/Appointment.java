@@ -3,7 +3,7 @@ package com.upt.cti.dentalhub;
 public class Appointment {
 
     private String appointmentId;
-    private String dentist;
+    private String doctor;
     private String service;
     private String date;
     private String time;
@@ -15,10 +15,10 @@ public class Appointment {
         //Constructor necesar pentru Firebase
     }
 
-    public Appointment(String appointmentId, String dentist, String service, String date, String time, String insurance, String userId, String location) {
+    public Appointment(String appointmentId, String doctor, String service, String date, String time, String insurance, String userId, String location) {
 
         this.appointmentId = appointmentId;
-        this.dentist = dentist;
+        this.doctor = doctor;
         this.service = service;
         this.date = date;
         this.time = time;
@@ -32,9 +32,9 @@ public class Appointment {
 
     public void setAppointmentId(String appointmentId) {this.appointmentId = appointmentId;}
 
-    public String getDentist() { return dentist; }
+    public String getDoctor() { return doctor; }
 
-    public void setDentist(String dentist) { this.dentist = dentist; }
+    public void setDoctor(String doctor) { this.doctor = doctor; }
 
     public String getService() { return service; }
 

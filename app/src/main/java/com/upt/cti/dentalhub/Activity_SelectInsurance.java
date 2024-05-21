@@ -24,7 +24,7 @@ public class Activity_SelectInsurance extends BaseActivity {
     private DatabaseReference db;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
-    private String selectedDentist, selectedService, selectedDate, selectedTime, selectedInsurance, selectedLocation;
+    private String selectedDoctor, selectedService, selectedDate, selectedTime, selectedInsurance, selectedLocation;
     private String appointmentId;
 
     @Override
@@ -50,7 +50,7 @@ public class Activity_SelectInsurance extends BaseActivity {
         }
 
         Intent intent = getIntent();
-        selectedDentist = intent.getStringExtra("selectedDentist");
+        selectedDoctor = intent.getStringExtra("selectedDoctor");
         selectedService = intent.getStringExtra("selectedService");
         selectedDate = intent.getStringExtra("selectedDate");
         selectedTime = intent.getStringExtra("selectedTime");
@@ -118,7 +118,7 @@ public class Activity_SelectInsurance extends BaseActivity {
 
         Map<String, Object> appointment = new HashMap<>();
         appointment.put("location", selectedLocation);
-        appointment.put("dentist", selectedDentist);
+        appointment.put("doctor", selectedDoctor);
         appointment.put("service", selectedService);
         appointment.put("date", selectedDate);
         appointment.put("time", selectedTime);
@@ -131,7 +131,7 @@ public class Activity_SelectInsurance extends BaseActivity {
                     Log.d(TAG, "Appointment booked successfully");
 
                     Intent intent = new Intent(Activity_SelectInsurance.this, Activity_ConfirmationAppointment.class);
-                    intent.putExtra("selectedDentist", selectedDentist);
+                    intent.putExtra("selectedDoctor", selectedDoctor);
                     intent.putExtra("selectedDate", selectedDate);
                     intent.putExtra("selectedTime", selectedTime);
                     intent.putExtra("selectedLocation", selectedLocation);
