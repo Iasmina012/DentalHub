@@ -13,4 +13,5 @@ public class MyFirebaseApp extends Application
         FirebaseDatabase.getInstance("https://dentalhub-1a0c0-default-rtdb.europe-west1.firebasedatabase.app/").setPersistenceEnabled(true);
 
     }
+
 }

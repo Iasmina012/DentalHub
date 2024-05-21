@@ -13,7 +13,6 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -29,7 +28,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-public class Activity_Contact extends AppCompatActivity implements OnMapReadyCallback {
+public class Activity_Contact extends BaseActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private static final int LOCATION_REQUEST_CODE = 101;

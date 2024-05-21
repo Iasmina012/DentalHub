@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Activity_Services extends AppCompatActivity {
+public class Activity_Services extends BaseActivity {
 
     private List<Services> servicesItems;
 

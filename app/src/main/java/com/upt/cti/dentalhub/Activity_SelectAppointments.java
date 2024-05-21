@@ -7,7 +7,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -17,7 +16,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class Activity_SelectAppointments extends AppCompatActivity {
+public class Activity_SelectAppointments extends BaseActivity {
 
     private static final String TAG = "SelectAppointments";
     private Button buttonBookAppointment, buttonViewAppointment;

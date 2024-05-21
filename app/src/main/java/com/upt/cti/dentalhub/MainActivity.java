@@ -2,19 +2,9 @@ package com.upt.cti.dentalhub;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.LinearLayout;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     LinearLayout DoctorsInfo;
     LinearLayout Services;
@@ -24,19 +14,10 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout Symptoms;
     LinearLayout Care;
 
-    public FirebaseAuth.AuthStateListener mAuthListener;
-    public String mCurrentUserUid;
-    public FirebaseAuth mAuth;
-    public DatabaseReference mUserRefDatabase;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        setAuthListener();
-        setAuthInstance();
 
         DoctorsInfo = findViewById(R.id.linearlayout1);
         Services = findViewById(R.id.linearlayout2);
@@ -47,173 +28,53 @@ public class MainActivity extends AppCompatActivity {
         Care = findViewById(R.id.linearlayout7);
 
         DoctorsInfo.setOnClickListener(v -> {
-            Intent i = new Intent(getApplicationContext(),Activity_DoctorsInfo.class);
-            i.putExtra("table_name","Doctors");
-
+            Intent i = new Intent(getApplicationContext(), Activity_DoctorsInfo.class);
+            i.putExtra("table_name", "Doctors");
             startActivity(i);
-            overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
-
+            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         });
 
         Services.setOnClickListener(v -> {
-            Intent i = new Intent(getApplicationContext(),Activity_Services.class);
-            i.putExtra("table_name","Services");
-
+            Intent i = new Intent(getApplicationContext(), Activity_Services.class);
+            i.putExtra("table_name", "Services");
             startActivity(i);
-            overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
-
+            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         });
 
         Appointment.setOnClickListener(v -> {
             Intent i = new Intent(getApplicationContext(), Activity_SelectAppointments.class);
-            i.putExtra("table_name","Appointment");
-
+            i.putExtra("table_name", "Appointment");
             startActivity(i);
-            overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
-
+            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         });
 
         Contact.setOnClickListener(v -> {
-            Intent i = new Intent(getApplicationContext(),Activity_Contact.class);
-            i.putExtra("table_name","Contact");
-
+            Intent i = new Intent(getApplicationContext(), Activity_Contact.class);
+            i.putExtra("table_name", "Contact");
             startActivity(i);
-            overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
-
+            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         });
 
         Tech.setOnClickListener(v -> {
-            Intent i = new Intent(getApplicationContext(),Activity_Tech.class);
-            i.putExtra("table_name","Technologies");
-
+            Intent i = new Intent(getApplicationContext(), Activity_Tech.class);
+            i.putExtra("table_name", "Technologies");
             startActivity(i);
-            overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
-
+            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         });
 
         Symptoms.setOnClickListener(v -> {
-            Intent i = new Intent(getApplicationContext(),Activity_SelectSymptoms.class);
-            i.putExtra("table_name","Symptoms Checker");
-
+            Intent i = new Intent(getApplicationContext(), Activity_SelectSymptoms.class);
+            i.putExtra("table_name", "Symptoms Checker");
             startActivity(i);
-            overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
-
+            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         });
 
         Care.setOnClickListener(v -> {
-            Intent i = new Intent(getApplicationContext(),Activity_Care.class);
-            i.putExtra("table_name","Teeth Care");
-
+            Intent i = new Intent(getApplicationContext(), Activity_Care.class);
+            i.putExtra("table_name", "Teeth Care");
             startActivity(i);
-            overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
-
+            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         });
-
-    }
-
-    public void setAuthInstance() {
-        mAuth = FirebaseAuth.getInstance();
-    }
-
-    public void setAuthListener() {
-        mAuthListener = firebaseAuth -> {
-
-            FirebaseUser user = firebaseAuth.getCurrentUser();
-
-            if (user != null) {
-                setUserData(user);
-                getIntent();
-            } else {
-                //user is signed out
-                goToLogin();
-            }
-        };
-    }
-
-    public void setUserData(FirebaseUser user) {
-        mCurrentUserUid = user.getUid();
-    }
-
-    public void setUsersDatabase() {mUserRefDatabase = FirebaseDatabase.getInstance("https://dentalhub-1a0c0-default-rtdb.europe-west1.firebasedatabase.app/").getReference().child("users");}
-
-    private void goToLogin() {
-
-        Intent intent = new Intent(this, Activity_Login.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //login is a new task
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK); //the old task should be cleared so we cannot go back to it
-        startActivity(intent);
-        overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
-
-    }
-
-    @Override
-    protected void onPause(){
-        super.onPause();
-    }
-
-    @Override
-    public void onStart() {
-
-        super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
-
-    }
-
-    @Override
-    protected void onResume(){
-        super.onResume();
-    }
-
-    @Override
-    public void onBackPressed() {
-
-        super.onBackPressed();
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        //set the message and title from the strings.xml file
-        //add strings.xml
-        //builder.setMessage(R.string.dialog_message) .setTitle(R.string.dialog_title);
-
-        //setting message manually and performing action on button click
-        builder.setMessage("Do you want to close this app?")
-                .setCancelable(false)
-                .setPositiveButton("Yes", (dialog, id) -> finish())
-                .setNegativeButton("No", (dialog, id) -> {
-                    //action for 'NO' Button
-                    dialog.cancel();
-                });
-
-        //creating dialog box
-        AlertDialog alert = builder.create();
-
-        alert.show();
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        //inflates the menu and adds items to the action bar if it is present
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        //handles the action bar item clicks here
-        //the action bar will automatically handle clicks on the Home/Up button, as long as its specified a parent activity in AndroidManifest.xml
-        if(item.getItemId()==R.id.action_logout){
-            logout();
-            return true;
-        }
-        //noinspection SimplifiableIfStatement
-
-        return super.onOptionsItemSelected(item);
-
-    }
-    private void logout() {
-        mAuth.signOut();
     }
 
 }

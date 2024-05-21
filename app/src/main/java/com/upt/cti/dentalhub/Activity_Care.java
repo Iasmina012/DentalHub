@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
@@ -12,7 +11,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.Objects;
 
-public class Activity_Care extends AppCompatActivity {
+public class Activity_Care extends BaseActivity {
 
     private ViewPager2 viewPager;
     private ImageView leftArrow;

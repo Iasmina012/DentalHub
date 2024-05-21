@@ -8,9 +8,8 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
 
-public class Activity_SelectDoctor extends AppCompatActivity {
+public class Activity_SelectDoctor extends BaseActivity {
 
     private RadioGroup radioGroupDentists;
     private Button buttonNext, buttonBack;

@@ -7,11 +7,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import android.util.Log;
 
-public class Activity_SelectService extends AppCompatActivity {
+public class Activity_SelectService extends BaseActivity {
 
     private Button buttonNext, buttonBack;
     private String selectedService;

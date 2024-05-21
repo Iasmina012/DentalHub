@@ -2,13 +2,11 @@ package com.upt.cti.dentalhub;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Activity_Tech extends AppCompatActivity {
+public class Activity_Tech extends BaseActivity {
     private List<Device> devices;
 
     @Override

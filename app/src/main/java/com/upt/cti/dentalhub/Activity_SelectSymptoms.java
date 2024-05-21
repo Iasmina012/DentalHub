@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
@@ -16,7 +15,7 @@ import java.util.Map;
 
 import timber.log.Timber;
 
-public class Activity_SelectSymptoms extends AppCompatActivity {
+public class Activity_SelectSymptoms extends BaseActivity {
 
     private RecyclerView recyclerViewSymptoms;
     private Button buttonGetResults;
@@ -101,7 +100,7 @@ public class Activity_SelectSymptoms extends AppCompatActivity {
         if (!diseases.isEmpty()) {
             diagnosis.append("Possible dental issues:");
             for (String disease : diseases) {
-                diagnosis.append("\n ").append(disease);
+                diagnosis.append("\n- ").append(disease);
             }
         }
 

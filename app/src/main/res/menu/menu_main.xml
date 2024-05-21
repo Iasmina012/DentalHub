@@ -5,10 +5,23 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/action_logout"
-        android:title="@string/action_logout"
+        android:id="@+id/action_back"
+        android:title="Back"
         android:orderInCategory="100"
-        app:showAsAction="never"
-        android:iconTint="@color/lightTeal"/>
+        android:icon="@drawable/arrow_back"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/action_home"
+        android:title="Home"
+        android:orderInCategory="101"
+        android:icon="@drawable/home_button"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/action_logout"
+        android:title="Logout"
+        android:orderInCategory="102"
+        app:showAsAction="never"/>
 
 </menu>

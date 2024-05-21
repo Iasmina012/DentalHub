@@ -5,13 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.SearchView;
 import android.widget.TextView;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Activity_DoctorsInfo extends AppCompatActivity {
+public class Activity_DoctorsInfo extends BaseActivity {
     private RecyclerView recyclerView;
     private DoctorAdapter doctorAdapter;
     private List<Doctor> doctorList;
