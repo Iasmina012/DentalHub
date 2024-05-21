@@ -1,6 +1,8 @@
 package com.upt.cti.dentalhub;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,9 +18,9 @@ public class Activity_SelectDoctor extends BaseActivity {
 
     private RadioGroup radioGroupDoctors;
     private Button buttonNext, buttonBack;
+    private String appointmentId;
     private String selectedLocation;
     private String selectedDoctor;
-    private String appointmentId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +33,9 @@ public class Activity_SelectDoctor extends BaseActivity {
         buttonBack = findViewById(R.id.buttonBack);
 
         Intent intent = getIntent();
+        appointmentId = intent.getStringExtra("appointmentId");
         selectedLocation = intent.getStringExtra("selectedLocation");
         selectedDoctor = intent.getStringExtra("selectedDoctor");
-        appointmentId = intent.getStringExtra("appointmentId");
 
         if (appointmentId != null) {
             Log.d("Activity_SelectDoctor", "Appointment ID received: " + appointmentId);
@@ -41,7 +43,7 @@ public class Activity_SelectDoctor extends BaseActivity {
             Log.e("Activity_SelectDoctor", "Failed to retrieve appointment ID");
         }
 
-        addDoctorsOptions();
+        addDoctorOptions();
 
         for (int i = 0; i < radioGroupDoctors.getChildCount(); i++) {
             RadioButton radioButton = (RadioButton) radioGroupDoctors.getChildAt(i);
@@ -59,9 +61,9 @@ public class Activity_SelectDoctor extends BaseActivity {
                 selectedDoctor = selectedRadioButton.getText().toString();
 
                 Intent nextIntent = new Intent(Activity_SelectDoctor.this, Activity_SelectService.class);
-                nextIntent.putExtra("selectedDoctor", selectedDoctor);
-                nextIntent.putExtra("selectedLocation", selectedLocation);
                 nextIntent.putExtra("appointmentId", appointmentId);
+                nextIntent.putExtra("selectedLocation", selectedLocation);
+                nextIntent.putExtra("selectedDoctor", selectedDoctor);
                 nextIntent.putExtra("selectedService", getIntent().getStringExtra("selectedService"));
                 nextIntent.putExtra("selectedDate", getIntent().getStringExtra("selectedDate"));
                 nextIntent.putExtra("selectedTime", getIntent().getStringExtra("selectedTime"));
@@ -76,34 +78,44 @@ public class Activity_SelectDoctor extends BaseActivity {
 
     }
 
-    private void addDoctorsOptions() {
+    private void addDoctorOptions() {
 
-        String[] doctors = {"Dr. Daniela Pop", "Dr. Ana Maria Popescu", "Dr. Maria Ionescu", "Dr. Andrei Radu", "Dr. Elena Popa", "Any"};
-        int[] images = {R.drawable.doctor01, R.drawable.doctor02, R.drawable.doctor04, R.drawable.doctor03, R.drawable.doctor05, R.drawable.doctors};
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        for (int i = 0; i < doctors.length; i++) {
-            RadioButton radioButton = new RadioButton(this);
-            radioButton.setText(doctors[i]);
-            radioButton.setTextSize(20);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-            );
-            params.setMargins(0, 0, 0, 18);
-            radioButton.setLayoutParams(params);
+        Cursor cursor = db.query(DatabaseHelper.TABLE_DOCTORS, null, null, null, null, null, null);
 
-            Drawable drawable = ContextCompat.getDrawable(this, images[i]);
-            if (drawable != null) {
-                int width = 150;
-                int height = 150;
-                drawable.setBounds(0, 0, width, height);
-                radioButton.setCompoundDrawables(drawable, null, null, null);
-            } else {
-                Log.e("Activity_SelectDoctor", "Drawable not found for index: " + i);
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                String name = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_DOCTOR_NAME));
+                int image = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_DOCTOR_IMAGE));
+
+                RadioButton radioButton = new RadioButton(this);
+                radioButton.setText(name);
+                radioButton.setTextSize(20);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                );
+                params.setMargins(0, 0, 0, 18);
+                radioButton.setLayoutParams(params);
+
+                Drawable drawable = ContextCompat.getDrawable(this, image);
+                if (drawable != null) {
+                    int width = 150;
+                    int height = 150;
+                    drawable.setBounds(0, 0, width, height);
+                    radioButton.setCompoundDrawables(drawable, null, null, null);
+                } else {
+                    Log.e("Activity_SelectDoctor", "Drawable not found for doctor: " + name);
+                }
+
+                radioGroupDoctors.addView(radioButton);
             }
-
-            radioGroupDoctors.addView(radioButton);
+            cursor.close();
         }
+
+        db.close();
 
     }
 

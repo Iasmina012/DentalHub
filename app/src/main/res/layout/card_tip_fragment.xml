@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:gravity="center_horizontal"
-    tools:context=".CardFragment">
+    tools:context=".TipFragment">
 
     <TextView
         android:id="@+id/titleTextView"

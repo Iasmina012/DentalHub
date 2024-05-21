@@ -14,11 +14,11 @@ import java.util.Objects;
 public class Activity_Care extends BaseActivity {
 
     private ViewPager2 viewPager;
-    private ImageView leftArrow;
-    private ImageView rightArrow;
+    private ImageView leftArrow, rightArrow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_care);
 
@@ -27,18 +27,17 @@ public class Activity_Care extends BaseActivity {
         leftArrow = findViewById(R.id.leftArrow);
         rightArrow = findViewById(R.id.rightArrow);
 
-        viewPager.setAdapter(new CardFragmentAdapter(this));
+        viewPager.setAdapter(new TipFragmentAdapter(this));
 
-        new TabLayoutMediator(tabLayout, viewPager,
-                (tab, position) -> {
-                }).attach();
+        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {}).attach();
 
         setupNavigationArrows();
-
         updateArrowsVisibility();
+
     }
 
     private void setupNavigationArrows() {
+
         leftArrow.setOnClickListener(v -> viewPager.setCurrentItem(viewPager.getCurrentItem() - 1, true));
         rightArrow.setOnClickListener(v -> viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true));
 
@@ -49,14 +48,17 @@ public class Activity_Care extends BaseActivity {
                 updateArrowsVisibility();
             }
         });
+
     }
 
     private void updateArrowsVisibility() {
+
         int currentItem = viewPager.getCurrentItem();
         int totalItems = Objects.requireNonNull(viewPager.getAdapter()).getItemCount();
 
         leftArrow.setVisibility(currentItem > 0 ? View.VISIBLE : View.INVISIBLE);
         rightArrow.setVisibility(currentItem < totalItems - 1 ? View.VISIBLE : View.INVISIBLE);
+
     }
 
 }

@@ -1,6 +1,8 @@
 package com.upt.cti.dentalhub;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -12,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,11 +24,12 @@ public class Activity_SelectInsurance extends BaseActivity {
 
     private RadioGroup radioGroupInsurance;
     private Button buttonBook, buttonBack;
+    private String appointmentId;
+    private String selectedDoctor, selectedService, selectedDate, selectedTime, selectedInsurance, selectedLocation;
+
     private DatabaseReference db;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
-    private String selectedDoctor, selectedService, selectedDate, selectedTime, selectedInsurance, selectedLocation;
-    private String appointmentId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,15 +54,15 @@ public class Activity_SelectInsurance extends BaseActivity {
         }
 
         Intent intent = getIntent();
+        appointmentId = intent.getStringExtra("appointmentId");
+        selectedLocation = intent.getStringExtra("selectedLocation");
         selectedDoctor = intent.getStringExtra("selectedDoctor");
         selectedService = intent.getStringExtra("selectedService");
         selectedDate = intent.getStringExtra("selectedDate");
         selectedTime = intent.getStringExtra("selectedTime");
-        selectedLocation = intent.getStringExtra("selectedLocation");
         selectedInsurance = intent.getStringExtra("selectedInsurance");
-        appointmentId = intent.getStringExtra("appointmentId");
 
-        addInsuranceOptions();
+        addInsurancesOptions();
 
         for (int i = 0; i < radioGroupInsurance.getChildCount(); i++) {
             RadioButton radioButton = (RadioButton) radioGroupInsurance.getChildAt(i);
@@ -86,28 +90,38 @@ public class Activity_SelectInsurance extends BaseActivity {
 
     }
 
-    private void addInsuranceOptions() {
+    private void addInsurancesOptions() {
 
-        String[] insurances = {"National Health Insurance Fund", "Groupama", "NN", "Medicover", "UltraMED", "Euraxess", "Raiffeisen", "Generali", "No Insurance"};
-        for (String insurance : insurances) {
-            RadioButton radioButton = new RadioButton(this);
-            radioButton.setText(insurance);
-            radioButton.setTextSize(20);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-            );
-            params.setMargins(0, 0, 0, 18);
-            radioButton.setLayoutParams(params);
-            radioGroupInsurance.addView(radioButton);
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.query(DatabaseHelper.TABLE_INSURANCES, null, null, null, null, null, null);
+
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                String insuranceName = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_INSURANCE_NAME));
+
+                RadioButton radioButton = new RadioButton(this);
+                radioButton.setText(insuranceName);
+                radioButton.setTextSize(20);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                );
+                params.setMargins(0, 0, 0, 18);
+                radioButton.setLayoutParams(params);
+                radioGroupInsurance.addView(radioButton);
+            }
+            cursor.close();
         }
+
+        db.close();
 
     }
 
     private void bookAppointment() {
 
         if (appointmentId == null) {
-            //generate a new appointment ID for new appointments
+            // Generate a new appointment ID for new appointments
             appointmentId = db.child("appointments").push().getKey();
             if (appointmentId == null) {
                 Toast.makeText(this, "Failed to generate appointment ID!", Toast.LENGTH_SHORT).show();

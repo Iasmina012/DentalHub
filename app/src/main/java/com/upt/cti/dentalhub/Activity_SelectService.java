@@ -1,6 +1,8 @@
 package com.upt.cti.dentalhub;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -12,12 +14,12 @@ import android.util.Log;
 
 public class Activity_SelectService extends BaseActivity {
 
+    private GridLayout gridLayout;
     private Button buttonNext, buttonBack;
+    private Button previouslySelectedButton;
+    private String appointmentId;
     private String selectedService;
     private String selectedLocation;
-    private String appointmentId;
-    private GridLayout gridLayout;
-    private Button previouslySelectedButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,13 +27,13 @@ public class Activity_SelectService extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_service);
 
+        gridLayout = findViewById(R.id.gridLayoutServices);
         buttonNext = findViewById(R.id.buttonNext);
         buttonBack = findViewById(R.id.buttonBack);
-        gridLayout = findViewById(R.id.gridLayoutServices);
 
         Intent intent = getIntent();
-        selectedLocation = intent.getStringExtra("selectedLocation");
         appointmentId = intent.getStringExtra("appointmentId");
+        selectedLocation = intent.getStringExtra("selectedLocation");
         selectedService = intent.getStringExtra("selectedService");
 
         if (appointmentId != null) {
@@ -40,15 +42,15 @@ public class Activity_SelectService extends BaseActivity {
             Log.e("Activity_SelectService", "Failed to retrieve appointment ID");
         }
 
-        addServiceButtons();
+        addServiceOptions();
 
         buttonNext.setOnClickListener(v -> {
             if (selectedService != null) {
                 Intent nextIntent = new Intent(Activity_SelectService.this, Activity_SelectDateTime.class);
-                nextIntent.putExtra("selectedService", selectedService);
-                nextIntent.putExtra("selectedDoctor", getIntent().getStringExtra("selectedDoctor"));
-                nextIntent.putExtra("selectedLocation", selectedLocation);
                 nextIntent.putExtra("appointmentId", appointmentId);
+                nextIntent.putExtra("selectedLocation", selectedLocation);
+                nextIntent.putExtra("selectedDoctor", getIntent().getStringExtra("selectedDoctor"));
+                nextIntent.putExtra("selectedService", selectedService);
                 nextIntent.putExtra("selectedDate", getIntent().getStringExtra("selectedDate"));
                 nextIntent.putExtra("selectedTime", getIntent().getStringExtra("selectedTime"));
                 nextIntent.putExtra("selectedInsurance", getIntent().getStringExtra("selectedInsurance"));
@@ -62,55 +64,51 @@ public class Activity_SelectService extends BaseActivity {
 
     }
 
-    private void addServiceButtons() {
+    private void addServiceOptions() {
 
-        String[] services = {
-                "Specialized Consultation",
-                "Dental Prophylaxis",
-                "Dental Aesthetics",
-                "Orthodontics And Dento-facial Orthopedics",
-                "Pedodontics (Pediatric Dentistry)",
-                "Odontotherapy",
-                "Endodontics",
-                "Periodontology",
-                "Dental Prosthetics",
-                "Dental Surgery",
-                "Implantology",
-                "Dental Radiology"
-        };
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.query(DatabaseHelper.TABLE_SERVICES, null, null, null, null, null, null);
 
-        for (String service : services) {
-            Button button = new Button(this);
-            button.setText(service);
-            button.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_bg));
-            button.setPadding(16, 16, 16, 16);
-            button.setTextColor(ContextCompat.getColor(this, R.color.grey));
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                String serviceName = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_SERVICE_NAME));
 
-            button.setOnClickListener(v -> {
-                if (button == previouslySelectedButton) {
-                    deselectButton(button);
-                    selectedService = null;
-                    previouslySelectedButton = null;
-                } else {
-                    selectedService = service;
+                Button button = new Button(this);
+                button.setText(serviceName);
+                button.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_bg));
+                button.setPadding(16, 16, 16, 16);
+                button.setTextColor(ContextCompat.getColor(this, R.color.grey));
+
+                button.setOnClickListener(v -> {
+                    if (button == previouslySelectedButton) {
+                        deselectButton(button);
+                        selectedService = null;
+                        previouslySelectedButton = null;
+                    } else {
+                        selectedService = serviceName;
+                        highlightSelectedButton(button);
+                    }
+                });
+
+                GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+                params.width = 0;
+                params.height = GridLayout.LayoutParams.WRAP_CONTENT;
+                params.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1, 1f);
+                params.rowSpec = GridLayout.spec(GridLayout.UNDEFINED, 1, 1f);
+                params.setMargins(8, 8, 8, 8);
+                button.setLayoutParams(params);
+
+                gridLayout.addView(button);
+
+                if (serviceName.equals(selectedService)) {
                     highlightSelectedButton(button);
                 }
-            });
-
-            GridLayout.LayoutParams params = new GridLayout.LayoutParams();
-            params.width = 0;
-            params.height = GridLayout.LayoutParams.WRAP_CONTENT;
-            params.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1, 1f);
-            params.rowSpec = GridLayout.spec(GridLayout.UNDEFINED, 1, 1f);
-            params.setMargins(8, 8, 8, 8);
-            button.setLayoutParams(params);
-
-            gridLayout.addView(button);
-
-            if (service.equals(selectedService)) {
-                highlightSelectedButton(button);
             }
+            cursor.close();
         }
+
+        db.close();
 
     }
 
