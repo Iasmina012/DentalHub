@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.SearchView;
 import android.widget.TextView;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +35,6 @@ public class Activity_DoctorsInfo extends BaseActivity {
         recyclerView = findViewById(R.id.recyclerView);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         recyclerView.setAdapter(doctorAdapter);
 
         searchView.clearFocus();
@@ -72,18 +73,45 @@ public class Activity_DoctorsInfo extends BaseActivity {
             while (cursor.moveToNext()) {
                 String name = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_DOCTOR_NAME));
                 int image = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_DOCTOR_IMAGE));
-                String specialty = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_DOCTOR_SPECIALIZATION));
-                String availability = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_DOCTOR_SCHEDULE));
-                String phone = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_DOCTOR_PHONE_NUMBER));
+                String specialization = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_DOCTOR_SPECIALIZATION));
+                String phone_number = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_DOCTOR_PHONE_NUMBER));
                 String email = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_DOCTOR_EMAIL));
 
-                doctorList.add(new Doctor(image, name, specialty, availability, phone, email));
+                String schedule = getDoctorSchedule(db, cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_ID)));
+
+                doctorList.add(new Doctor(image, name, specialization, schedule, phone_number, email));
             }
             cursor.close();
         }
 
         db.close();
         doctorAdapter.notifyDataSetChanged();
+
+    }
+
+    private String getDoctorSchedule(SQLiteDatabase db, int doctorId) {
+
+        StringBuilder scheduleBuilder = new StringBuilder();
+        Cursor cursor = db.query(DatabaseHelper.TABLE_DOCTOR_SCHEDULE,
+                null,
+                DatabaseHelper.COLUMN_DOCTOR_ID + "=?",
+                new String[]{String.valueOf(doctorId)},
+                null,
+                null,
+                null);
+
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                String dayOfWeek = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_DAY_OF_WEEK));
+                String startTime = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_START_TIME));
+                String endTime = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_END_TIME));
+
+                scheduleBuilder.append(dayOfWeek).append(": ").append(startTime).append(" - ").append(endTime).append("\n");
+            }
+            cursor.close();
+        }
+
+        return scheduleBuilder.toString().trim();
 
     }
 
