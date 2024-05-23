@@ -9,14 +9,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //DB (Name + Version)
     private static final String DATABASE_NAME = "dentalhub.db";
-    private static final int DATABASE_VERSION = 16;
+    private static final int DATABASE_VERSION = 18;
 
 
     //Table names
     public static final String TABLE_SYMPTOMS = "symptoms";
     public static final String TABLE_DISEASES = "diseases";
     public static final String TABLE_DISEASE_SYMPTOMS = "disease_symptoms";
-    public static final String TABLE_CLINICS = "clinics";
     public static final String TABLE_DEVICES = "devices";
     public static final String TABLE_TIPS = "tips";
     public static final String TABLE_APPOINTMENTS = "appointments";
@@ -26,6 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_SERVICES = "services";
     public static final String TABLE_SERVICE_SPECIALIZATIONS = "service_specializations";
     public static final String TABLE_INSURANCES = "insurances";
+    public static final String TABLE_DOCTOR_LOCATION = "doctor_location";
 
 
     //Common column names
@@ -43,12 +43,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //Disease-Symptoms: column names
     public static final String COLUMN_DISEASE_ID = "disease_id";
     public static final String COLUMN_SYMPTOM_ID = "symptom_id";
-
-
-    //Clinics: column names
-    public static final String COLUMN_CLINIC_ADDRESS = "address";
-    public static final String COLUMN_CLINIC_PHONE = "phone";
-    public static final String COLUMN_CLINIC_EMAIL = "email";
 
 
     //Devices: column names
@@ -84,8 +78,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_END_TIME = "end_time";
 
 
+    //Doctor Location: column names
+    public static final String COLUMN_LOCATION_ID = "location_id";
+
     //Locations: column names
     public static final String COLUMN_LOCATION_ADDRESS = "address";
+    public static final String COLUMN_LOCATION_PHONE = "phone";
+    public static final String COLUMN_LOCATION_EMAIL = "email";
 
 
     //Services: column names
@@ -118,12 +117,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + "FOREIGN KEY(" + COLUMN_DISEASE_ID + ") REFERENCES " + TABLE_DISEASES + "(" + COLUMN_ID + "),"
             + "FOREIGN KEY(" + COLUMN_SYMPTOM_ID + ") REFERENCES " + TABLE_SYMPTOMS + "(" + COLUMN_ID + "))";
 
-    private static final String CREATE_TABLE_CLINICS = "CREATE TABLE "
-            + TABLE_CLINICS + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + COLUMN_CLINIC_ADDRESS + " TEXT,"
-            + COLUMN_CLINIC_PHONE + " TEXT,"
-            + COLUMN_CLINIC_EMAIL + " TEXT" + ")";
-
     private static final String CREATE_TABLE_DEVICES = "CREATE TABLE "
             + TABLE_DEVICES + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + COLUMN_DEVICE_NAME + " TEXT," + COLUMN_DEVICE_DESCRIPTION + " TEXT,"
@@ -142,7 +135,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String CREATE_TABLE_LOCATIONS = "CREATE TABLE "
             + TABLE_LOCATIONS + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + COLUMN_LOCATION_ADDRESS + " TEXT" + ")";
+            + COLUMN_LOCATION_ADDRESS + " TEXT,"
+            + COLUMN_LOCATION_PHONE + " TEXT,"
+            + COLUMN_LOCATION_EMAIL + " TEXT" + ")";
 
     private static final String CREATE_TABLE_DOCTORS = "CREATE TABLE "
             + TABLE_DOCTORS + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -155,6 +150,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + COLUMN_DOCTOR_ID + " INTEGER," + COLUMN_DAY_OF_WEEK + " TEXT,"
             + COLUMN_START_TIME + " TEXT," + COLUMN_END_TIME + " TEXT,"
             + "FOREIGN KEY(" + COLUMN_DOCTOR_ID + ") REFERENCES " + TABLE_DOCTORS + "(" + COLUMN_ID + "))";
+
+    private static final String CREATE_TABLE_DOCTOR_LOCATIONS = "CREATE TABLE "
+            + TABLE_DOCTOR_LOCATION + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + COLUMN_DOCTOR_ID + " INTEGER," + COLUMN_LOCATION_ID + " INTEGER,"
+            + "FOREIGN KEY(" + COLUMN_DOCTOR_ID + ") REFERENCES " + TABLE_DOCTORS + "(" + COLUMN_ID + "),"
+            + "FOREIGN KEY(" + COLUMN_LOCATION_ID + ") REFERENCES " + TABLE_LOCATIONS + "(" + COLUMN_ID + "))";
 
     private static final String CREATE_TABLE_SERVICES = "CREATE TABLE "
             + TABLE_SERVICES + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -178,13 +179,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_SYMPTOMS);
         db.execSQL(CREATE_TABLE_DISEASES);
         db.execSQL(CREATE_TABLE_DISEASE_SYMPTOMS);
-        db.execSQL(CREATE_TABLE_CLINICS);
         db.execSQL(CREATE_TABLE_DEVICES);
         db.execSQL(CREATE_TABLE_TIPS);
         db.execSQL(CREATE_TABLE_APPOINTMENTS);
         db.execSQL(CREATE_TABLE_LOCATIONS);
         db.execSQL(CREATE_TABLE_DOCTORS);
         db.execSQL(CREATE_TABLE_DOCTOR_SCHEDULE);
+        db.execSQL(CREATE_TABLE_DOCTOR_LOCATIONS);
         db.execSQL(CREATE_TABLE_SERVICES);
         db.execSQL(CREATE_TABLE_SERVICE_SPECIALIZATIONS);
         db.execSQL(CREATE_TABLE_INSURANCES);
@@ -197,13 +198,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SYMPTOMS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_DISEASES);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_DISEASE_SYMPTOMS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CLINICS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_DEVICES);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TIPS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_APPOINTMENTS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_LOCATIONS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_DOCTORS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_DOCTOR_SCHEDULE);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_DOCTOR_LOCATION);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SERVICES);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SERVICE_SPECIALIZATIONS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_INSURANCES);
@@ -217,13 +218,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DELETE FROM " + TABLE_SYMPTOMS);
         db.execSQL("DELETE FROM " + TABLE_DISEASES);
         db.execSQL("DELETE FROM " + TABLE_DISEASE_SYMPTOMS);
-        db.execSQL("DELETE FROM " + TABLE_CLINICS);
         db.execSQL("DELETE FROM " + TABLE_DEVICES);
         db.execSQL("DELETE FROM " + TABLE_TIPS);
         db.execSQL("DELETE FROM " + TABLE_APPOINTMENTS);
         db.execSQL("DELETE FROM " + TABLE_LOCATIONS);
         db.execSQL("DELETE FROM " + TABLE_DOCTORS);
         db.execSQL("DELETE FROM " + TABLE_DOCTOR_SCHEDULE);
+        db.execSQL("DELETE FROM " + TABLE_DOCTOR_LOCATION);
         db.execSQL("DELETE FROM " + TABLE_SERVICES);
         db.execSQL("DELETE FROM " + TABLE_SERVICE_SPECIALIZATIONS);
         db.execSQL("DELETE FROM " + TABLE_INSURANCES);

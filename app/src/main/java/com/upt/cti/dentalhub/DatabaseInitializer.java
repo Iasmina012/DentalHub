@@ -26,7 +26,6 @@ public class DatabaseInitializer {
                 insertSymptoms(db);
                 insertDiseases(db);
                 insertDiseaseSymptoms(db);
-                insertClinics(db);
                 insertDevices(db);
                 insertTips(db);
                 insertLocations(db);
@@ -119,23 +118,6 @@ public class DatabaseInitializer {
 
     }
 
-    private void insertClinics(SQLiteDatabase db) {
-
-        String[][] clinics = {
-                {"425 Broadway Suite 22, New York, NY 10018", "123-456-7890", "clinic1@example.com"},
-                {"58 Wall Street Suite 100, New York, NY 10005", "098-765-4321", "clinic2@example.com"}
-        };
-
-        for (String[] clinic : clinics) {
-            ContentValues values = new ContentValues();
-            values.put(DatabaseHelper.COLUMN_CLINIC_ADDRESS, clinic[0]);
-            values.put(DatabaseHelper.COLUMN_CLINIC_PHONE, clinic[1]);
-            values.put(DatabaseHelper.COLUMN_CLINIC_EMAIL, clinic[2]);
-            db.insert(DatabaseHelper.TABLE_CLINICS, null, values);
-        }
-
-    }
-
     private void insertDevices(SQLiteDatabase db) {
 
         String[][] devices = {
@@ -188,14 +170,16 @@ public class DatabaseInitializer {
 
     private void insertLocations(SQLiteDatabase db) {
 
-        String[] locations = {
-                "425 Broadway Suite 22\nNew York, NY 10018\nClinic 1",
-                "58 Wall Street Suite 100\nNew York, NY 10005\nClinic 2"
+        String[][] locations = {
+                { "1425 Broadway Suite 22\nNew York, NY 10018\nClinic 1", "+40 (256) 867 346", "head@office.com"},
+                { "58 Wall Street Suite 100\nNew York, NY 10005\nClinic 2", "+40 (758) 364 567", "office@office.com"}
         };
 
-        for (String location : locations) {
+        for (String[] location : locations) {
             ContentValues values = new ContentValues();
-            values.put(DatabaseHelper.COLUMN_LOCATION_ADDRESS, location);
+            values.put(DatabaseHelper.COLUMN_LOCATION_ADDRESS, location[0]);
+            values.put(DatabaseHelper.COLUMN_LOCATION_PHONE, location[1]);
+            values.put(DatabaseHelper.COLUMN_LOCATION_EMAIL, location[2]);
             db.insert(DatabaseHelper.TABLE_LOCATIONS, null, values);
         }
 
@@ -208,10 +192,18 @@ public class DatabaseInitializer {
         String[] specializations = {"General Dentist", "Orthodontist", "Implantologist", "Pedodontist", "Prosthodontist", "Any Specialization"};
         String[] phone_numbers = {"0721122334", "0723456789", "0734567890", "0745678901", "0756789012", "0256986274"};
         String[] emails = {"daniela@gmail.com", "ana@yahoo.com", "maria@yahoo.com", "andrei@gmail.com", "elena@gmail.com", "doctors@gmail.com"};
+        long[] locationIds = {1, 2};
 
         for (int i = 0; i < names.length; i++) {
             long doctorId = insertDoctor(db, names[i], images[i], specializations[i], phone_numbers[i], emails[i]);
             insertDoctorSchedules(db, doctorId, i);
+            if (i == 5) { //"Any Doctor"
+                for (long locationId : locationIds) {
+                    insertDoctorLocation(db, doctorId, locationId);
+                }
+            } else {
+                insertDoctorLocation(db, doctorId, locationIds[i % 2]);
+            }
         }
 
     }
@@ -265,6 +257,15 @@ public class DatabaseInitializer {
             values.put(DatabaseHelper.COLUMN_END_TIME, endTimes[doctorIndex][i]);
             db.insert(DatabaseHelper.TABLE_DOCTOR_SCHEDULE, null, values);
         }
+
+    }
+
+    private void insertDoctorLocation(SQLiteDatabase db, long doctorId, long locationId) {
+
+        ContentValues values = new ContentValues();
+        values.put(DatabaseHelper.COLUMN_DOCTOR_ID, doctorId);
+        values.put(DatabaseHelper.COLUMN_LOCATION_ID, locationId);
+        db.insert(DatabaseHelper.TABLE_DOCTOR_LOCATION, null, values);
 
     }
 

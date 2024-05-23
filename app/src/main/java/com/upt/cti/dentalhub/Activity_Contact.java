@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
 public class Activity_Contact extends BaseActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -40,6 +44,8 @@ public class Activity_Contact extends BaseActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact);
 
+        addAddressOptions();
+
         SearchView searchView = findViewById(R.id.searchView);
         searchView.setQueryHint("Search for an office here ...");
 
@@ -48,6 +54,8 @@ public class Activity_Contact extends BaseActivity implements OnMapReadyCallback
             dialog.setContentView(R.layout.popup_message);
             Objects.requireNonNull(dialog.getWindow()).setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             dialog.show();
+
+            addPopupOptions(dialog);
 
             FloatingActionButton fab = dialog.findViewById(R.id.floatingActionButton);
             fab.setOnClickListener(v -> {
@@ -121,12 +129,22 @@ public class Activity_Contact extends BaseActivity implements OnMapReadyCallback
 
     private void setInitialLocation() {
 
-        String location = "1425 Broadway Suite 22, New York, NY 10018";
-        LatLng latLng = getLocationFromAddress(location);
-        if (latLng != null) {
-            mMap.addMarker(new MarkerOptions().position(latLng).title("Headquarters"));
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        Cursor cursor = db.query(DatabaseHelper.TABLE_LOCATIONS, null, null, null, null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            String address = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_LOCATION_ADDRESS));
+            LatLng latLng = getLocationFromAddress(address);
+            if (latLng != null) {
+                mMap.addMarker(new MarkerOptions().position(latLng).title("Headquarters"));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+            }
+            cursor.close();
         }
+
+        db.close();
 
     }
 
@@ -197,6 +215,68 @@ public class Activity_Contact extends BaseActivity implements OnMapReadyCallback
                 Toast.makeText(this, "Location permission denied!", Toast.LENGTH_SHORT).show();
             }
         }
+
+    }
+
+    private void addAddressOptions() {
+
+        SQLiteDatabase db = new DatabaseHelper(this).getReadableDatabase();
+        Cursor cursor = db.query(DatabaseHelper.TABLE_LOCATIONS, null, null, null, null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            TextView headquartersAddress = findViewById(R.id.textViewAddress1);
+            TextView officeAddress = findViewById(R.id.textViewAddress2);
+
+            int addressIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_LOCATION_ADDRESS);
+            if (addressIndex != -1) {
+                String location1 = cursor.getString(addressIndex);
+                headquartersAddress.setText(location1);
+
+                if (cursor.moveToNext()) {
+                    String location2 = cursor.getString(addressIndex);
+                    officeAddress.setText(location2);
+                }
+            } else {
+                Log.e("DatabaseError", "Address column not found");
+            }
+            cursor.close();
+        }
+
+        db.close();
+
+    }
+
+    private void addPopupOptions(Dialog dialog) {
+
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        Cursor cursor = db.query(DatabaseHelper.TABLE_LOCATIONS, null, null, null, null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            String email = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_LOCATION_EMAIL));
+            String phone = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_LOCATION_PHONE));
+
+            TextView emailTextView1 = dialog.findViewById(R.id.textViewEmail1);
+            TextView emailTextView2 = dialog.findViewById(R.id.textViewEmail2);
+            TextView phoneTextView1 = dialog.findViewById(R.id.textViewPhoneNumber1);
+            TextView phoneTextView2 = dialog.findViewById(R.id.textViewPhoneNumber2);
+
+            emailTextView1.setText(email);
+            phoneTextView1.setText(phone);
+
+            if (cursor.moveToNext()) {
+                email = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_LOCATION_EMAIL));
+                phone = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_LOCATION_PHONE));
+
+                emailTextView2.setText(email);
+                phoneTextView2.setText(phone);
+            }
+
+            cursor.close();
+        }
+
+        db.close();
 
     }
 

@@ -117,9 +117,6 @@
     <string name="phone_number">Phone Number</string>
     <string name="name_hint">Name</string>
     <string name="message_hint">Message</string>
-    <string name="office_email">dental@office.com</string>
-    <string name="phone_number1">+40 (256) 867 346</string>
-    <string name="phone_number2">+40 (758) 364 567</string>
     <string name="close_button">Close</string>
     <!-- Content Description -->
     <string name="close_button_description">Close Button</string>

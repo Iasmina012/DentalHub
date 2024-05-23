@@ -77,8 +77,7 @@
                 android:layout_toEndOf="@+id/imageView1"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:text="@string/headquarters_address"
-                android:textSize="18sp"/>
+                android:textSize="16sp"/>
 
         </RelativeLayout>
 
@@ -119,8 +118,7 @@
                 android:layout_marginTop="4dp"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:text="@string/local_office_address"
-                android:textSize="18sp"/>
+                android:textSize="16sp"/>
 
         </RelativeLayout>
 

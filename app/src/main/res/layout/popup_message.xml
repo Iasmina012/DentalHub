@@ -97,14 +97,24 @@
                             android:textSize="12sp"/>
 
                         <TextView
-                            android:id="@+id/textViewAddress1"
+                            android:id="@+id/textViewEmail1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/textViewEmail"
                             android:layout_marginStart="1dp"
                             android:layout_marginTop="5dp"
                             android:layout_toEndOf="@+id/imageView1"
-                            android:text="@string/office_email"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"/>
+
+                        <TextView
+                            android:id="@+id/textViewEmail2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/textViewEmail1"
+                            android:layout_marginStart="1dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_toEndOf="@+id/imageView1"
                             android:textColor="@color/white"
                             android:textSize="12sp"/>
 
@@ -112,7 +122,7 @@
                             android:id="@+id/imageView2"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:layout_toEndOf="@id/textViewAddress1"
+                            android:layout_toEndOf="@id/textViewEmail"
                             android:layout_marginStart="50dp"
                             android:padding="8dp"
                             android:src="@drawable/contact"
@@ -139,7 +149,6 @@
                             android:layout_marginStart="1dp"
                             android:layout_marginTop="5dp"
                             android:layout_toEndOf="@+id/imageView2"
-                            android:text="@string/phone_number1"
                             android:textColor="@color/white"
                             android:textSize="12sp"/>
 
@@ -151,7 +160,6 @@
                             android:layout_marginStart="1dp"
                             android:layout_marginTop="5dp"
                             android:layout_toEndOf="@+id/imageView2"
-                            android:text="@string/phone_number2"
                             android:textColor="@color/white"
                             android:textSize="12sp"/>
 
