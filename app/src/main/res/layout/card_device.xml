@@ -9,7 +9,7 @@
     android:layout_marginTop="15dp"
     android:layout_marginRight="12dp"
     android:layout_marginBottom="15dp"
-    android:background="@drawable/rounded_bg"
+    android:background="@drawable/rounded_bg_light_teal"
     android:padding="16dp">
 
     <LinearLayout

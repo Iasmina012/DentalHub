@@ -93,6 +93,11 @@
     <string name="cancel_button">Cancel</string>
     <string name="book_an_appointment">Book An Appointment</string>
     <string name="no_appointments_found">You have no appointments yet.</string>
+    <string name="no_appointments_found_doctor">You have no upcoming appointments.</string>
+    <string name="no_appointments_found_admin">There are no appointments yet.</string>
+    <string name="admin_panel">Admin Panel</string>
+    <string name="doctor_panel">Doctor Panel</string>
+    <string name="patient">Patient</string>
     <string name="welcome_simple">Welcome!</string>
     <string name="time_left">In x days</string>
     <string name="doctor">Doctor</string>

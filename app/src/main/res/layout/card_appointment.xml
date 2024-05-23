@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:layout_margin="12dp"
-    android:background="@drawable/rounded_bg">
+    android:background="@drawable/rounded_bg_light_teal">
 
     <TextView
         android:id="@+id/textViewLeft"

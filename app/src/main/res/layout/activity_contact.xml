@@ -35,7 +35,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="10dp"
         android:orientation="vertical"
-        android:background="@drawable/rounded_bg"
+        android:background="@drawable/rounded_bg_light_teal"
         android:elevation="4dp">
 
         <RelativeLayout

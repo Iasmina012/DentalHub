@@ -105,7 +105,7 @@ public class Activity_SelectService extends BaseActivity {
 
                 Button button = new Button(this);
                 button.setText(serviceName);
-                button.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_bg));
+                button.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_bg_light_teal));
                 button.setPadding(16, 16, 16, 16);
                 button.setTextColor(ContextCompat.getColor(this, R.color.grey));
 
@@ -170,7 +170,7 @@ public class Activity_SelectService extends BaseActivity {
             deselectButton(previouslySelectedButton);
         }
 
-        selectedButton.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_bg_selected));
+        selectedButton.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_bg_dark_teal));
         selectedButton.setTextColor(ContextCompat.getColor(this, R.color.white));
 
         Animation anim = AnimationUtils.loadAnimation(this, R.anim.scale);
@@ -182,7 +182,7 @@ public class Activity_SelectService extends BaseActivity {
 
     private void deselectButton(Button button) {
 
-        button.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_bg));
+        button.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_bg_light_teal));
         button.setTextColor(ContextCompat.getColor(this, R.color.grey));
 
         Animation reverseAnim = AnimationUtils.loadAnimation(this, R.anim.scale_reverse);
