@@ -41,7 +41,7 @@ public class TipFragment extends Fragment {
 
         TextView titleTextView = view.findViewById(R.id.titleTextView);
         TextView descriptionTextView = view.findViewById(R.id.descriptionTextView);
-        ImageView imageView = view.findViewById(R.id.imageViewDevice);
+        ImageView imageView = view.findViewById(R.id.imageViewTip);
 
         Bundle args = getArguments();
         if (args != null) {

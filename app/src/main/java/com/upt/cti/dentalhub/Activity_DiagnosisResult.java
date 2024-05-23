@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Activity_DiagnosisResult extends BaseActivity {
+public class Activity_DiagnosisResult extends AppCompatActivity {
 
     private TextView textViewDiagnosis;
 
