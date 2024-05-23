@@ -9,7 +9,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //DB (Name + Version)
     private static final String DATABASE_NAME = "dentalhub.db";
-    private static final int DATABASE_VERSION = 18;
+    private static final int DATABASE_VERSION = 21;
 
 
     //Table names
@@ -69,6 +69,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_DOCTOR_SPECIALIZATION = "specialization";
     public static final String COLUMN_DOCTOR_PHONE_NUMBER = "phone_number";
     public static final String COLUMN_DOCTOR_EMAIL = "email";
+    public static final String COLUMN_DOCTOR_PASSWORD = "password";
 
 
     //Doctor Schedule: column names
@@ -80,6 +81,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //Doctor Location: column names
     public static final String COLUMN_LOCATION_ID = "location_id";
+
 
     //Locations: column names
     public static final String COLUMN_LOCATION_ADDRESS = "address";
@@ -143,7 +145,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + TABLE_DOCTORS + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + COLUMN_DOCTOR_NAME + " TEXT," + COLUMN_DOCTOR_IMAGE + " INTEGER,"
             + COLUMN_DOCTOR_SPECIALIZATION + " TEXT,"
-            + COLUMN_DOCTOR_PHONE_NUMBER + " TEXT," + COLUMN_DOCTOR_EMAIL + " TEXT" + ")";
+            + COLUMN_DOCTOR_PHONE_NUMBER + " TEXT," + COLUMN_DOCTOR_EMAIL + " TEXT,"
+            + COLUMN_DOCTOR_PASSWORD + " TEXT DEFAULT 'Doctor123#'" + ")";
 
     private static final String CREATE_TABLE_DOCTOR_SCHEDULE = "CREATE TABLE "
             + TABLE_DOCTOR_SCHEDULE + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"

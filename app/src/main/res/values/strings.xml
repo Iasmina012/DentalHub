@@ -15,6 +15,9 @@
     <string name="sign_in">Sign In</string>
     <string name="new_user_prompt">Don\'t have an account? Sign Up</string>
     <string name="forgot_password">Forgot Password?</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="change_password_button">Change Password</string>
     <!-- Content Description -->
     <string name="email_icon_description">Email Icon</string>
     <string name="password_icon_description">Password Icon</string>

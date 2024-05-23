@@ -3,6 +3,8 @@ package com.upt.cti.dentalhub;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,7 +27,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Objects;
 
-
 public class Activity_Login extends AppCompatActivity {
 
     EditText userEmail;
@@ -33,6 +35,9 @@ public class Activity_Login extends AppCompatActivity {
     Button forgotPassword;
     Button newUser;
     private FirebaseAuth mAuth;
+    private static final String ADMIN_EMAIL = "admin@admin.com";
+    private static final String ADMIN_DEFAULT_PASSWORD = "Admin123#";
+    private static final String DOCTOR_DEFAULT_PASSWORD = "Doctor123#";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +50,7 @@ public class Activity_Login extends AppCompatActivity {
         signIn = findViewById(R.id.buttonSignIn);
         forgotPassword = findViewById(R.id.buttonForgotPassword);
         newUser = findViewById(R.id.buttonNewUser);
+
         setAuthInstance();
 
         signIn.setOnClickListener(v -> onLogInUser());
@@ -55,30 +61,15 @@ public class Activity_Login extends AppCompatActivity {
 
     }
 
-    private String getUserEmail() {
-        return userEmail.getText().toString().trim();
-    }
+    private String getUserEmail() { return userEmail.getText().toString().trim(); }
 
-    private String getUserPassword() {
-        return userPassword.getText().toString().trim();
-    }
+    private String getUserPassword() { return userPassword.getText().toString().trim(); }
 
     public boolean validate() {
 
         boolean valid = true;
         String email = userEmail.getText().toString();
         String password = userPassword.getText().toString();
-
-        String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}";
-
-        /*
-        (?=.*[0-9]): Cel putin un caracter numeric
-        (?=.*[a-z]): Cel putin un caracter litera mica
-        (?=.*[A-Z]): Cel putin un caracter litera mare
-        (?=.*[@#$%^&+=]): Cel putin un caracter special dintre @#$%^&+=
-        (?=\S+$): Nu contine spatii albe
-        .{8,}: Lungimea minima a parolei este de 8 caractere
-         */
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             userEmail.setError("Enter a valid email address!");
@@ -87,8 +78,8 @@ public class Activity_Login extends AppCompatActivity {
             userPassword.setError(null);
         }
 
-        if (password.isEmpty() || (password.length() < 8 || !password.matches(pattern))) {
-            userPassword.setError("The password must contain at least one lowercase letter, one uppercase letter, one numeric digit, one special character (@#$%^&+=) and have a minimum length of 8 characters!");
+        if (password.isEmpty() || password.length() < 8) {
+            userPassword.setError("The password must have a minimum length of 8 characters!");
             valid = false;
         } else {
             userPassword.setError(null);
@@ -98,9 +89,7 @@ public class Activity_Login extends AppCompatActivity {
 
     }
 
-    private void setAuthInstance() {
-        mAuth = FirebaseAuth.getInstance();
-    }
+    private void setAuthInstance() { mAuth = FirebaseAuth.getInstance(); }
 
     private void onLogInUser() {
 
@@ -120,24 +109,95 @@ public class Activity_Login extends AppCompatActivity {
         progressDialog.show();
 
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, task -> {
-
             progressDialog.dismiss();
 
             if (task.isSuccessful()) {
-                goToMainActivity();
+                FirebaseUser user = mAuth.getCurrentUser();
+                if (user != null) {
+                    if (isAdmin(email)) {
+                        if (isFirstLogin(password, ADMIN_DEFAULT_PASSWORD)) {
+                            goToChangePasswordActivity(user.getEmail(), "admin");
+                        } else {
+                            goToAdminActivity();
+                        }
+                    } else if (isDoctor(email)) {
+                        if (isFirstLogin(password, DOCTOR_DEFAULT_PASSWORD)) {
+                            goToChangePasswordActivity(user.getEmail(), "doctor");
+                        } else {
+                            goToDoctorActivity();
+                        }
+                    } else {
+                        goToMainActivity();
+                    }
+                }
             } else {
                 Toast.makeText(getApplicationContext(), " " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                 userPassword.setText("");
                 userPassword.requestFocus();
             }
-
         });
 
     }
 
+    private boolean isAdmin(String email) { return ADMIN_EMAIL.equals(email); }
+
+    private boolean isDoctor(String email) {
+
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String query = "SELECT COUNT(*) FROM " + DatabaseHelper.TABLE_DOCTORS + " WHERE " + DatabaseHelper.COLUMN_DOCTOR_EMAIL + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{email});
+
+        boolean isDoctor = false;
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                isDoctor = cursor.getInt(0) > 0;
+            }
+            cursor.close();
+        }
+
+        db.close();
+        return isDoctor;
+
+    }
+
+    private boolean isFirstLogin(String password, String defaultPassword) { return defaultPassword.equals(password); }
+
     private void goToMainActivity() {
 
         Intent intent = new Intent(Activity_Login.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
+    }
+
+    private void goToAdminActivity() {
+
+        Intent intent = new Intent(Activity_Login.this, AdminActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
+    }
+
+    private void goToDoctorActivity() {
+
+        Intent intent = new Intent(Activity_Login.this, DoctorActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
+    }
+
+    private void goToChangePasswordActivity(String email, String role) {
+
+        Intent intent = new Intent(Activity_Login.this, Activity_ChangePassword.class);
+        intent.putExtra("email", email);
+        intent.putExtra("role", role);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
@@ -172,19 +232,14 @@ public class Activity_Login extends AppCompatActivity {
         final AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
 
-        //initially disable the OK button
         final Button okButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
         okButton.setEnabled(false);
 
-        //add text watcher to the email field to enable/disable the OK button
         userMail.addTextChangedListener(new TextWatcher() {
-
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
             @Override
             public void afterTextChanged(Editable editable) {
 
@@ -200,7 +255,6 @@ public class Activity_Login extends AppCompatActivity {
             }
         });
 
-        //set the positive button click listener
         okButton.setOnClickListener(v -> {
             String email = userMail.getText().toString().trim();
             if (!email.isEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
@@ -220,7 +274,6 @@ public class Activity_Login extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 if (dataSnapshot.exists()) {
-                    //email exists, send the reset email
                     mAuth.sendPasswordResetEmail(email)
                             .addOnSuccessListener(aVoid -> {
                                 Toast.makeText(Activity_Login.this, "Reset password email sent successfully", Toast.LENGTH_SHORT).show();
@@ -228,7 +281,6 @@ public class Activity_Login extends AppCompatActivity {
                             })
                             .addOnFailureListener(e -> Toast.makeText(Activity_Login.this, "Failed to send reset password email: " + e.getMessage(), Toast.LENGTH_SHORT).show());
                 } else {
-                    //email does not exist
                     Toast.makeText(Activity_Login.this, "No account found with this email address", Toast.LENGTH_SHORT).show();
                 }
 
@@ -239,6 +291,7 @@ public class Activity_Login extends AppCompatActivity {
                 Toast.makeText(Activity_Login.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
 }

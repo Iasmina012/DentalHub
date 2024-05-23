@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import timber.log.Timber;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 public class DatabaseInitializer {
 
     private DatabaseHelper dbHelper;
@@ -185,17 +187,20 @@ public class DatabaseInitializer {
 
     }
 
+    private String hashPassword(String plainTextPassword) { return BCrypt.hashpw(plainTextPassword, BCrypt.gensalt()); }
+
     private void insertDoctors(SQLiteDatabase db) {
 
+        long[] locationIds = {1, 2};
         String[] names = {"Dr. Daniela Pop", "Dr. Ana Maria Popescu", "Dr. Andrei Radu", "Dr. Maria Ionescu", "Dr. Elena Popa", "Any Doctor"};
         int[] images = {R.drawable.doctor01, R.drawable.doctor02, R.drawable.doctor03, R.drawable.doctor04, R.drawable.doctor05, R.drawable.doctors};
         String[] specializations = {"General Dentist", "Orthodontist", "Implantologist", "Pedodontist", "Prosthodontist", "Any Specialization"};
         String[] phone_numbers = {"0721122334", "0723456789", "0734567890", "0745678901", "0756789012", "0256986274"};
         String[] emails = {"daniela@gmail.com", "ana@yahoo.com", "maria@yahoo.com", "andrei@gmail.com", "elena@gmail.com", "doctors@gmail.com"};
-        long[] locationIds = {1, 2};
+        String password = "Doctor123#";
 
         for (int i = 0; i < names.length; i++) {
-            long doctorId = insertDoctor(db, names[i], images[i], specializations[i], phone_numbers[i], emails[i]);
+            long doctorId = insertDoctor(db, names[i], images[i], specializations[i], phone_numbers[i], emails[i], password);
             insertDoctorSchedules(db, doctorId, i);
             if (i == 5) { //"Any Doctor"
                 for (long locationId : locationIds) {
@@ -205,10 +210,9 @@ public class DatabaseInitializer {
                 insertDoctorLocation(db, doctorId, locationIds[i % 2]);
             }
         }
-
     }
 
-    private long insertDoctor(SQLiteDatabase db, String name, int image, String specialization, String phone_number, String email) {
+    private long insertDoctor(SQLiteDatabase db, String name, int image, String specialization, String phone_number, String email, String password) {
 
         ContentValues values = new ContentValues();
         values.put(DatabaseHelper.COLUMN_DOCTOR_NAME, name);
@@ -216,6 +220,7 @@ public class DatabaseInitializer {
         values.put(DatabaseHelper.COLUMN_DOCTOR_SPECIALIZATION, specialization);
         values.put(DatabaseHelper.COLUMN_DOCTOR_PHONE_NUMBER, phone_number);
         values.put(DatabaseHelper.COLUMN_DOCTOR_EMAIL, email);
+        values.put(DatabaseHelper.COLUMN_DOCTOR_PASSWORD, hashPassword("Doctor123#"));
         return db.insert(DatabaseHelper.TABLE_DOCTORS, null, values);
 
     }
