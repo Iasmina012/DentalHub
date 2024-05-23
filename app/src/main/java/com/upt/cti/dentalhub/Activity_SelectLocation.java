@@ -17,6 +17,11 @@ public class Activity_SelectLocation extends BaseActivity {
     private Button buttonNext, buttonBack;
     private String appointmentId;
     private String selectedLocation;
+    private String selectedDoctor;
+    private String selectedService;
+    private String selectedDate;
+    private String selectedTime;
+    private String selectedInsurance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +36,11 @@ public class Activity_SelectLocation extends BaseActivity {
         Intent intent = getIntent();
         appointmentId = intent.getStringExtra("appointmentId");
         selectedLocation = intent.getStringExtra("selectedLocation");
+        selectedDoctor = intent.getStringExtra("selectedDoctor");
+        selectedService = intent.getStringExtra("selectedService");
+        selectedDate = intent.getStringExtra("selectedDate");
+        selectedTime = intent.getStringExtra("selectedTime");
+        selectedInsurance = intent.getStringExtra("selectedInsurance");
 
         if (appointmentId != null) {
             Log.d("Activity_SelectLocation", "Appointment ID received: " + appointmentId);
@@ -41,7 +51,9 @@ public class Activity_SelectLocation extends BaseActivity {
         addLocationOptions();
 
         buttonNext.setOnClickListener(v -> {
+
             int selectedId = radioGroupLocations.getCheckedRadioButtonId();
+
             if (selectedId != -1) {
                 RadioButton selectedRadioButton = findViewById(selectedId);
                 selectedLocation = selectedRadioButton.getText().toString();
@@ -49,11 +61,11 @@ public class Activity_SelectLocation extends BaseActivity {
                 Intent nextIntent = new Intent(Activity_SelectLocation.this, Activity_SelectDoctor.class);
                 nextIntent.putExtra("appointmentId", appointmentId);
                 nextIntent.putExtra("selectedLocation", selectedLocation);
-                nextIntent.putExtra("selectedDoctor", getIntent().getStringExtra("selectedDoctor"));
-                nextIntent.putExtra("selectedService", getIntent().getStringExtra("selectedService"));
-                nextIntent.putExtra("selectedDate", getIntent().getStringExtra("selectedDate"));
-                nextIntent.putExtra("selectedTime", getIntent().getStringExtra("selectedTime"));
-                nextIntent.putExtra("selectedInsurance", getIntent().getStringExtra("selectedInsurance"));
+                nextIntent.putExtra("selectedDoctor", selectedDoctor);
+                nextIntent.putExtra("selectedService", selectedService);
+                nextIntent.putExtra("selectedDate", selectedDate);
+                nextIntent.putExtra("selectedTime", selectedTime);
+                nextIntent.putExtra("selectedInsurance", selectedInsurance);
                 startActivity(nextIntent);
             } else {
                 Toast.makeText(Activity_SelectLocation.this, "Please select a location!", Toast.LENGTH_SHORT).show();
@@ -77,11 +89,13 @@ public class Activity_SelectLocation extends BaseActivity {
                 RadioButton radioButton = new RadioButton(this);
                 radioButton.setText(address);
                 radioButton.setTextSize(20);
+
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
                 );
                 params.setMargins(0, 0, 0, 18);
+
                 radioButton.setLayoutParams(params);
                 radioGroupLocations.addView(radioButton);
 

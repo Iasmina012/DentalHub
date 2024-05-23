@@ -54,7 +54,8 @@
             android:layout_height="40dp"
             android:src="@drawable/calendar"
             android:padding="1dp"
-            app:tint="@color/darkTeal"/>
+            app:tint="@color/darkTeal"
+            android:contentDescription="@string/calendar_icon_description" />
 
         <TextView
             android:id="@+id/textViewDate"
@@ -78,7 +79,8 @@
             android:layout_height="40dp"
             android:src="@drawable/clock"
             android:padding="10dp"
-            app:tint="@color/darkTeal"/>
+            app:tint="@color/darkTeal"
+            android:contentDescription="@string/clock_icon_description" />
 
         <TextView
             android:id="@+id/textViewTime"
@@ -102,7 +104,8 @@
             android:layout_height="40dp"
             android:src="@drawable/location"
             android:padding="8dp"
-            app:tint="@color/darkTeal"/>
+            app:tint="@color/darkTeal"
+            android:contentDescription="@string/location_icon_description" />
 
         <TextView
             android:id="@+id/textViewLocation"
@@ -113,12 +116,31 @@
             android:textStyle="bold"/>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/buttonReschedule"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Reschedule"
+        android:orientation="horizontal"
         android:layout_marginTop="16dp"
-        android:textColor="@android:color/white"/>
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/buttonReschedule"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/reschedule_button"
+            android:layout_marginEnd="8dp"
+            android:textColor="@color/white"/>
+
+        <Button
+            android:id="@+id/buttonCancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cancel_button"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
 
 </LinearLayout>

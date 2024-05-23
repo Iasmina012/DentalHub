@@ -89,6 +89,8 @@
     <string name="view_my_appointments_button">VIEW MY APPOINTMENTS</string>
     <string name="next_button">Next</string>
     <string name="back_button">Back</string>
+    <string name="reschedule_button">Reschedule</string>
+    <string name="cancel_button">Cancel</string>
     <string name="book_an_appointment">Book An Appointment</string>
     <string name="no_appointments_found">You have no appointments yet.</string>
     <string name="welcome_simple">Welcome!</string>
@@ -99,6 +101,10 @@
     <string name="date">Date</string>
     <string name="time">Time</string>
     <string name="location">Location</string>
+    <!-- Content Description -->
+    <string name="calendar_icon_description">Calendar Icon</string>
+    <string name="clock_icon_description">Clock/Time Icon</string>
+    <string name="location_icon_description">Location Icon</string>
 
     <!-- Contact -->
     <string name="search_hint">Search for an office here …</string>
@@ -118,7 +124,6 @@
     <!-- Content Description -->
     <string name="close_button_description">Close Button</string>
     <string name="fab_description">Send Message Floating Action Button</string>
-    <string name="location_icon_description">Location Icon</string>
 
 
     <!-- Technologies -->

@@ -1,5 +1,6 @@
 package com.upt.cti.dentalhub;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -25,8 +27,13 @@ public class Activity_SelectInsurance extends BaseActivity {
     private RadioGroup radioGroupInsurance;
     private Button buttonBook, buttonBack;
     private String appointmentId;
-    private String selectedDoctor, selectedService, selectedDate, selectedTime, selectedInsurance, selectedLocation;
-
+    private String selectedLocation;
+    private String selectedDoctor;
+    private int selectedDoctorId;
+    private String selectedService;
+    private String selectedDate;
+    private String selectedTime;
+    private String selectedInsurance;
     private DatabaseReference db;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
@@ -57,6 +64,7 @@ public class Activity_SelectInsurance extends BaseActivity {
         appointmentId = intent.getStringExtra("appointmentId");
         selectedLocation = intent.getStringExtra("selectedLocation");
         selectedDoctor = intent.getStringExtra("selectedDoctor");
+        selectedDoctorId = intent.getIntExtra("selectedDoctorId", -1);
         selectedService = intent.getStringExtra("selectedService");
         selectedDate = intent.getStringExtra("selectedDate");
         selectedTime = intent.getStringExtra("selectedTime");
@@ -103,12 +111,14 @@ public class Activity_SelectInsurance extends BaseActivity {
                 RadioButton radioButton = new RadioButton(this);
                 radioButton.setText(insuranceName);
                 radioButton.setTextSize(20);
+
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
                 );
                 params.setMargins(0, 0, 0, 18);
                 radioButton.setLayoutParams(params);
+
                 radioGroupInsurance.addView(radioButton);
             }
             cursor.close();
@@ -121,7 +131,7 @@ public class Activity_SelectInsurance extends BaseActivity {
     private void bookAppointment() {
 
         if (appointmentId == null) {
-            // Generate a new appointment ID for new appointments
+            //generate new appointment ID
             appointmentId = db.child("appointments").push().getKey();
             if (appointmentId == null) {
                 Toast.makeText(this, "Failed to generate appointment ID!", Toast.LENGTH_SHORT).show();
@@ -139,8 +149,12 @@ public class Activity_SelectInsurance extends BaseActivity {
         appointment.put("insurance", selectedInsurance);
         appointment.put("userId", currentUser.getUid());
 
+        //Firebase
         db.child("appointments").child(appointmentId).setValue(appointment)
                 .addOnSuccessListener(aVoid -> {
+                    //SQLite
+                    addAppointmentToSQLite();
+
                     Toast.makeText(Activity_SelectInsurance.this, "Appointment booked successfully!", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "Appointment booked successfully");
 
@@ -155,6 +169,47 @@ public class Activity_SelectInsurance extends BaseActivity {
                     Toast.makeText(Activity_SelectInsurance.this, "Failed to book appointment!", Toast.LENGTH_SHORT).show();
                     Log.e(TAG, "Failed to book appointment", e);
                 });
+
+    }
+
+    private void addAppointmentToSQLite() {
+
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(DatabaseHelper.COLUMN_APPOINTMENT_DOCTOR_ID, getDoctorIdByName(selectedDoctor, db));
+        values.put(DatabaseHelper.COLUMN_APPOINTMENT_DATE, selectedDate);
+        values.put(DatabaseHelper.COLUMN_APPOINTMENT_TIME, selectedTime);
+
+        long newRowId = db.insert(DatabaseHelper.TABLE_APPOINTMENTS, null, values);
+        if (newRowId == -1) {
+            Log.e(TAG, "Failed to add appointment to SQLite");
+        } else {
+            Log.d(TAG, "Appointment added to SQLite with ID: " + newRowId);
+        }
+
+        db.close();
+
+    }
+
+    private int getDoctorIdByName(String doctorName, SQLiteDatabase db) {
+
+        Cursor cursor = db.query(DatabaseHelper.TABLE_DOCTORS,
+                new String[]{DatabaseHelper.COLUMN_ID},
+                DatabaseHelper.COLUMN_DOCTOR_NAME + "=?",
+                new String[]{doctorName},
+                null,
+                null,
+                null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            int doctorId = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_ID));
+            cursor.close();
+            return doctorId;
+        }
+
+        return -1; //cand un doctor nu e gasit
 
     }
 

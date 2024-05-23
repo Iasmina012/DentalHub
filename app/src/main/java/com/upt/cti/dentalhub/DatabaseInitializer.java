@@ -4,13 +4,16 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
 import timber.log.Timber;
 
 public class DatabaseInitializer {
 
     private DatabaseHelper dbHelper;
 
-    public DatabaseInitializer(Context context) { dbHelper = new DatabaseHelper(context); }
+    public DatabaseInitializer(Context context) {
+        dbHelper = new DatabaseHelper(context);
+    }
 
     public void insertInitialData() {
 
@@ -19,19 +22,18 @@ public class DatabaseInitializer {
         //dbHelper.clearDatabase();
 
         try {
-            //Checks if data already exists
             if (isDatabaseEmpty(db)) {
-
                 insertSymptoms(db);
                 insertDiseases(db);
                 insertDiseaseSymptoms(db);
-                insertDoctors(db);
-                insertLocations(db);
-                insertServices(db);
-                insertInsurances(db);
+                insertClinics(db);
                 insertDevices(db);
                 insertTips(db);
-
+                insertLocations(db);
+                insertDoctors(db);
+                insertServices(db);
+                insertServiceSpecializations(db);
+                insertInsurances(db);
             }
         } catch (Exception e) {
             Timber.e(e, "Error initializing database");
@@ -45,6 +47,7 @@ public class DatabaseInitializer {
 
         boolean isEmpty = true;
         Cursor cursor = null;
+
         try {
             cursor = db.query(DatabaseHelper.TABLE_SYMPTOMS, null, null, null, null, null, null);
             if (cursor != null && cursor.moveToFirst()) {
@@ -71,7 +74,9 @@ public class DatabaseInitializer {
         };
 
         for (String symptom : symptoms) {
-            insertSymptom(db, symptom);
+            ContentValues values = new ContentValues();
+            values.put(DatabaseHelper.COLUMN_SYMPTOM_NAME, symptom);
+            db.insert(DatabaseHelper.TABLE_SYMPTOMS, null, values);
         }
 
     }
@@ -84,14 +89,15 @@ public class DatabaseInitializer {
         };
 
         for (String disease : diseases) {
-            insertDisease(db, disease);
+            ContentValues values = new ContentValues();
+            values.put(DatabaseHelper.COLUMN_DISEASE_NAME, disease);
+            db.insert(DatabaseHelper.TABLE_DISEASES, null, values);
         }
 
     }
 
     private void insertDiseaseSymptoms(SQLiteDatabase db) {
 
-        //proper ids
         long[][] diseaseSymptoms = {
                 {1, 1}, {1, 4}, {1, 9}, {1, 10}, {1, 11},
                 {2, 5}, {2, 6},
@@ -105,7 +111,27 @@ public class DatabaseInitializer {
         };
 
         for (long[] ds : diseaseSymptoms) {
-            insertDiseaseSymptom(db, ds[0], ds[1]);
+            ContentValues values = new ContentValues();
+            values.put(DatabaseHelper.COLUMN_DISEASE_ID, ds[0]);
+            values.put(DatabaseHelper.COLUMN_SYMPTOM_ID, ds[1]);
+            db.insert(DatabaseHelper.TABLE_DISEASE_SYMPTOMS, null, values);
+        }
+
+    }
+
+    private void insertClinics(SQLiteDatabase db) {
+
+        String[][] clinics = {
+                {"425 Broadway Suite 22, New York, NY 10018", "123-456-7890", "clinic1@example.com"},
+                {"58 Wall Street Suite 100, New York, NY 10005", "098-765-4321", "clinic2@example.com"}
+        };
+
+        for (String[] clinic : clinics) {
+            ContentValues values = new ContentValues();
+            values.put(DatabaseHelper.COLUMN_CLINIC_ADDRESS, clinic[0]);
+            values.put(DatabaseHelper.COLUMN_CLINIC_PHONE, clinic[1]);
+            values.put(DatabaseHelper.COLUMN_CLINIC_EMAIL, clinic[2]);
+            db.insert(DatabaseHelper.TABLE_CLINICS, null, values);
         }
 
     }
@@ -132,7 +158,11 @@ public class DatabaseInitializer {
         };
 
         for (String[] device : devices) {
-            insertDevice(db, device[0], device[1], Integer.parseInt(device[2]));
+            ContentValues values = new ContentValues();
+            values.put(DatabaseHelper.COLUMN_DEVICE_NAME, device[0]);
+            values.put(DatabaseHelper.COLUMN_DEVICE_DESCRIPTION, device[1]);
+            values.put(DatabaseHelper.COLUMN_DEVICE_IMAGE, Integer.parseInt(device[2]));
+            db.insert(DatabaseHelper.TABLE_DEVICES, null, values);
         }
 
     }
@@ -147,7 +177,11 @@ public class DatabaseInitializer {
         };
 
         for (String[] tip : tips) {
-            insertTip(db, tip[0], tip[1], Integer.parseInt(tip[2]));
+            ContentValues values = new ContentValues();
+            values.put(DatabaseHelper.COLUMN_TIP_NAME, tip[0]);
+            values.put(DatabaseHelper.COLUMN_TIP_DESCRIPTION, tip[1]);
+            values.put(DatabaseHelper.COLUMN_TIP_IMAGE, Integer.parseInt(tip[2]));
+            db.insert(DatabaseHelper.TABLE_TIPS, null, values);
         }
 
     }
@@ -160,47 +194,82 @@ public class DatabaseInitializer {
         };
 
         for (String location : locations) {
-            insertLocation(db, location);
+            ContentValues values = new ContentValues();
+            values.put(DatabaseHelper.COLUMN_LOCATION_ADDRESS, location);
+            db.insert(DatabaseHelper.TABLE_LOCATIONS, null, values);
         }
 
     }
 
     private void insertDoctors(SQLiteDatabase db) {
 
-        String[] names = {
-                "Dr. Daniela Pop", "Dr. Ana Maria Popescu", "Dr. Andrei Radu", "Dr. Maria Ionescu", "Dr. Elena Popa"
-        };
-
-        int[] images = {
-                R.drawable.doctor01, R.drawable.doctor02, R.drawable.doctor03,
-                R.drawable.doctor04, R.drawable.doctor05
-        };
-
-        String[] specializations = {
-                "Endodontist/Periodontist", "Orthodontist", "Implantologist", "Pedodontist", "Prosthodontist"
-        };
-
-        String[] schedules = {
-                "Monday - Friday, 08:00 AM - 04:00 PM", "Monday - Friday, 09:30 AM - 05:30 PM",
-                "Monday - Friday, 10:30 AM - 06:30 PM", "Monday - Friday, 08:30 AM - 04:30 PM",
-                "Monday - Friday, 08:00 AM - 04:00 PM"
-        };
-
-        String[] phone_numbers = {
-                "0721122334", "0723456789", "0734567890", "0745678901", "0756789012"
-        };
-
-        String[] emails = {
-                "daniela@gmail.com", "ana@yahoo.com", "maria@yahoo.com", "andrei@gmail.com", "elena@gmail.com"
-        };
+        String[] names = {"Dr. Daniela Pop", "Dr. Ana Maria Popescu", "Dr. Andrei Radu", "Dr. Maria Ionescu", "Dr. Elena Popa", "Any Doctor"};
+        int[] images = {R.drawable.doctor01, R.drawable.doctor02, R.drawable.doctor03, R.drawable.doctor04, R.drawable.doctor05, R.drawable.doctors};
+        String[] specializations = {"General Dentist", "Orthodontist", "Implantologist", "Pedodontist", "Prosthodontist", "Any Specialization"};
+        String[] phone_numbers = {"0721122334", "0723456789", "0734567890", "0745678901", "0756789012", "0256986274"};
+        String[] emails = {"daniela@gmail.com", "ana@yahoo.com", "maria@yahoo.com", "andrei@gmail.com", "elena@gmail.com", "doctors@gmail.com"};
 
         for (int i = 0; i < names.length; i++) {
-            insertDentist(db, names[i], images[i], specializations[i], schedules[i], phone_numbers[i], emails[i]);
+            long doctorId = insertDoctor(db, names[i], images[i], specializations[i], phone_numbers[i], emails[i]);
+            insertDoctorSchedules(db, doctorId, i);
+        }
+
+    }
+
+    private long insertDoctor(SQLiteDatabase db, String name, int image, String specialization, String phone_number, String email) {
+
+        ContentValues values = new ContentValues();
+        values.put(DatabaseHelper.COLUMN_DOCTOR_NAME, name);
+        values.put(DatabaseHelper.COLUMN_DOCTOR_IMAGE, image);
+        values.put(DatabaseHelper.COLUMN_DOCTOR_SPECIALIZATION, specialization);
+        values.put(DatabaseHelper.COLUMN_DOCTOR_PHONE_NUMBER, phone_number);
+        values.put(DatabaseHelper.COLUMN_DOCTOR_EMAIL, email);
+        return db.insert(DatabaseHelper.TABLE_DOCTORS, null, values);
+
+    }
+
+    private void insertDoctorSchedules(SQLiteDatabase db, long doctorId, int doctorIndex) {
+
+        String[][] schedules = {
+                {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"},
+                {"Monday", "Wednesday", "Friday"},
+                {"Tuesday", "Thursday"},
+                {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"},
+                {"Monday", "Wednesday", "Friday"},
+                {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"}
+        };
+
+        String[][] startTimes = {
+                {"08:00", "08:00", "08:00", "08:00", "08:00"},
+                {"14:00", "14:00", "14:00"},
+                {"10:00", "10:00"},
+                {"12:00", "12:00", "12:00", "12:00", "12:00"},
+                {"08:00", "08:00", "08:00"},
+                {"08:00", "08:00", "08:00", "08:00", "08:00"}
+        };
+
+        String[][] endTimes = {
+                {"16:00", "16:00", "16:00", "16:00", "16:00"},
+                {"18:00", "18:00", "18:00"},
+                {"14:00", "14:00"},
+                {"15:00", "15:00", "15:00", "15:00", "15:00"},
+                {"12:00", "12:00", "12:00"},
+                {"20:00", "20:00", "20:00", "20:00", "20:00"}
+        };
+
+        for (int i = 0; i < schedules[doctorIndex].length; i++) {
+            ContentValues values = new ContentValues();
+            values.put(DatabaseHelper.COLUMN_DOCTOR_ID, doctorId);
+            values.put(DatabaseHelper.COLUMN_DAY_OF_WEEK, schedules[doctorIndex][i]);
+            values.put(DatabaseHelper.COLUMN_START_TIME, startTimes[doctorIndex][i]);
+            values.put(DatabaseHelper.COLUMN_END_TIME, endTimes[doctorIndex][i]);
+            db.insert(DatabaseHelper.TABLE_DOCTOR_SCHEDULE, null, values);
         }
 
     }
 
     private void insertServices(SQLiteDatabase db) {
+
         String[][] services = {
                 {"SPECIALIZED CONSULTATION", "Surgery consultation\nPeriodontology consultation\nOrthodontics and orthopedics consultation\nImplantology consultation", String.valueOf(R.drawable.services01)},
                 {"DENTAL PROPHYLAXIS", "Scaling, air-flow, professional brushing\nSealing of temporary and permanent teeth", String.valueOf(R.drawable.services02)},
@@ -215,9 +284,125 @@ public class DatabaseInitializer {
                 {"IMPLANTOLOGY", "Alpha Bio dental implants\nImplantium dental implants\nNobel Biocare dental implants", String.valueOf(R.drawable.services11)},
                 {"DENTAL RADIOLOGY", "Retroalveolar dental X-ray", String.valueOf(R.drawable.services12)}
         };
+
         for (String[] service : services) {
-            insertService(db, service[0], service[1], Integer.parseInt(service[2]));
+            ContentValues values = new ContentValues();
+            values.put(DatabaseHelper.COLUMN_SERVICE_NAME, service[0]);
+            values.put(DatabaseHelper.COLUMN_SERVICE_DESCRIPTION, service[1]);
+            values.put(DatabaseHelper.COLUMN_SERVICE_IMAGE, Integer.parseInt(service[2]));
+            db.insert(DatabaseHelper.TABLE_SERVICES, null, values);
         }
+
+    }
+
+    private void insertServiceSpecializations(SQLiteDatabase db) {
+
+        String[][] serviceSpecializations = {
+                {"SPECIALIZED CONSULTATION", "Any Specialization"},
+                {"SPECIALIZED CONSULTATION", "General Dentist"},
+                {"SPECIALIZED CONSULTATION", "Aesthetic Dentist"},
+                {"SPECIALIZED CONSULTATION", "Orthodontist"},
+                {"SPECIALIZED CONSULTATION", "Pedodontist"},
+                {"SPECIALIZED CONSULTATION", "Endodontist"},
+                {"SPECIALIZED CONSULTATION", "Periodontologist"},
+                {"SPECIALIZED CONSULTATION", "Prosthodontist"},
+                {"SPECIALIZED CONSULTATION", "Surgeon"},
+                {"SPECIALIZED CONSULTATION", "Implantologist"},
+                {"SPECIALIZED CONSULTATION", "Odontotherapist"},
+                {"SPECIALIZED CONSULTATION", "Radiologist"},
+
+                {"DENTAL PROPHYLAXIS", "Any Specialization"},
+                {"DENTAL PROPHYLAXIS", "General Dentist"},
+                {"DENTAL PROPHYLAXIS", "Aesthetic Dentist"},
+                {"DENTAL PROPHYLAXIS", "Orthodontist"},
+                {"DENTAL PROPHYLAXIS", "Pedodontist"},
+                {"DENTAL PROPHYLAXIS", "Endodontist"},
+                {"DENTAL PROPHYLAXIS", "Periodontologist"},
+                {"DENTAL PROPHYLAXIS", "Prosthodontist"},
+                {"DENTAL PROPHYLAXIS", "Surgeon"},
+                {"DENTAL PROPHYLAXIS", "Implantologist"},
+                {"DENTAL PROPHYLAXIS", "Odontotherapist"},
+                {"DENTAL PROPHYLAXIS", "Radiologist"},
+
+                {"DENTAL AESTHETICS", "Any Specialization"},
+                {"DENTAL AESTHETICS", "General Dentist"},
+                {"DENTAL AESTHETICS", "Aesthetic Dentist"},
+                {"DENTAL AESTHETICS", "Orthodontist"},
+                {"DENTAL AESTHETICS", "Prosthodontist"},
+                {"DENTAL AESTHETICS", "Implantologist"},
+
+                {"ORTHODONTICS AND DENTO-FACIAL ORTHOPEDICS", "Any Specialization"},
+                {"ORTHODONTICS AND DENTO-FACIAL ORTHOPEDICS", "Orthodontist"},
+                {"ORTHODONTICS AND DENTO-FACIAL ORTHOPEDICS", "Prosthodontist"},
+                {"ORTHODONTICS AND DENTO-FACIAL ORTHOPEDICS", "Implantologist"},
+                {"ORTHODONTICS AND DENTO-FACIAL ORTHOPEDICS", "Surgeon"},
+
+                {"PEDODONTICS (PEDIATRIC DENTISTRY)", "Any Specialization"},
+                {"PEDODONTICS (PEDIATRIC DENTISTRY)", "Pedodontist"},
+                {"PEDODONTICS (PEDIATRIC DENTISTRY)", "Orthodontist"},
+                {"PEDODONTICS (PEDIATRIC DENTISTRY)", "Endodontist"},
+                {"PEDODONTICS (PEDIATRIC DENTISTRY)", "Odontotherapist"},
+
+                {"ODONTOTHERAPY", "Any Specialization"},
+                {"ODONTOTHERAPY", "Odontotherapist"},
+                {"ODONTOTHERAPY", "Endodontist"},
+
+                {"ENDODONTICS", "Any Specialization"},
+                {"ENDODONTICS", "Endodontist"},
+                {"ENDODONTICS", "Odontotherapist"},
+
+                {"PERIODONTOLOGY", "Any Specialization"},
+                {"PERIODONTOLOGY", "Periodontologist"},
+                {"PERIODONTOLOGY", "Surgeon"},
+                {"PERIODONTOLOGY", "Implantologist"},
+                {"PERIODONTOLOGY", "Prosthodontist"},
+
+                {"DENTAL PROSTHETICS", "Any Specialization"},
+                {"DENTAL PROSTHETICS", "Prosthodontist"},
+                {"DENTAL PROSTHETICS", "Periodontologist"},
+                {"DENTAL PROSTHETICS", "Implantologist"},
+                {"DENTAL PROSTHETICS", "Orthodontist"},
+
+                {"DENTAL SURGERY", "Any Specialization"},
+                {"DENTAL SURGERY", "Surgeon"},
+
+                {"IMPLANTOLOGY", "Any Specialization"},
+                {"IMPLANTOLOGY", "Implantologist"},
+                {"IMPLANTOLOGY", "Prosthodontist"},
+
+                {"DENTAL RADIOLOGY", "Any Specialization"},
+                {"DENTAL RADIOLOGY", "Radiologist"}
+        };
+
+        for (String[] specialization : serviceSpecializations) {
+            long serviceId = getServiceIdByName(db, specialization[0]);
+            if (serviceId != -1) {
+                ContentValues values = new ContentValues();
+                values.put(DatabaseHelper.COLUMN_SERVICE_ID, serviceId);
+                values.put(DatabaseHelper.COLUMN_SPECIALIZATION, specialization[1]);
+                db.insert(DatabaseHelper.TABLE_SERVICE_SPECIALIZATIONS, null, values);
+            }
+        }
+
+    }
+
+    private long getServiceIdByName(SQLiteDatabase db, String serviceName) {
+
+        Cursor cursor = db.query(DatabaseHelper.TABLE_SERVICES,
+                new String[]{DatabaseHelper.COLUMN_ID},
+                DatabaseHelper.COLUMN_SERVICE_NAME + "=?",
+                new String[]{serviceName},
+                null,
+                null,
+                null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            long serviceId = cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_ID));
+            cursor.close();
+            return serviceId;
+        }
+        return -1;
+
     }
 
     private void insertInsurances(SQLiteDatabase db) {
@@ -228,92 +413,10 @@ public class DatabaseInitializer {
         };
 
         for (String insurance : insurances) {
-            insertInsurance(db, insurance);
+            ContentValues values = new ContentValues();
+            values.put(DatabaseHelper.COLUMN_INSURANCE_NAME, insurance);
+            db.insert(DatabaseHelper.TABLE_INSURANCES, null, values);
         }
-
-    }
-
-    private long insertSymptom(SQLiteDatabase db, String name) {
-
-        ContentValues values = new ContentValues();
-        values.put(DatabaseHelper.COLUMN_SYMPTOM_NAME, name);
-        return db.insert(DatabaseHelper.TABLE_SYMPTOMS, null, values);
-
-    }
-
-    private long insertDisease(SQLiteDatabase db, String name) {
-
-        ContentValues values = new ContentValues();
-        values.put(DatabaseHelper.COLUMN_DISEASE_NAME, name);
-        return db.insert(DatabaseHelper.TABLE_DISEASES, null, values);
-
-    }
-
-    private void insertDiseaseSymptom(SQLiteDatabase db, long diseaseId, long symptomId) {
-
-        ContentValues values = new ContentValues();
-        values.put(DatabaseHelper.COLUMN_DISEASE_ID, diseaseId);
-        values.put(DatabaseHelper.COLUMN_SYMPTOM_ID, symptomId);
-        db.insert(DatabaseHelper.TABLE_DISEASE_SYMPTOMS, null, values);
-
-    }
-
-    private long insertDevice(SQLiteDatabase db, String name, String description, int image) {
-
-        ContentValues values = new ContentValues();
-        values.put(DatabaseHelper.COLUMN_DEVICE_NAME, name);
-        values.put(DatabaseHelper.COLUMN_DEVICE_DESCRIPTION, description);
-        values.put(DatabaseHelper.COLUMN_DOCTOR_IMAGE, image);
-        return db.insert(DatabaseHelper.TABLE_DEVICES, null, values);
-
-    }
-
-    private long insertTip(SQLiteDatabase db, String name, String description, int image) {
-
-        ContentValues values = new ContentValues();
-        values.put(DatabaseHelper.COLUMN_TIP_NAME, name);
-        values.put(DatabaseHelper.COLUMN_TIP_DESCRIPTION, description);
-        values.put(DatabaseHelper.COLUMN_TIP_IMAGE, image);
-        return db.insert(DatabaseHelper.TABLE_TIPS, null, values);
-
-    }
-
-    private long insertLocation(SQLiteDatabase db, String address) {
-
-        ContentValues values = new ContentValues();
-        values.put(DatabaseHelper.COLUMN_LOCATION_ADDRESS, address);
-        return db.insert(DatabaseHelper.TABLE_LOCATIONS, null, values);
-
-    }
-
-    private long insertDentist(SQLiteDatabase db, String name, int image, String specialization, String schedule, String phone_number, String email) {
-
-        ContentValues values = new ContentValues();
-        values.put(DatabaseHelper.COLUMN_DOCTOR_NAME, name);
-        values.put(DatabaseHelper.COLUMN_DOCTOR_IMAGE, image);
-        values.put(DatabaseHelper.COLUMN_DOCTOR_SPECIALIZATION, specialization);
-        values.put(DatabaseHelper.COLUMN_DOCTOR_SCHEDULE, schedule);
-        values.put(DatabaseHelper.COLUMN_DOCTOR_PHONE_NUMBER, phone_number);
-        values.put(DatabaseHelper.COLUMN_DOCTOR_EMAIL, email);
-        return db.insert(DatabaseHelper.TABLE_DOCTORS, null, values);
-
-    }
-
-    private long insertService(SQLiteDatabase db, String name, String description, int image) {
-
-        ContentValues values = new ContentValues();
-        values.put(DatabaseHelper.COLUMN_SERVICE_NAME, name);
-        values.put(DatabaseHelper.COLUMN_SERVICE_DESCRIPTION, description);
-        values.put(DatabaseHelper.COLUMN_SERVICE_IMAGE, image);
-        return db.insert(DatabaseHelper.TABLE_SERVICES, null, values);
-
-    }
-
-    private long insertInsurance(SQLiteDatabase db, String name) {
-
-        ContentValues values = new ContentValues();
-        values.put(DatabaseHelper.COLUMN_INSURANCE_NAME, name);
-        return db.insert(DatabaseHelper.TABLE_INSURANCES, null, values);
 
     }
 

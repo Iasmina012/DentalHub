@@ -21,6 +21,11 @@ public class Activity_SelectDoctor extends BaseActivity {
     private String appointmentId;
     private String selectedLocation;
     private String selectedDoctor;
+    private int selectedDoctorId;
+    private String selectedService;
+    private String selectedDate;
+    private String selectedTime;
+    private String selectedInsurance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +41,11 @@ public class Activity_SelectDoctor extends BaseActivity {
         appointmentId = intent.getStringExtra("appointmentId");
         selectedLocation = intent.getStringExtra("selectedLocation");
         selectedDoctor = intent.getStringExtra("selectedDoctor");
+        selectedDoctorId = intent.getIntExtra("selectedDoctorId", -1);
+        selectedService = intent.getStringExtra("selectedService");
+        selectedDate = intent.getStringExtra("selectedDate");
+        selectedTime = intent.getStringExtra("selectedTime");
+        selectedInsurance = intent.getStringExtra("selectedInsurance");
 
         if (appointmentId != null) {
             Log.d("Activity_SelectDoctor", "Appointment ID received: " + appointmentId);
@@ -46,28 +56,38 @@ public class Activity_SelectDoctor extends BaseActivity {
         addDoctorOptions();
 
         for (int i = 0; i < radioGroupDoctors.getChildCount(); i++) {
+
             RadioButton radioButton = (RadioButton) radioGroupDoctors.getChildAt(i);
             radioButton.setTextSize(20);
 
             if (radioButton.getText().toString().equals(selectedDoctor)) {
                 radioButton.setChecked(true);
             }
+
         }
 
         buttonNext.setOnClickListener(v -> {
+
             int selectedId = radioGroupDoctors.getCheckedRadioButtonId();
+
             if (selectedId != -1) {
                 RadioButton selectedRadioButton = findViewById(selectedId);
                 selectedDoctor = selectedRadioButton.getText().toString();
+                selectedDoctorId = selectedRadioButton.getId();
+
+                DatabaseHelper dbHelper = new DatabaseHelper(this);
+                String selectedSpecialization = dbHelper.getDoctorSpecialization(selectedDoctorId);
 
                 Intent nextIntent = new Intent(Activity_SelectDoctor.this, Activity_SelectService.class);
                 nextIntent.putExtra("appointmentId", appointmentId);
                 nextIntent.putExtra("selectedLocation", selectedLocation);
                 nextIntent.putExtra("selectedDoctor", selectedDoctor);
-                nextIntent.putExtra("selectedService", getIntent().getStringExtra("selectedService"));
-                nextIntent.putExtra("selectedDate", getIntent().getStringExtra("selectedDate"));
-                nextIntent.putExtra("selectedTime", getIntent().getStringExtra("selectedTime"));
-                nextIntent.putExtra("selectedInsurance", getIntent().getStringExtra("selectedInsurance"));
+                nextIntent.putExtra("selectedDoctorId", selectedDoctorId);
+                nextIntent.putExtra("selectedService", selectedService);
+                nextIntent.putExtra("selectedDate", selectedDate);
+                nextIntent.putExtra("selectedTime", selectedTime);
+                nextIntent.putExtra("selectedInsurance", selectedInsurance);
+                nextIntent.putExtra("selectedSpecialization", selectedSpecialization);
                 startActivity(nextIntent);
             } else {
                 Toast.makeText(Activity_SelectDoctor.this, "Please select a doctor!", Toast.LENGTH_SHORT).show();
@@ -87,12 +107,15 @@ public class Activity_SelectDoctor extends BaseActivity {
 
         if (cursor != null) {
             while (cursor.moveToNext()) {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_ID));
                 String name = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_DOCTOR_NAME));
                 int image = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_DOCTOR_IMAGE));
 
                 RadioButton radioButton = new RadioButton(this);
+                radioButton.setId(id); //doctorId
                 radioButton.setText(name);
                 radioButton.setTextSize(20);
+
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
@@ -111,6 +134,10 @@ public class Activity_SelectDoctor extends BaseActivity {
                 }
 
                 radioGroupDoctors.addView(radioButton);
+
+                if (name.equals(selectedDoctor)) {
+                    radioButton.setChecked(true);
+                }
             }
             cursor.close();
         }

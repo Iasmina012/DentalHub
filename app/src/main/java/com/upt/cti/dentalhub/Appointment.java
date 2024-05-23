@@ -3,61 +3,103 @@ package com.upt.cti.dentalhub;
 public class Appointment {
 
     private String appointmentId;
+    private String location;
     private String doctor;
+    private int doctorId;
     private String service;
     private String date;
     private String time;
     private String insurance;
     private String userId;
-    private String location;
 
     public Appointment() {
         //Constructor necesar pentru Firebase
     }
 
-    public Appointment(String appointmentId, String doctor, String service, String date, String time, String insurance, String userId, String location) {
+    public Appointment(String appointmentId, String location, String doctor, int doctorId, String service, String date, String time, String insurance, String userId) {
 
         this.appointmentId = appointmentId;
+        this.location = location;
+        this.doctorId = doctorId;
         this.doctor = doctor;
         this.service = service;
         this.date = date;
         this.time = time;
         this.insurance = insurance;
         this.userId = userId;
-        this.location = location;
 
     }
 
-    public String getAppointmentId() {return appointmentId;}
+    public String getAppointmentId() {
+        return appointmentId;
+    }
 
-    public void setAppointmentId(String appointmentId) {this.appointmentId = appointmentId;}
+    public void setAppointmentId(String appointmentId) {
+        this.appointmentId = appointmentId;
+    }
 
-    public String getDoctor() { return doctor; }
+    public String getLocation() {
+        return location;
+    }
 
-    public void setDoctor(String doctor) { this.doctor = doctor; }
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
-    public String getService() { return service; }
+    public String getDoctor() {
+        return doctor;
+    }
 
-    public void setService(String service) { this.service = service; }
+    public void setDoctor(String doctor) {
+        this.doctor = doctor;
+    }
 
-    public String getDate() { return date; }
+    public int getDoctorId() {
+        return doctorId;
+    }
 
-    public void setDate(String date) { this.date = date; }
+    public void setDoctorId(int doctorId) {
+        this.doctorId = doctorId;
+    }
 
-    public String getTime() { return time; }
+    public String getService() {
+        return service;
+    }
 
-    public void setTime(String time) { this.time = time; }
+    public void setService(String service) {
+        this.service = service;
+    }
 
-    public String getInsurance() { return insurance; }
+    public String getDate() {
+        return date;
+    }
 
-    public void setInsurance(String insurance) { this.insurance = insurance; }
+    public void setDate(String date) {
+        this.date = date;
+    }
 
-    public String getUserId() { return userId; }
+    public String getTime() {
+        return time;
+    }
 
-    public void setUserId(String userId) { this.userId = userId; }
+    public void setTime(String time) {
+        this.time = time;
+    }
 
-    public String getLocation() { return location; }
+    public String getInsurance() {
+        return insurance;
+    }
 
-    public void setLocation(String location) { this.location = location; }
+    public void setInsurance(String insurance) {
+        this.insurance = insurance;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
 }
