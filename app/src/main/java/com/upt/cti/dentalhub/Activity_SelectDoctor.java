@@ -83,11 +83,11 @@ public class Activity_SelectDoctor extends BaseActivity {
                 nextIntent.putExtra("selectedLocation", selectedLocation);
                 nextIntent.putExtra("selectedDoctor", selectedDoctor);
                 nextIntent.putExtra("selectedDoctorId", selectedDoctorId);
+                nextIntent.putExtra("selectedSpecialization", selectedSpecialization);
                 nextIntent.putExtra("selectedService", selectedService);
                 nextIntent.putExtra("selectedDate", selectedDate);
                 nextIntent.putExtra("selectedTime", selectedTime);
                 nextIntent.putExtra("selectedInsurance", selectedInsurance);
-                nextIntent.putExtra("selectedSpecialization", selectedSpecialization);
                 startActivity(nextIntent);
             } else {
                 Toast.makeText(Activity_SelectDoctor.this, "Please select a doctor!", Toast.LENGTH_SHORT).show();
@@ -103,46 +103,80 @@ public class Activity_SelectDoctor extends BaseActivity {
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        Cursor cursor = db.query(DatabaseHelper.TABLE_DOCTORS, null, null, null, null, null, null);
+        long locationId = getLocationIdByAddress(db, selectedLocation);
 
-        if (cursor != null) {
-            while (cursor.moveToNext()) {
-                int id = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_ID));
-                String name = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_DOCTOR_NAME));
-                int image = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_DOCTOR_IMAGE));
+        if (locationId != -1) {
+            Cursor cursor = db.rawQuery(
+                    "SELECT d." + DatabaseHelper.COLUMN_ID + ", d." + DatabaseHelper.COLUMN_DOCTOR_NAME + ", d." + DatabaseHelper.COLUMN_DOCTOR_IMAGE +
+                            " FROM " + DatabaseHelper.TABLE_DOCTORS + " d" +
+                            " INNER JOIN " + DatabaseHelper.TABLE_DOCTOR_LOCATION + " dl ON d." + DatabaseHelper.COLUMN_ID + " = dl." + DatabaseHelper.COLUMN_DOCTOR_ID +
+                            " WHERE dl." + DatabaseHelper.COLUMN_LOCATION_ID + " = ?",
+                    new String[]{String.valueOf(locationId)}
+            );
 
-                RadioButton radioButton = new RadioButton(this);
-                radioButton.setId(id); //doctorId
-                radioButton.setText(name);
-                radioButton.setTextSize(20);
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
+                    int id = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_ID));
+                    String name = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_DOCTOR_NAME));
+                    int image = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_DOCTOR_IMAGE));
 
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                );
-                params.setMargins(0, 0, 0, 18);
-                radioButton.setLayoutParams(params);
+                    RadioButton radioButton = new RadioButton(this);
+                    radioButton.setId(id);
+                    radioButton.setText(name);
+                    radioButton.setTextSize(20);
 
-                Drawable drawable = ContextCompat.getDrawable(this, image);
-                if (drawable != null) {
-                    int width = 150;
-                    int height = 150;
-                    drawable.setBounds(0, 0, width, height);
-                    radioButton.setCompoundDrawables(drawable, null, null, null);
-                } else {
-                    Log.e("Activity_SelectDoctor", "Drawable not found for doctor: " + name);
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT
+                    );
+                    params.setMargins(0, 0, 0, 18);
+                    radioButton.setLayoutParams(params);
+
+                    Drawable drawable = ContextCompat.getDrawable(this, image);
+                    if (drawable != null) {
+                        int width = 150;
+                        int height = 150;
+                        drawable.setBounds(0, 0, width, height);
+                        radioButton.setCompoundDrawables(drawable, null, null, null);
+                    } else {
+                        Log.e("Activity_SelectDoctor", "Drawable not found for doctor: " + name);
+                    }
+
+                    radioGroupDoctors.addView(radioButton);
+
+                    if (name.equals(selectedDoctor)) {
+                        radioButton.setChecked(true);
+                    }
                 }
-
-                radioGroupDoctors.addView(radioButton);
-
-                if (name.equals(selectedDoctor)) {
-                    radioButton.setChecked(true);
-                }
+                cursor.close();
             }
-            cursor.close();
+
+        } else {
+            Log.e("Activity_SelectDoctor", "Invalid location ID for address: " + selectedLocation);
         }
 
         db.close();
+
+    }
+
+    private long getLocationIdByAddress(SQLiteDatabase db, String address) {
+
+        long locationId = -1;
+        Cursor cursor = db.query(
+                DatabaseHelper.TABLE_LOCATIONS,
+                new String[]{DatabaseHelper.COLUMN_ID},
+                DatabaseHelper.COLUMN_LOCATION_ADDRESS + "=?",
+                new String[]{address},
+                null, null, null
+        );
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                locationId = cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_ID));
+            }
+            cursor.close();
+        }
+        return locationId;
 
     }
 
