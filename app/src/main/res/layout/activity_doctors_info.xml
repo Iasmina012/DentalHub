@@ -6,9 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
 
         <android.widget.SearchView
             android:id="@+id/searchView"
@@ -31,17 +33,16 @@
             android:padding="16dp"
             android:textAlignment="center"
             android:textSize="24sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:visibility="gone"
+            android:text="@string/no_doctors_found"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/searchView"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:layout_marginBottom="15dp"/>
+            android:layout_below="@id/searchView"/>
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </ScrollView>
