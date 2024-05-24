@@ -4,9 +4,18 @@
     <string name="app_name">DentalHub</string>
 
 
-    <!-- Logout Menu -->
+    <!-- Menu -->
     <string name="action_logout">Logout</string>
-
+    <string name="action_back">Back</string>
+    <string name="action_home">Home</string>
+    <string name="action_change_username">Change Username</string>
+    <string name="action_change_email">Change Email</string>
+    <string name="action_change_password">Change Password</string>
+    <string name="new_email">New Email</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="new_username">New Username</string>
+    <string name="save_button">Save</string>
 
     <!-- Login -->
     <string name="login">LOGIN</string>
@@ -15,8 +24,6 @@
     <string name="sign_in">Sign In</string>
     <string name="new_user_prompt">Don\'t have an account? Sign Up</string>
     <string name="forgot_password">Forgot Password?</string>
-    <string name="new_password">New Password</string>
-    <string name="confirm_password">Confirm Password</string>
     <string name="change_password_button">Change Password</string>
     <!-- Content Description -->
     <string name="email_icon_description">Email Icon</string>
@@ -141,7 +148,7 @@
     <string name="symptom">Symptom</string>
     <string name="get_results_button">Get Results</string>
     <string name="diagnosis_results">Diagnosis Results</string>
-    <string name="result">You may have...</string>
+    <string name="result">You may have…</string>
 
     <!-- Care -->
     <!-- Content Description -->

@@ -21,6 +21,15 @@
             android:name=".Activity_ChangePassword"
             android:exported="false" />
         <activity
+            android:name=".Activity_ChangeUsername"
+            android:exported="false" />
+        <activity
+            android:name=".Activity_ChangeEmail"
+            android:exported="false" />
+        <activity
+            android:name=".Activity_ChangePassword_Roles"
+            android:exported="false" />
+        <activity
             android:name=".DoctorActivity"
             android:exported="false" />
         <activity
@@ -57,7 +66,7 @@
             android:name=".Activity_Tech"
             android:exported="false" />
         <activity
-            android:name=".Activity_Care"
+            android:name=".Activity_Tips"
             android:exported="false" />
 
         <meta-data

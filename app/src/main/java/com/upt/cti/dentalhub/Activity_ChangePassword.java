@@ -1,24 +1,20 @@
 package com.upt.cti.dentalhub;
 
-import android.content.ContentValues;
-import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import org.mindrot.jbcrypt.BCrypt;
+public class Activity_ChangePassword extends BaseActivity {
 
-public class Activity_ChangePassword extends AppCompatActivity {
-    private EditText newPassword, confirmNewPassword;
-    private Button changePasswordButton;
-    private String email, role;
+    private EditText editTextNewPassword, editTextConfirmPassword;
+    private Button buttonSavePassword;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,84 +22,60 @@ public class Activity_ChangePassword extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
 
-        newPassword = findViewById(R.id.editTextNewPassword);
-        confirmNewPassword = findViewById(R.id.editTextConfirmPassword);
-        changePasswordButton = findViewById(R.id.buttonChangePassword);
+        editTextNewPassword = findViewById(R.id.editTextNewPassword);
+        editTextConfirmPassword = findViewById(R.id.editTextConfirmPassword);
+        buttonSavePassword = findViewById(R.id.savePasswordButton);
 
-        email = getIntent().getStringExtra("email");
-        role = getIntent().getStringExtra("role");
+        mAuth = FirebaseAuth.getInstance();
 
-        changePasswordButton.setOnClickListener(v -> handleChangePassword());
-
+        buttonSavePassword.setOnClickListener(v -> changePassword());
     }
 
-    private void handleChangePassword() {
+    private void changePassword() {
 
-        String newPasswordStr = newPassword.getText().toString().trim();
-        String confirmNewPasswordStr = confirmNewPassword.getText().toString().trim();
+        String newPassword = editTextNewPassword.getText().toString().trim();
+        String confirmPassword = editTextConfirmPassword.getText().toString().trim();
+        String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}";
 
-        if (newPasswordStr.isEmpty() || confirmNewPasswordStr.isEmpty()) {
-            Toast.makeText(this, "Please fill in both fields", Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(newPassword)) {
+            editTextNewPassword.setError("Enter a new password!");
             return;
         }
 
-        if (!newPasswordStr.equals(confirmNewPasswordStr)) {
-            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+        if (!newPassword.matches(pattern)) {
+            editTextNewPassword.setError("The password must contain at least one lowercase letter, one uppercase letter, one numeric digit, one special character (@#$%^&+=) and have a minimum length of 8 characters!");
             return;
         }
 
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseUser user = auth.getCurrentUser();
+        if (TextUtils.isEmpty(confirmPassword)) {
+            editTextConfirmPassword.setError("Confirm your password!");
+            return;
+        }
 
-        if (user != null && user.getEmail().equals(email)) {
-            user.updatePassword(newPasswordStr).addOnCompleteListener(task -> {
+        if (!newPassword.equals(confirmPassword)) {
+            editTextConfirmPassword.setError("PThe passwords do not match!");
+            return;
+        }
+
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Updating Password...");
+        progressDialog.show();
+
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            user.updatePassword(newPassword).addOnCompleteListener(task -> {
+                progressDialog.dismiss();
                 if (task.isSuccessful()) {
-                    DatabaseHelper dbHelper = new DatabaseHelper(this);
-                    SQLiteDatabase db = dbHelper.getWritableDatabase();
-
-                    ContentValues values = new ContentValues();
-                    values.put(DatabaseHelper.COLUMN_DOCTOR_PASSWORD, BCrypt.hashpw(newPasswordStr, BCrypt.gensalt()));
-
-                    db.update(DatabaseHelper.TABLE_DOCTORS, values, DatabaseHelper.COLUMN_DOCTOR_EMAIL + " = ?", new String[]{email});
-                    db.close();
-
-                    Toast.makeText(Activity_ChangePassword.this, "Password changed successfully", Toast.LENGTH_SHORT).show();
-                    goToNextActivity();
+                    Toast.makeText(Activity_ChangePassword.this, "Password updated successfully", Toast.LENGTH_SHORT).show();
+                    finish();
                 } else {
-                    Toast.makeText(Activity_ChangePassword.this, "Failed to change password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Activity_ChangePassword.this, "Password update failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
+        } else {
+            progressDialog.dismiss();
+            Toast.makeText(this, "User not signed in", Toast.LENGTH_SHORT).show();
         }
-
-    }
-
-    private void goToNextActivity() {
-
-        if ("admin".equalsIgnoreCase(role)) {
-            goToAdminActivity();
-        } else if ("doctor".equalsIgnoreCase(role)) {
-            goToDoctorActivity();
-        }
-
-    }
-
-    private void goToAdminActivity() {
-
-        Intent intent = new Intent(Activity_ChangePassword.this, AdminActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-
-    }
-
-    private void goToDoctorActivity() {
-
-        Intent intent = new Intent(Activity_ChangePassword.this, DoctorActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
 
     }
 
