@@ -7,12 +7,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder> {
     private List<Device> devices;
+    private List<Device> devicesFull;
 
-    public DeviceAdapter(List<Device> devices) {this.devices = devices;}
+    public DeviceAdapter(List<Device> devices) {
+
+        this.devices = devices;
+        this.devicesFull = new ArrayList<>(devices);
+
+    }
 
     @NonNull
     @Override
@@ -20,6 +28,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceView
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_device, parent, false);
         return new DeviceViewHolder(view);
+
 
     }
 
@@ -34,7 +43,14 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceView
     }
 
     @Override
-    public int getItemCount() {return devices.size();}
+    public int getItemCount() { return devices.size(); }
+
+    public void setFilteredList(List<Device> filteredList) {
+
+        this.devices = filteredList;
+        notifyDataSetChanged();
+
+    }
 
     static class DeviceViewHolder extends RecyclerView.ViewHolder {
 

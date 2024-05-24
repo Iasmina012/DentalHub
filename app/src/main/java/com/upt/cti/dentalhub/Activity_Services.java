@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Button;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,7 +17,10 @@ import java.util.List;
 
 public class Activity_Services extends BaseActivity {
 
-    private List<Services> servicesItems;
+    private RecyclerView recyclerView;
+    private TextView textViewNoResults;
+    private ServicesAdapter servicesAdapter;
+    private List<Services> servicesList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,14 +28,32 @@ public class Activity_Services extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_services);
 
-        RecyclerView recyclerView = findViewById(R.id.servicesRecyclerView);
+        servicesList = new ArrayList<>();
+        servicesAdapter = new ServicesAdapter(servicesList);
+
+        SearchView searchView = findViewById(R.id.searchView);
+        textViewNoResults = findViewById(R.id.textViewNoResults);
+        recyclerView = findViewById(R.id.servicesRecyclerView);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(servicesAdapter);
 
-        servicesItems = new ArrayList<>();
+        searchView.clearFocus();
+        searchView.setQueryHint("Search for a service here ...");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) { return false; }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                filterList(newText);
+                return true;
+
+            }
+        });
+
         addServicesOptions();
-
-        ServicesAdapter adapter = new ServicesAdapter(servicesItems);
-        recyclerView.setAdapter(adapter);
 
         Button buttonBookNow = findViewById(R.id.buttonBook);
         buttonBookNow.setOnClickListener(v -> {
@@ -51,12 +75,36 @@ public class Activity_Services extends BaseActivity {
                 String description = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_SERVICE_DESCRIPTION));
                 int image = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_SERVICE_IMAGE));
 
-                servicesItems.add(new Services(name, description, image));
+                servicesList.add(new Services(name, description, image));
             }
+
             cursor.close();
         }
 
         db.close();
+        servicesAdapter.notifyDataSetChanged();
+
+    }
+
+    private void filterList(String text) {
+
+        List<Services> filteredList = new ArrayList<>();
+        for (Services service : servicesList) {
+            if (service.getTitle().toLowerCase().contains(text.toLowerCase()) ||
+                    service.getDescription().toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(service);
+            }
+        }
+
+        if (filteredList.isEmpty()) {
+            textViewNoResults.setText(getString(R.string.no_services_found));
+            textViewNoResults.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        } else {
+            textViewNoResults.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            servicesAdapter.setFilteredList(filteredList);
+        }
 
     }
 

@@ -59,6 +59,7 @@
 
         </androidx.cardview.widget.CardView>
 
+
         <Button
             android:id="@+id/buttonBook"
             android:layout_width="wrap_content"
@@ -67,6 +68,31 @@
             android:fontFamily="sans-serif"
             android:text="@string/book_now_an_appointment_button"
             android:layout_gravity="center_horizontal"/>
+
+        <android.widget.SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:iconifiedByDefault="false"
+            android:background="@color/lightTeal"
+            app:queryHint="Search for a service here ..."/>
+
+        <TextView
+            android:id="@+id/textViewNoResults"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="75dp"
+            android:padding="16dp"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            android:text="@string/no_services_found"/>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"

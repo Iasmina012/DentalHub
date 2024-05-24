@@ -17,6 +17,7 @@
     <string name="new_username">New Username</string>
     <string name="save_button">Save</string>
 
+
     <!-- Login -->
     <string name="login">LOGIN</string>
     <string name="email_hint">Email</string>
@@ -80,6 +81,7 @@
     <!-- Services -->
     <string name="welcome">Welcome</string>
     <string name="book_now_an_appointment_button">Book Now An Appointment</string>
+    <string name="no_services_found">No services found!</string>
     <!-- Content Description -->
     <string name="teeth_helper_description">Team\'s Motto Icon</string>
     <string name="description">Our team is eager to discuss the doctor-patient relationship with you, emphasizing the importance of kindness, understanding, and patience. This relationship is cultivated through professional care and results in personalized treatments tailored to meet the unique needs of each patient.</string>
@@ -140,6 +142,7 @@
 
     <!-- Technologies -->
     <string name="device_name">Device Name</string>
+    <string name="no_devices_found">No technologies found!</string>
     <string name="device_description">About the device</string>
     <string name="image_description">Image of the Device</string>
 

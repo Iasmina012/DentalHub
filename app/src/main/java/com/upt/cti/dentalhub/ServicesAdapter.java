@@ -10,13 +10,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.util.ArrayList;
 
 public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.ViewHolder> {
 
     private List<Services> servicesList;
+    private List<Services> servicesListFull;
 
     public ServicesAdapter(List<Services> servicesList) {
+
         this.servicesList = servicesList;
+        this.servicesListFull = new ArrayList<>(servicesList);
+
     }
 
     @NonNull
@@ -39,7 +44,13 @@ public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.ViewHo
     }
 
     @Override
-    public int getItemCount() {return servicesList.size();
+    public int getItemCount() { return servicesList.size(); }
+
+    public void setFilteredList(List<Services> filteredList) {
+
+        this.servicesList = filteredList;
+        notifyDataSetChanged();
+
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
