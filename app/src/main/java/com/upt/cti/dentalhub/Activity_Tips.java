@@ -11,7 +11,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.Objects;
 
-public class Activity_Care extends BaseActivity {
+public class Activity_Tips extends BaseActivity {
 
     private ViewPager2 viewPager;
     private ImageView leftArrow, rightArrow;
@@ -20,7 +20,7 @@ public class Activity_Care extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_care);
+        setContentView(R.layout.activity_tips);
 
         viewPager = findViewById(R.id.viewPager);
         TabLayout tabLayout = findViewById(R.id.tabLayout);
