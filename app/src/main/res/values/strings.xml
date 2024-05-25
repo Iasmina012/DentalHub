@@ -39,15 +39,19 @@
 
     <!-- SignUp -->
     <string name="register">REGISTER</string>
+    <string name="first_name_hint">First Name</string>
+    <string name="last_name_hint">Last Name</string>
     <string name="username_hint">Username</string>
     <string name="re_enter_password">Re-enter Password</string>
     <string name="sign_up">Sign Up</string>
     <string name="already_member">Already a member? Sign in here</string>
     <!-- Content Description -->
-    <string name="username_icon_description">Username Icon</string>
+    <string name="name_icon_description">Username/First Name/Last Name Icon</string>
     <string name="password_confirmation_icon_description">Password Confirmation Icon</string>
     <!-- Autofill hints -->
     <string name="autofill_username">username</string>
+    <string name="autofill_first_name">name</string>
+    <string name="autofill_last_name">familyName</string>
     <string name="autofill_password_confirmation">newPasswordConfirmation</string>
 
 

@@ -2,45 +2,49 @@ package com.upt.cti.dentalhub;
 
 public class UserModel {
 
-    private String displayName;
+    private String firstName;
+    private String lastName;
+    private String username;
     private String email;
     private long createdAt;
     private String mRecipientId;
 
-    public UserModel(String displayName, String email,long createdAt) {
+    public UserModel() {
 
-        this.displayName = displayName;
+    }
+
+    public UserModel(String firstName, String lastName, String userName, String email, long createdAt) {
+
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = userName;
         this.email = email;
         this.createdAt = createdAt;
 
     }
 
-    public long getCreatedAt() {
-        return createdAt;
-    }
+    public String getFirstName() { return firstName; }
 
-    private String getUserEmail() {
-        return email;
-    }
+    public void setFirstName(String firstName) { this.firstName = firstName; }
 
-    public String getDisplayName() {
-        return displayName;
-    }
+    public String getLastName() { return lastName; }
 
-    public String getEmail() {
-        return email;
-    }
+    public void setLastName(String lastName) { this.lastName = lastName; }
 
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
+    public String getUsername() { return username; }
 
-    public String getRecipientId() {
-        return mRecipientId;
-    }
+    public void setUsername(String username) { this.username = username; }
 
-    public void setRecipientId(String recipientId) {
-        this.mRecipientId = recipientId;
-    }
+    public String getEmail() { return email; }
+
+    public void setEmail(String email) { this.email = email; }
+
+    public long getCreatedAt() { return createdAt; }
+
+    public void setCreatedAt(long createdAt) { this.createdAt = createdAt; }
+
+    public String getmRecipientId() { return mRecipientId; }
+
+    public void setmRecipientId(String mRecipientId) { this.mRecipientId = mRecipientId; }
 
 }

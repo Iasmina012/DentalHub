@@ -23,12 +23,12 @@
             app:cardElevation="3dp"
             app:cardPreventCornerOverlap="false"
             app:cardUseCompatPadding="true"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <RelativeLayout
                 android:id="@+id/relativeLayout1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:id="@+id/linearlayout1"
@@ -63,9 +63,78 @@
                     android:id="@+id/relativeLayout2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="160dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginRight="30dp"
-                    android:layout_marginLeft="30dp">
+                    android:layout_marginLeft="30dp"
+                    android:layout_below="@id/linearlayout1">
+
+                    <ImageView
+                        android:id="@+id/imageViewFirstName"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/username_icon"
+                        android:padding="8dp"
+                        app:tint="@color/teal_700"
+                        android:contentDescription="@string/name_icon_description"/>
+
+                    <EditText
+                        android:id="@+id/editTextFirstName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/imageViewFirstName"
+                        android:layout_alignParentTop="true"
+                        android:layout_toEndOf="@+id/imageViewFirstName"
+                        android:hint="@string/first_name_hint"
+                        android:autofillHints="@string/autofill_first_name"
+                        android:inputType="text"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:textSize="15sp"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayout3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_below="@id/relativeLayout2">
+
+                    <ImageView
+                        android:id="@+id/imageViewLastName"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/username_icon"
+                        android:padding="8dp"
+                        app:tint="@color/teal_700"
+                        android:contentDescription="@string/name_icon_description"/>
+
+                    <EditText
+                        android:id="@+id/editTextLastName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/imageViewLastName"
+                        android:layout_alignParentTop="true"
+                        android:layout_toEndOf="@+id/imageViewLastName"
+                        android:hint="@string/last_name_hint"
+                        android:autofillHints="@string/autofill_first_name"
+                        android:inputType="text"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:textSize="15sp"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayout4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_below="@id/relativeLayout3">
 
                     <ImageView
                         android:id="@+id/imageViewUsername"
@@ -74,7 +143,7 @@
                         android:src="@drawable/username_icon"
                         android:padding="8dp"
                         app:tint="@color/teal_700"
-                        android:contentDescription="@string/username_icon_description"/>
+                        android:contentDescription="@string/name_icon_description"/>
 
                     <EditText
                         android:id="@+id/editTextUsername"
@@ -93,13 +162,13 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/relativeLayout3"
+                    android:id="@+id/relativeLayout5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginRight="30dp"
                     android:layout_marginLeft="30dp"
-                    android:layout_below="@id/relativeLayout2">
+                    android:layout_below="@id/relativeLayout4">
 
                     <ImageView
                         android:id="@+id/imageViewEmail"
@@ -127,13 +196,13 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/relativeLayout4"
+                    android:id="@+id/relativeLayout6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginRight="30dp"
                     android:layout_marginLeft="30dp"
-                    android:layout_below="@id/relativeLayout3">
+                    android:layout_below="@id/relativeLayout5">
 
                     <ImageView
                         android:id="@+id/imageViewPassword"
@@ -161,13 +230,13 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/relativeLayout5"
+                    android:id="@+id/relativeLayout7"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginRight="30dp"
                     android:layout_marginLeft="30dp"
-                    android:layout_below="@id/relativeLayout4">
+                    android:layout_below="@id/relativeLayout6">
 
                     <ImageView
                         android:id="@+id/imageViewPasswordConfirmation"
@@ -198,7 +267,7 @@
                     android:id="@+id/btn_SignUp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/relativeLayout5"
+                    android:layout_below="@+id/relativeLayout7"
                     android:layout_marginLeft="30dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="30dp"

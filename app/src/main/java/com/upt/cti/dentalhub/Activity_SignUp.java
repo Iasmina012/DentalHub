@@ -11,7 +11,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -25,32 +24,35 @@ import java.util.Objects;
 
 public class Activity_SignUp extends AppCompatActivity {
 
-    EditText username;
+    EditText userFirstName;
+    EditText userLastName;
+    EditText userUsername;
     EditText userEmail;
-    EditText password;
-    EditText repassword;
-    Button btn_Sign_Up;
-    Button btn_Already_Member;
+    EditText userPassword;
+    EditText userRepassword;
+    Button buttonSignUp;
+    Button buttonAlreadyMember;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
-    private boolean isTaken = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        username = findViewById(R.id.editTextUsername);
+        userFirstName = findViewById(R.id.editTextFirstName);
+        userLastName = findViewById(R.id.editTextLastName);
+        userUsername = findViewById(R.id.editTextUsername);
         userEmail = findViewById(R.id.editText_email);
-        password = findViewById(R.id.editTextPassword);
-        repassword = findViewById(R.id.editTextPasswordConfirmation);
-        btn_Sign_Up = findViewById(R.id.btn_SignUp);
-        btn_Already_Member = findViewById(R.id.btn_Login);
+        userPassword = findViewById(R.id.editTextPassword);
+        userRepassword = findViewById(R.id.editTextPasswordConfirmation);
+        buttonSignUp = findViewById(R.id.btn_SignUp);
+        buttonAlreadyMember = findViewById(R.id.btn_Login);
 
         setAuthInstance();
         setDatabaseInstance();
 
-        btn_Already_Member.setOnClickListener(v -> {
+        buttonAlreadyMember.setOnClickListener(v -> {
             Intent i = new Intent(getApplicationContext(), Activity_Login.class);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -58,41 +60,46 @@ public class Activity_SignUp extends AppCompatActivity {
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         });
 
-        btn_Sign_Up.setOnClickListener(v -> onRegisterUser());
+        buttonSignUp.setOnClickListener(v -> onRegisterUser());
 
     }
 
-    private void setAuthInstance() {
-        mAuth = FirebaseAuth.getInstance();
-    }
+    private void setAuthInstance() { mAuth = FirebaseAuth.getInstance(); }
 
-    private void setDatabaseInstance() {mDatabase = FirebaseDatabase.getInstance("https://dentalhub-1a0c0-default-rtdb.europe-west1.firebasedatabase.app/").getReference();}
+    private void setDatabaseInstance() { mDatabase = FirebaseDatabase.getInstance("https://dentalhub-1a0c0-default-rtdb.europe-west1.firebasedatabase.app/").getReference(); }
 
     public boolean validate() {
 
         boolean valid = true;
 
-        String name = username.getText().toString();
+        String firstName = this.userFirstName.getText().toString();
+        String lastName = this.userLastName.getText().toString();
+        String userName = this.userUsername.getText().toString();
         String email = userEmail.getText().toString();
-        String password = this.password.getText().toString();
-        String reEnterPassword = repassword.getText().toString();
+        String password = this.userPassword.getText().toString();
+        String reEnterPassword = userRepassword.getText().toString();
 
         String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}";
 
-        /*
-        (?=.*[0-9]): Cel putin un caracter numeric
-        (?=.*[a-z]): Cel putin un caracter litera mica
-        (?=.*[A-Z]): Cel putin un caracter litera mare
-        (?=.*[@#$%^&+=]): Cel putin un caracter special dintre @#$%^&+=
-        (?=\S+$): Nu contine spatii albe
-        .{8,}: Lungimea minima a parolei este de 8 caractere
-         */
-
-        if (name.isEmpty()) {
-            username.setError("Enter a valid username!");
+        if(firstName.isEmpty()) {
+            this.userFirstName.setError("Enter a valid first name!");
             valid = false;
         } else {
-            username.setError(null);
+            this.userFirstName.setError(null);
+        }
+
+        if(lastName.isEmpty()) {
+            this.userLastName.setError("Enter a valid last name!");
+            valid = false;
+        } else {
+            this.userLastName.setError(null);
+        }
+
+        if (userName.isEmpty()) {
+            this.userUsername.setError("Enter a valid username!");
+            valid = false;
+        } else {
+            this.userUsername.setError(null);
         }
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
@@ -103,80 +110,80 @@ public class Activity_SignUp extends AppCompatActivity {
         }
 
         if (password.isEmpty() || password.length() < 8 || !password.matches(pattern)) {
-            this.password.setError("The password must contain at least one lowercase letter, one uppercase letter, one numeric digit, one special character (@#$%^&+=) and have a minimum length of 8 characters!");
+            this.userPassword.setError("The password must contain at least one lowercase letter, one uppercase letter, one numeric digit, one special character (@#$%^&+=) and have a minimum length of 8 characters!");
             valid = false;
         } else {
-            this.password.setError(null);
+            this.userPassword.setError(null);
         }
 
         if (reEnterPassword.isEmpty() || reEnterPassword.length() < 8 || !reEnterPassword.matches(pattern) || !reEnterPassword.equals(password)) {
-            repassword.setError("The passwords do not match!");
+            userRepassword.setError("The passwords do not match!");
             valid = false;
         } else {
-            repassword.setError(null);
+            userRepassword.setError(null);
         }
+
         return valid;
+
     }
 
     private void onRegisterUser() {
 
-        String name = username.getText().toString();
+        final String name = userUsername.getText().toString();
         Log.d("Name", " " + name);
-        boolean exist = retreiveUserNames(name);
 
         if (!validate()) {
             //daca validarea nu trece, nu facem nimic si lasam erorile sa fie afisate
-        } else if (exist) {
-            username.setError("Enter a unique username!");
-        } else {
-            signUp(getUserEmail(), getUserPassword());
+            return;
         }
+
+        retreiveUserNames(name, isTaken -> {
+            if (isTaken) {
+                userUsername.setError("Enter a unique username!");
+            } else {
+                signUp(getUserEmail(), getUserPassword());
+            }
+        });
 
     }
 
-    public boolean retreiveUserNames(final String sUserName) {
+    public void retreiveUserNames(final String sUserName, final UsernameCheckCallback callback) {
 
         mDatabase = FirebaseDatabase.getInstance("https://dentalhub-1a0c0-default-rtdb.europe-west1.firebasedatabase.app/").getReference("userNames");
-        mDatabase.addValueEventListener(new ValueEventListener() {
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                boolean isTaken = false;
 
-                for(DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                     String existingUsername = userSnapshot.getKey();
-
-                    Log.d("Ex"," "+sUserName);
-                    Log.d("Shot ", " " + existingUsername);
-
-                    if(sUserName.equals(existingUsername)) {
+                    if (sUserName.equals(existingUsername)) {
                         isTaken = true;
-                        Log.d("BooleanShot ", "" + isTaken);
                         break;
                     }
-                    else {
-                        isTaken = false;
-                    }
                 }
+                callback.onUsernameCheckComplete(isTaken);
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {Toast.makeText(getApplicationContext(), "Connection Error! Please try again later!", Toast.LENGTH_SHORT).show();}
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(getApplicationContext(), "Connection Error! Please try again later!", Toast.LENGTH_SHORT).show();
+                callback.onUsernameCheckComplete(true); // Consider it as taken in case of error
+            }
         });
-        return isTaken;
 
     }
 
-    private String getUserDisplayName() {
-        return username.getText().toString().trim();
-    }
+    private String getUserFirstName() { return userFirstName.getText().toString().trim(); }
 
-    private String getUserEmail() {
-        return userEmail.getText().toString().trim();
-    }
+    private String getUserLastName() { return userLastName.getText().toString().trim(); }
 
-    private String getUserPassword() {
-        return password.getText().toString().trim();
-    }
+    private String getUserUsername() { return userUsername.getText().toString().trim(); }
+
+    private String getUserEmail() { return userEmail.getText().toString().trim(); }
+
+    private String getUserPassword() { return userPassword.getText().toString().trim(); }
 
     private void signUp(String email, String password) {
 
@@ -223,10 +230,12 @@ public class Activity_SignUp extends AppCompatActivity {
 
     public void createUserNames() {
 
-        //mDatabase.child("userNames").child(getUserDisplayName()).setValue(true);
-        FirebaseDatabase.getInstance("https://dentalhub-1a0c0-default-rtdb.europe-west1.firebasedatabase.app/").getReference("userNames").child(getUserDisplayName()).setValue(true);
+        FirebaseDatabase.getInstance("https://dentalhub-1a0c0-default-rtdb.europe-west1.firebasedatabase.app/").getReference("userNames").child(getUserUsername()).setValue(true);
 
     }
-    private UserModel buildNewUser() {return new UserModel(getUserDisplayName(), getUserEmail(), new Date().getTime());}
+
+    private UserModel buildNewUser() {
+        return new UserModel(getUserFirstName(), getUserLastName(), getUserUsername(), getUserEmail(), new Date().getTime());
+    }
 
 }

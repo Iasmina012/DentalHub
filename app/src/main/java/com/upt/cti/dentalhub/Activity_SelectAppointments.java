@@ -16,7 +16,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class Activity_SelectAppointments extends PromptMenuActivity {
+public class Activity_SelectAppointments extends MainMenuActivity {
 
     private static final String TAG = "SelectAppointments";
     private Button buttonBookAppointment, buttonViewAppointment;
@@ -46,9 +46,9 @@ public class Activity_SelectAppointments extends PromptMenuActivity {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                     if (dataSnapshot.exists()) {
-                        String displayName = dataSnapshot.child("displayName").getValue(String.class);
-                        if (displayName != null) {
-                            textViewWelcome.setText("Welcome, " + displayName + "!");
+                        String username = dataSnapshot.child("username").getValue(String.class);
+                        if (username != null) {
+                            textViewWelcome.setText("Welcome, " + username + "!");
                         } else {
                             Log.d(TAG, "Username not found.");
                             textViewWelcome.setText("Welcome!");

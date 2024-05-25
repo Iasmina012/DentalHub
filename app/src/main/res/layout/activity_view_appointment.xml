@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:text="@string/no_appointments_found"
         android:textAlignment="center"
+        android:layout_gravity="center"
         android:textSize="24sp"
         android:textStyle="bold"
         android:visibility="gone"/>

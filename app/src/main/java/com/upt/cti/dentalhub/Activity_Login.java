@@ -35,7 +35,7 @@ public class Activity_Login extends AppCompatActivity {
     Button forgotPassword;
     Button newUser;
     private FirebaseAuth mAuth;
-    private static final String ADMIN_EMAIL = "admin@admin.com";
+    private static final String ADMIN_EMAIL = "admin@dentalhub.com";
     private static final String ADMIN_DEFAULT_PASSWORD = "Admin123#";
     private static final String DOCTOR_DEFAULT_PASSWORD = "Doctor123#";
 
