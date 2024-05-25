@@ -65,10 +65,8 @@ public class AdminActivity extends StaffMenuActivity {
     private void loadAppointments() {
 
         db.addListenerForSingleValueEvent(new ValueEventListener() {
-
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                 appointmentList.clear();
                 Log.d(TAG, "DataSnapshot: " + dataSnapshot);
 
@@ -77,19 +75,19 @@ public class AdminActivity extends StaffMenuActivity {
                         Appointment currentAppointment = snapshot.getValue(Appointment.class);
                         if (currentAppointment != null) {
                             currentAppointment.setAppointmentId(snapshot.getKey());
-                            Log.d(TAG, "Appointment ID: " + currentAppointment.getAppointmentId()); // Log pentru fiecare programare
+                            Log.d(TAG, "Appointment ID: " + currentAppointment.getAppointmentId());
                             fetchPatientName(currentAppointment);
                         }
                     }
                 } else {
                     updateUI();
                 }
-
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) { Log.e(TAG, "Database error: " + databaseError.getMessage()); }
-
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e(TAG, "Database error: " + databaseError.getMessage());
+            }
         });
 
     }
@@ -99,14 +97,17 @@ public class AdminActivity extends StaffMenuActivity {
         Log.d(TAG, "Fetching patient name for userId: " + appointment.getUserId());
         DatabaseReference usersRef = FirebaseDatabase.getInstance("https://dentalhub-1a0c0-default-rtdb.europe-west1.firebasedatabase.app").getReference("users");
         usersRef.child(appointment.getUserId()).addListenerForSingleValueEvent(new ValueEventListener() {
-
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                 if (dataSnapshot.exists()) {
-                    String patientName = dataSnapshot.child("displayName").getValue(String.class);
-                    Log.d(TAG, "Found patient name: " + patientName);
-                    appointment.setUserName(patientName);
+                    String firstName = dataSnapshot.child("firstName").getValue(String.class);
+                    String lastName = dataSnapshot.child("lastName").getValue(String.class);
+                    if (firstName != null && lastName != null) {
+                        String patientName = firstName + " " + lastName;
+                        appointment.setUserName(patientName);
+                    } else {
+                        appointment.setUserName("Unknown Patient");
+                    }
                 } else {
                     Log.d(TAG, "Patient name not found for userId: " + appointment.getUserId());
                     appointment.setUserName("Unknown Patient");
@@ -114,19 +115,15 @@ public class AdminActivity extends StaffMenuActivity {
 
                 appointmentList.add(appointment);
                 updateUI();
-
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
                 Log.e(TAG, "Failed to fetch patient name: " + databaseError.getMessage());
                 appointment.setUserName("Unknown Patient");
                 appointmentList.add(appointment);
                 updateUI();
-
             }
-
         });
 
     }
