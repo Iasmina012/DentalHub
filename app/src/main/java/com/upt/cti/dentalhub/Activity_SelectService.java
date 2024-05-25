@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
-public class Activity_SelectService extends BaseActivity {
+public class Activity_SelectService extends PromptMenuActivity {
 
     private GridLayout gridLayout;
     private Button buttonNext, buttonBack;

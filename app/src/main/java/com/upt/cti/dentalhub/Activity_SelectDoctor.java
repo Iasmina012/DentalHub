@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
-public class Activity_SelectDoctor extends BaseActivity {
+public class Activity_SelectDoctor extends PromptMenuActivity {
 
     private RadioGroup radioGroupDoctors;
     private Button buttonNext, buttonBack;

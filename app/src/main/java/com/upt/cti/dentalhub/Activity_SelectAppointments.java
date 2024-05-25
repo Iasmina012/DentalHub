@@ -16,7 +16,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class Activity_SelectAppointments extends BaseActivity {
+public class Activity_SelectAppointments extends PromptMenuActivity {
 
     private static final String TAG = "SelectAppointments";
     private Button buttonBookAppointment, buttonViewAppointment;

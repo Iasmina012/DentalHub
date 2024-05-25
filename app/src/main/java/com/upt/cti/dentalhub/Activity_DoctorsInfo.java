@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Activity_DoctorsInfo extends BaseActivity {
+public class Activity_DoctorsInfo extends MainMenuActivity {
 
     private RecyclerView recyclerView;
     private TextView textViewNoResults;

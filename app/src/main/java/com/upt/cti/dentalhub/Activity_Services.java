@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Activity_Services extends BaseActivity {
+public class Activity_Services extends MainMenuActivity {
 
     private RecyclerView recyclerView;
     private TextView textViewNoResults;

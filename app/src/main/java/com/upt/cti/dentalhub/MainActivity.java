@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends MainMenuActivity {
 
     LinearLayout DoctorsInfo;
     LinearLayout Services;

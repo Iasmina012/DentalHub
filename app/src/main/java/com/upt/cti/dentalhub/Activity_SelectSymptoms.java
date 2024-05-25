@@ -17,7 +17,7 @@ import java.util.Map;
 
 import timber.log.Timber;
 
-public class Activity_SelectSymptoms extends BaseActivity {
+public class Activity_SelectSymptoms extends PromptMenuActivity {
 
     private RecyclerView recyclerViewSymptoms;
     private Button buttonGetResults;

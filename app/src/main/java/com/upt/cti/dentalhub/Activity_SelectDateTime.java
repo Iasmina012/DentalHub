@@ -16,7 +16,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class Activity_SelectDateTime extends BaseActivity {
+public class Activity_SelectDateTime extends PromptMenuActivity {
 
     private DatePicker datePicker;
     private TimePicker timePicker;

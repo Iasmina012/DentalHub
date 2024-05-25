@@ -11,7 +11,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.Objects;
 
-public class Activity_Tips extends BaseActivity {
+public class Activity_Tips extends MainMenuActivity {
 
     private ViewPager2 viewPager;
     private ImageView leftArrow, rightArrow;

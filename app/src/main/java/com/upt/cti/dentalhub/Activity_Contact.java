@@ -12,6 +12,8 @@ import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -29,10 +31,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-
-public class Activity_Contact extends BaseActivity implements OnMapReadyCallback {
+public class Activity_Contact extends MainMenuActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private static final int LOCATION_REQUEST_CODE = 101;

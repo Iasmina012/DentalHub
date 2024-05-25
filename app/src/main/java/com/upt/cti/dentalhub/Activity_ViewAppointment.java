@@ -25,7 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Activity_ViewAppointment extends BaseActivity {
+public class Activity_ViewAppointment extends MainMenuActivity {
 
     private static final String TAG = "ViewAppointments";
 

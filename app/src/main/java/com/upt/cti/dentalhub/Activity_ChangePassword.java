@@ -10,7 +10,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class Activity_ChangePassword extends BaseActivity {
+public class Activity_ChangePassword extends StaffMenuActivity {
 
     private EditText editTextNewPassword, editTextConfirmPassword;
     private Button buttonSavePassword;
@@ -29,6 +29,7 @@ public class Activity_ChangePassword extends BaseActivity {
         mAuth = FirebaseAuth.getInstance();
 
         buttonSavePassword.setOnClickListener(v -> changePassword());
+
     }
 
     private void changePassword() {
@@ -53,7 +54,7 @@ public class Activity_ChangePassword extends BaseActivity {
         }
 
         if (!newPassword.equals(confirmPassword)) {
-            editTextConfirmPassword.setError("PThe passwords do not match!");
+            editTextConfirmPassword.setError("The passwords do not match!");
             return;
         }
 

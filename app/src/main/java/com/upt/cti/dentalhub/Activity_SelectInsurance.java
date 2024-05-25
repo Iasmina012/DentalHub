@@ -20,7 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Activity_SelectInsurance extends BaseActivity {
+public class Activity_SelectInsurance extends PromptMenuActivity {
 
     private static final String TAG = "Activity_SelectInsurance";
 

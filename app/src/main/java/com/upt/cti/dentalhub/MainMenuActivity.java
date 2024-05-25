@@ -11,7 +11,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class BaseActivity extends AppCompatActivity {
+public class MainMenuActivity extends AppCompatActivity {
 
     public FirebaseAuth.AuthStateListener mAuthListener;
     public FirebaseAuth mAuth;

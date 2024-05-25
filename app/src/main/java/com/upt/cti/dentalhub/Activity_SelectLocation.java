@@ -11,7 +11,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-public class Activity_SelectLocation extends BaseActivity {
+public class Activity_SelectLocation extends PromptMenuActivity {
 
     private RadioGroup radioGroupLocations;
     private Button buttonNext, buttonBack;
