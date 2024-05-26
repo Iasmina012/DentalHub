@@ -18,16 +18,10 @@
         android:theme="@style/Theme.DentalHub"
         tools:targetApi="31">
         <activity
+            android:name=".Activity_MyAccount"
+            android:exported="false" />
+        <activity
             android:name=".Activity_ChangePassword"
-            android:exported="false" />
-        <activity
-            android:name=".Activity_ChangeUsername"
-            android:exported="false" />
-        <activity
-            android:name=".Activity_ChangeEmail"
-            android:exported="false" />
-        <activity
-            android:name=".Activity_ChangePassword_Roles"
             android:exported="false" />
         <activity
             android:name=".DoctorActivity"

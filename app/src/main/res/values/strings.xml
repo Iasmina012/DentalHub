@@ -8,14 +8,21 @@
     <string name="action_logout">Logout</string>
     <string name="action_back">Back</string>
     <string name="action_home">Home</string>
-    <string name="action_change_username">Change Username</string>
-    <string name="action_change_email">Change Email</string>
-    <string name="action_change_password">Change Password</string>
+    <string name="action_my_account">My Account</string>
     <string name="new_email">New Email</string>
     <string name="new_password">New Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="new_username">New Username</string>
+    <string name="username">Username</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
     <string name="save_button">Save</string>
+    <string name="choose_file_button">Choose File</string>
+    <string name="edit_profile_button">Edit Profile</string>
+    <string name="save_changes_button">Save Changes</string>
+    <string name="my_appointments_button">My Appointments</string>
+    <!-- Content Description -->
+    <string name="pfp_icon_description">Profile Picture</string>
 
 
     <!-- Login -->

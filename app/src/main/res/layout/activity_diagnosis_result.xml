@@ -13,10 +13,11 @@
         android:layout_height="wrap_content"
         android:src="@android:drawable/ic_menu_close_clear_cancel"
         android:background="?attr/selectableItemBackgroundBorderless"
+        app:tint="@color/darkTeal"
         android:contentDescription="@string/close_button_description"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="3dp"/>
+        android:layout_margin="15dp"/>
 
     <TextView
         android:id="@+id/textViewDiagnosisTitle"

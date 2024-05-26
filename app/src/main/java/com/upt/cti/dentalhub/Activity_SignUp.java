@@ -34,6 +34,7 @@ public class Activity_SignUp extends AppCompatActivity {
     Button buttonAlreadyMember;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
+    private static final String DEFAULT_PROFILE_IMAGE_URL = "https://cdn-icons-png.flaticon.com/512/1144/1144760.png";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +81,14 @@ public class Activity_SignUp extends AppCompatActivity {
         String reEnterPassword = userRepassword.getText().toString();
 
         String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}";
+        /*
+        (?=.*[0-9]): Cel putin un caracter numeric
+        (?=.*[a-z]): Cel putin un caracter litera mica
+        (?=.*[A-Z]): Cel putin un caracter litera mare
+        (?=.*[@#$%^&+=]): Cel putin un caracter special dintre @#$%^&+=
+        (?=\S+$): Nu contine spatii albe
+        .{8,}: Lungimea minima a parolei este de 8 caractere
+         */
 
         if(firstName.isEmpty()) {
             this.userFirstName.setError("Enter a valid first name!");
@@ -133,7 +142,6 @@ public class Activity_SignUp extends AppCompatActivity {
         Log.d("Name", " " + name);
 
         if (!validate()) {
-            //daca validarea nu trece, nu facem nimic si lasam erorile sa fie afisate
             return;
         }
 
@@ -151,7 +159,6 @@ public class Activity_SignUp extends AppCompatActivity {
 
         mDatabase = FirebaseDatabase.getInstance("https://dentalhub-1a0c0-default-rtdb.europe-west1.firebasedatabase.app/").getReference("userNames");
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 boolean isTaken = false;
@@ -214,7 +221,7 @@ public class Activity_SignUp extends AppCompatActivity {
 
     private void goToMainActivity() {
 
-        Intent intent = new Intent(Activity_SignUp.this,MainActivity.class);
+        Intent intent = new Intent(Activity_SignUp.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
@@ -235,7 +242,9 @@ public class Activity_SignUp extends AppCompatActivity {
     }
 
     private UserModel buildNewUser() {
-        return new UserModel(getUserFirstName(), getUserLastName(), getUserUsername(), getUserEmail(), new Date().getTime());
+
+        return new UserModel(getUserFirstName(), getUserLastName(), getUserUsername(), getUserEmail(), new Date().getTime(), DEFAULT_PROFILE_IMAGE_URL);
+
     }
 
 }

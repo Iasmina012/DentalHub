@@ -6,20 +6,21 @@ public class UserModel {
     private String lastName;
     private String username;
     private String email;
+    private String imageUrl;
     private long createdAt;
-    private String mRecipientId;
 
     public UserModel() {
-
+        //constructor necesar pentru firebase
     }
 
-    public UserModel(String firstName, String lastName, String userName, String email, long createdAt) {
+    public UserModel(String firstName, String lastName, String username, String email, long createdAt, String imageUrl) {
 
         this.firstName = firstName;
         this.lastName = lastName;
-        this.username = userName;
+        this.username = username;
         this.email = email;
         this.createdAt = createdAt;
+        this.imageUrl = imageUrl;
 
     }
 
@@ -43,8 +44,8 @@ public class UserModel {
 
     public void setCreatedAt(long createdAt) { this.createdAt = createdAt; }
 
-    public String getmRecipientId() { return mRecipientId; }
+    public String getImageUrl() { return imageUrl; }
 
-    public void setmRecipientId(String mRecipientId) { this.mRecipientId = mRecipientId; }
+    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
 
 }

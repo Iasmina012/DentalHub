@@ -5,21 +5,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/action_change_username"
-        android:title="@string/action_change_username"
+        android:id="@+id/action_my_account"
+        android:title="@string/action_my_account"
         android:orderInCategory="100"
-        app:showAsAction="never"/>
-
-    <item
-        android:id="@+id/action_change_email"
-        android:title="@string/action_change_email"
-        android:orderInCategory="101"
-        app:showAsAction="never"/>
-
-    <item
-        android:id="@+id/action_change_password"
-        android:title="@string/action_change_password"
-        android:orderInCategory="102"
         app:showAsAction="never"/>
 
     <item

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f0f0f0"
+    android:padding="16dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/buttonClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:tint="@color/darkTeal"
+            android:contentDescription="@string/close_button_description"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_below="@id/buttonClose"
+            android:layout_marginTop="16dp">
+
+            <ImageView
+                android:id="@+id/profile_image"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp"
+                android:contentDescription="@string/pfp_icon_description"
+                android:clickable="true"
+                android:focusable="true"
+                android:visibility="visible"/>
+
+            <Button
+                android:id="@+id/button_choose_file"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/choose_file_button"
+                android:visibility="gone"
+                android:layout_marginBottom="16dp"/>
+
+            <TextView
+                android:id="@+id/text_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/username"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/text_first_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/first_name"
+                android:textSize="18sp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/text_last_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/last_name"
+                android:textSize="18sp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/text_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/email"
+                android:textSize="16sp"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"/>
+
+            <EditText
+                android:id="@+id/edit_text_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/username_hint"
+                android:textSize="18sp"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
+                android:gravity="center"
+                android:inputType="text"
+                android:autofillHints="@string/autofill_username"/>
+
+            <EditText
+                android:id="@+id/edit_text_first_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/first_name_hint"
+                android:textSize="18sp"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
+                android:gravity="center"
+                android:inputType="text"
+                android:autofillHints="@string/autofill_first_name"/>
+
+            <EditText
+                android:id="@+id/edit_text_last_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/last_name"
+                android:textSize="18sp"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
+                android:gravity="center"
+                android:inputType="text"
+                android:autofillHints="@string/autofill_last_name"/>
+
+            <EditText
+                android:id="@+id/edit_text_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/email_hint"
+                android:textSize="18sp"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone"
+                android:gravity="center"
+                android:inputType="text|textEmailAddress"
+                android:autofillHints="@string/autofill_email"/>
+
+            <Button
+                android:id="@+id/button_change_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/change_password_button"
+                android:layout_marginTop="16dp"
+                android:visibility="gone"/>
+
+            <EditText
+                android:id="@+id/edit_text_new_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/autofill_password"
+                android:inputType="textPassword"
+                android:textSize="18sp"
+                android:visibility="gone"
+                android:autofillHints="@string/autofill_password"/>
+
+            <EditText
+                android:id="@+id/edit_text_confirm_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/confirm_password"
+                android:inputType="textPassword"
+                android:textSize="18sp"
+                android:visibility="gone"
+                android:autofillHints="@string/autofill_password_confirmation"/>
+
+            <Button
+                android:id="@+id/button_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/edit_profile_button"/>
+
+            <Button
+                android:id="@+id/button_save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/save_changes_button"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/button_appointments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/my_appointments_button"
+                android:layout_marginTop="16dp"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</ScrollView>

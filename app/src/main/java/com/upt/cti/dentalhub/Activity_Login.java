@@ -195,7 +195,7 @@ public class Activity_Login extends AppCompatActivity {
 
     private void goToChangePasswordActivity(String email, String role) {
 
-        Intent intent = new Intent(Activity_Login.this, Activity_ChangePassword_Roles.class);
+        Intent intent = new Intent(Activity_Login.this, Activity_ChangePassword.class);
         intent.putExtra("email", email);
         intent.putExtra("role", role);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

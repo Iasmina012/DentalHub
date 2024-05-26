@@ -72,16 +72,8 @@ public class PromptMenuActivity extends AppCompatActivity {
             startActivity(logoutIntent);
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
             return true;
-        } else if (id == R.id.action_change_password) {
-            Intent changePasswordIntent = new Intent(this, Activity_ChangePassword.class);
-            startActivity(changePasswordIntent);
-            return true;
-        } else if (id == R.id.action_change_email) {
-            Intent changeEmailIntent = new Intent(this, Activity_ChangeEmail.class);
-            startActivity(changeEmailIntent);
-            return true;
-        } else if (id == R.id.action_change_username) {
-            Intent changeUsernameIntent = new Intent(this, Activity_ChangeUsername.class);
+        } else if (id == R.id.action_my_account) {
+            Intent changeUsernameIntent = new Intent(this, Activity_MyAccount.class);
             startActivity(changeUsernameIntent);
             return true;
         }
