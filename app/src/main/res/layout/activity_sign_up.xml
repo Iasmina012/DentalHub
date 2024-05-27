@@ -72,7 +72,7 @@
                         android:id="@+id/imageViewFirstName"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:src="@drawable/username_icon"
+                        android:src="@drawable/user_icon"
                         android:padding="8dp"
                         app:tint="@color/teal_700"
                         android:contentDescription="@string/name_icon_description"/>
@@ -106,7 +106,7 @@
                         android:id="@+id/imageViewLastName"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:src="@drawable/username_icon"
+                        android:src="@drawable/user_icon"
                         android:padding="8dp"
                         app:tint="@color/teal_700"
                         android:contentDescription="@string/name_icon_description"/>
@@ -140,7 +140,7 @@
                         android:id="@+id/imageViewUsername"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:src="@drawable/username_icon"
+                        android:src="@drawable/user_icon"
                         android:padding="8dp"
                         app:tint="@color/teal_700"
                         android:contentDescription="@string/name_icon_description"/>
