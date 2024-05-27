@@ -146,7 +146,7 @@ public class PromptMenuActivity extends AppCompatActivity {
     }
 
     private boolean isAdmin(String email) {
-        return "admin@dentalhub.com".equals(email); // Update with the actual admin email if different
+        return "admin@dentalhub.com".equals(email);
     }
 
     private boolean isDoctor(String email) {
