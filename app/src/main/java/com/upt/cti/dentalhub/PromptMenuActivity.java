@@ -50,9 +50,7 @@ public class PromptMenuActivity extends AppCompatActivity {
             new AlertDialog.Builder(this)
                     .setTitle("Confirmation")
                     .setMessage("Are you sure you want to exit? This will cancel the current action.")
-                    .setPositiveButton("Yes", (dialog, which) -> {
-                        onBackPressed();
-                    })
+                    .setPositiveButton("Yes", (dialog, which) -> onBackPressed())
                     .setNegativeButton("No", null)
                     .show();
             return true;
@@ -60,9 +58,7 @@ public class PromptMenuActivity extends AppCompatActivity {
             new AlertDialog.Builder(this)
                     .setTitle("Confirmation")
                     .setMessage("Are you sure you want to exit? This will cancel the current action.")
-                    .setPositiveButton("Yes", (dialog, which) -> {
-                        checkUserRoleAndRedirect();
-                    })
+                    .setPositiveButton("Yes", (dialog, which) -> checkUserRoleAndRedirect())
                     .setNegativeButton("No", null)
                     .show();
             return true;
