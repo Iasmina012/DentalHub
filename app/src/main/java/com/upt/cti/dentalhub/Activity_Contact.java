@@ -16,6 +16,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -92,7 +93,12 @@ public class Activity_Contact extends MainMenuActivity implements OnMapReadyCall
             });
 
             ImageButton closeButton = dialog.findViewById(R.id.buttonClose);
-            closeButton.setOnClickListener(v -> dialog.dismiss());
+            closeButton.setOnClickListener(v -> new AlertDialog.Builder(this)
+                    .setTitle("Confirm Exit")
+                    .setMessage("Are you sure you want to quit now? You'll lose all of your work.")
+                    .setPositiveButton("Yes", (dialogInterface, i) -> dialog.dismiss())
+                    .setNegativeButton("No", (dialogInterface, i) -> dialogInterface.dismiss())
+                    .show());
 
         });
 
