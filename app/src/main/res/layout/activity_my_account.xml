@@ -31,22 +31,31 @@
             android:layout_below="@id/buttonClose"
             android:layout_marginTop="16dp">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/profile_image"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_gravity="center"
-                android:layout_marginBottom="16dp"
-                android:contentDescription="@string/pfp_icon_description"
+                android:layout_marginTop="16dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:visibility="visible"/>
+                android:visibility="visible"
+                app:shapeAppearanceOverlay="@style/RoundImage"
+                android:contentDescription="@string/pfp_icon_description"/>
 
             <Button
                 android:id="@+id/button_choose_file"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/choose_file_button"
+                android:visibility="gone"
+                android:layout_marginBottom="16dp"/>
+
+            <Button
+                android:id="@+id/button_remove_file"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/remove_file_button"
                 android:visibility="gone"
                 android:layout_marginBottom="16dp"/>
 

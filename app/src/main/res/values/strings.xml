@@ -18,6 +18,7 @@
     <string name="last_name">Last Name</string>
     <string name="save_button">Save</string>
     <string name="choose_file_button">Choose File</string>
+    <string name="remove_file_button">Remove File</string>
     <string name="edit_profile_button">Edit Profile</string>
     <string name="save_changes_button">Save Changes</string>
     <string name="my_appointments_button">My Appointments</string>

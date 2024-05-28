@@ -1,8 +1,12 @@
 package com.upt.cti.dentalhub;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -14,7 +18,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.graphics.PorterDuff;
 
+import androidx.core.content.ContextCompat;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -42,13 +48,15 @@ public class Activity_MyAccount extends AppCompatActivity {
     private ImageView profileImage;
     private TextView textFirstName, textLastName, textUsername, textEmail;
     private EditText editTextFirstName, editTextLastName, editTextUsername, editTextEmail, editTextNewPassword, editTextConfirmPassword;
-    private Button buttonEdit, buttonSave, buttonAppointments, buttonChooseFile, buttonChangePassword;
+    private Button buttonEdit, buttonSave, buttonAppointments, buttonChooseFile, buttonChangePassword, buttonRemovePicture;
     private ImageButton buttonClose;
     private Uri imageUri;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private StorageReference mStorageRef;
     private FirebaseUser currentUser;
+    private boolean isDefaultImage = true;
+    private boolean isEditing = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,12 +80,15 @@ public class Activity_MyAccount extends AppCompatActivity {
         buttonAppointments = findViewById(R.id.button_appointments);
         buttonChooseFile = findViewById(R.id.button_choose_file);
         buttonChangePassword = findViewById(R.id.button_change_password);
+        buttonRemovePicture = findViewById(R.id.button_remove_file);
         buttonClose = findViewById(R.id.buttonClose);
 
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance("https://dentalhub-1a0c0-default-rtdb.europe-west1.firebasedatabase.app/").getReference("users").child(currentUser.getUid());
-        mStorageRef = FirebaseStorage.getInstance().getReference("profile_images");
+        mStorageRef = FirebaseStorage.getInstance("gs://dentalhub-1a0c0.appspot.com").getReference("profile_images");
+
+        setDefaultProfileImage();
 
         loadUserProfile();
 
@@ -90,18 +101,34 @@ public class Activity_MyAccount extends AppCompatActivity {
 
         buttonChooseFile.setOnClickListener(v -> openFileChooser());
 
-        buttonAppointments.setOnClickListener(v -> {
-            Intent intent = new Intent(Activity_MyAccount.this, Activity_ViewAppointment.class);
-            startActivity(intent);
-        });
+        buttonRemovePicture.setOnClickListener(v -> removeProfilePicture());
+
+        buttonAppointments.setOnClickListener(v -> checkUserRoleAndRedirect());
 
         buttonChangePassword.setOnClickListener(v -> showPasswordFields(true));
 
-        buttonClose.setOnClickListener(v -> onBackPressed());
+        buttonClose.setOnClickListener(v -> {
+            if (isEditing) {
+                showDiscardChangesDialog();
+            } else {
+                onBackPressed();
+            }
+        });
+
+    }
+
+    private void setDefaultProfileImage() {
+
+        profileImage.setImageResource(R.drawable.username_icon);
+        profileImage.setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.lightTeal), PorterDuff.Mode.SRC_IN));
+        isDefaultImage = true;
+        buttonRemovePicture.setVisibility(View.GONE);
 
     }
 
     private void enableEditing(boolean enable) {
+
+        isEditing = enable;
 
         textFirstName.setVisibility(enable ? View.GONE : View.VISIBLE);
         textLastName.setVisibility(enable ? View.GONE : View.VISIBLE);
@@ -118,6 +145,7 @@ public class Activity_MyAccount extends AppCompatActivity {
         profileImage.setClickable(enable);
         buttonSave.setVisibility(enable ? View.VISIBLE : View.GONE);
         buttonEdit.setVisibility(enable ? View.GONE : View.VISIBLE);
+        buttonRemovePicture.setVisibility(enable && !isDefaultImage ? View.VISIBLE : View.GONE);
 
     }
 
@@ -140,6 +168,7 @@ public class Activity_MyAccount extends AppCompatActivity {
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                 if (dataSnapshot.exists()) {
                     String firstName = dataSnapshot.child("firstName").getValue(String.class);
                     String lastName = dataSnapshot.child("lastName").getValue(String.class);
@@ -151,26 +180,38 @@ public class Activity_MyAccount extends AppCompatActivity {
                         textFirstName.setText(firstName);
                         editTextFirstName.setText(firstName);
                     }
+
                     if (lastName != null) {
                         textLastName.setText(lastName);
                         editTextLastName.setText(lastName);
                     }
+
                     if (username != null) {
                         textUsername.setText("@" + username);
                         editTextUsername.setText(username);
                     }
+
                     if (email != null) {
                         textEmail.setText(email);
                         editTextEmail.setText(email);
                     }
+
                     if (profileImageUrl != null) {
                         Glide.with(Activity_MyAccount.this)
                                 .load(profileImageUrl)
                                 .into(profileImage);
+                        profileImage.clearColorFilter();
+                        isDefaultImage = false;
+                        if (isEditing) {
+                            buttonRemovePicture.setVisibility(View.VISIBLE);
+                        }
                     } else {
-                        profileImage.setImageResource(R.drawable.main);
+                        setDefaultProfileImage();
                     }
+
+
                 }
+
             }
 
             @Override
@@ -200,6 +241,11 @@ public class Activity_MyAccount extends AppCompatActivity {
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
                 profileImage.setImageBitmap(bitmap);
+                profileImage.clearColorFilter();
+                isDefaultImage = false;
+                if (isEditing) {
+                    buttonRemovePicture.setVisibility(View.VISIBLE);
+                }
             } catch (IOException e) {
                 Log.e("Activity_MyAccount", "Failed to load image", e);
                 Toast.makeText(this, "Failed to load image", Toast.LENGTH_SHORT).show();
@@ -247,21 +293,36 @@ public class Activity_MyAccount extends AppCompatActivity {
         if (!username.isEmpty()) updates.put("username", username);
         if (!email.isEmpty()) updates.put("email", email);
 
-        if (imageUri != null) {
+        if (isDefaultImage) {
+            updates.put("imageUrl", null);
+            updateDatabase(updates, progressDialog);
+        } else if (imageUri != null) {
             final StorageReference fileReference = mStorageRef.child(currentUser.getUid() + ".jpg");
-            fileReference.putFile(imageUri)
-                    .addOnSuccessListener(taskSnapshot -> fileReference.getDownloadUrl().addOnSuccessListener(uri -> {
-                        String imageUrl = uri.toString();
-                        updates.put("imageUrl", imageUrl);
-                        updateDatabase(updates, progressDialog);
-                    }))
-                    .addOnFailureListener(e -> {
-                        progressDialog.dismiss();
-                        Toast.makeText(Activity_MyAccount.this, "Failed to upload image", Toast.LENGTH_SHORT).show();
-                    });
+            uploadFileWithRetry(fileReference, imageUri, updates, progressDialog, 3); // Attempt 3 retries
         } else {
             updateDatabase(updates, progressDialog);
         }
+
+    }
+
+    private void uploadFileWithRetry(StorageReference fileReference, Uri fileUri, Map<String, Object> updates, ProgressDialog progressDialog, int retryCount) {
+
+        fileReference.putFile(fileUri)
+                .addOnSuccessListener(taskSnapshot -> fileReference.getDownloadUrl().addOnSuccessListener(uri -> {
+                    String imageUrl = uri.toString();
+                    updates.put("imageUrl", imageUrl);
+                    updateDatabase(updates, progressDialog);
+                }))
+                .addOnFailureListener(e -> {
+                    if (retryCount > 0) {
+                        Log.e("Activity_MyAccount", "Upload failed, retrying... (" + retryCount + " retries left)", e);
+                        uploadFileWithRetry(fileReference, fileUri, updates, progressDialog, retryCount - 1);
+                    } else {
+                        progressDialog.dismiss();
+                        Log.e("Activity_MyAccount", "Failed to upload image after multiple attempts", e);
+                        Toast.makeText(Activity_MyAccount.this, "Failed to upload image after multiple attempts", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
     }
 
@@ -279,6 +340,103 @@ public class Activity_MyAccount extends AppCompatActivity {
                 Toast.makeText(Activity_MyAccount.this, "Failed to update profile", Toast.LENGTH_SHORT).show();
             }
         });
+
+    }
+
+    private void removeProfilePicture() {
+
+        imageUri = null;
+        isDefaultImage = true;
+        profileImage.setImageResource(R.drawable.username_icon);  // Setează imaginea implicită
+        profileImage.setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.lightTeal), PorterDuff.Mode.SRC_IN));
+        buttonRemovePicture.setVisibility(View.GONE);
+
+    }
+
+    private void checkUserRoleAndRedirect() {
+
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    String email = dataSnapshot.child("email").getValue(String.class);
+                    if (email != null) {
+                        if (isAdmin(email)) {
+                            goToAdminActivity();
+                        } else if (isDoctor(email)) {
+                            goToDoctorActivity();
+                        } else {
+                            goToViewAppointmentActivity();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(Activity_MyAccount.this, "Failed to retrieve user role", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private boolean isAdmin(String email) {
+        return "admin@dentalhub.com".equals(email);
+    }
+
+    private boolean isDoctor(String email) {
+
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String query = "SELECT COUNT(*) FROM " + DatabaseHelper.TABLE_DOCTORS + " WHERE " + DatabaseHelper.COLUMN_DOCTOR_EMAIL + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{email});
+
+        boolean isDoctor = false;
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                isDoctor = cursor.getInt(0) > 0;
+            }
+            cursor.close();
+        }
+
+        db.close();
+        return isDoctor;
+
+    }
+
+    private void goToViewAppointmentActivity() {
+
+        Intent intent = new Intent(Activity_MyAccount.this, Activity_ViewAppointment.class);
+        startActivity(intent);
+
+    }
+
+    private void goToAdminActivity() {
+
+        Intent intent = new Intent(Activity_MyAccount.this, AdminActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
+    }
+
+    private void goToDoctorActivity() {
+
+        Intent intent = new Intent(Activity_MyAccount.this, DoctorActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
+    }
+
+    private void showDiscardChangesDialog() {
+
+        new AlertDialog.Builder(this)
+                .setMessage("Do you want to discard changes? Unsaved changes will be lost.")
+                .setPositiveButton("Discard", (dialog, which) -> onBackPressed())
+                .setNegativeButton("Cancel", null)
+                .show();
+
     }
 
 }
