@@ -20,9 +20,9 @@ public class Doctor {
 
     }
 
-    public int getImageResource() {return imageResource;}
+    public int getImageResource() { return imageResource; }
 
-    public void setImageResource(int imageResource) {this.imageResource = imageResource;}
+    public void setImageResource(int imageResource) { this.imageResource = imageResource; }
 
     public String getName() {return name;}
 
