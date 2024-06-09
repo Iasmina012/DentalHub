@@ -37,7 +37,7 @@ public class AdminAppointmentAdapter extends RecyclerView.Adapter<AdminAppointme
     public void onBindViewHolder(@NonNull AppointmentViewHolder holder, int position) {
 
         Appointment appointment = appointmentList.get(position);
-        holder.textViewPatient.setText(appointment.getUserName());
+        holder.textViewPatient.setText(appointment.getFullName());
         holder.textViewDoctor.setText(appointment.getDoctor());
         holder.textViewService.setText(appointment.getService());
         holder.textViewInsurance.setText(appointment.getInsurance());

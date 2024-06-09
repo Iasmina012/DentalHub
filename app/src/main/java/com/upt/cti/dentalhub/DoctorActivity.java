@@ -39,6 +39,7 @@ public class DoctorActivity extends StaffMenuActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor);
 
@@ -63,9 +64,11 @@ public class DoctorActivity extends StaffMenuActivity {
         recyclerViewAppointments.setAdapter(adapter);
 
         loadAppointments();
+
     }
 
     private String getDoctorName(String email) {
+
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String doctorName = "";
@@ -82,9 +85,11 @@ public class DoctorActivity extends StaffMenuActivity {
 
         db.close();
         return doctorName;
+
     }
 
     private void loadAppointments() {
+
         db.orderByChild("doctor").equalTo(doctorName)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -108,11 +113,24 @@ public class DoctorActivity extends StaffMenuActivity {
                         Log.e(TAG, "Database error: " + databaseError.getMessage());
                     }
                 });
+
     }
 
     private void fetchPatientName(Appointment appointment) {
-        DatabaseReference usersRef = FirebaseDatabase.getInstance("https://dentalhub-1a0c0-default-rtdb.europe-west1.firebasedatabase.app").getReference("users");
-        usersRef.child(appointment.getUserId()).addListenerForSingleValueEvent(new ValueEventListener() {
+
+        String userId = appointment.getUserId();
+        if (userId == null) {
+            Log.e(TAG, "User ID is null for appointment ID: " + appointment.getAppointmentId());
+            appointment.setUserName("Unknown Patient");
+            appointmentList.add(appointment);
+            updateUI();
+            return;
+        }
+
+        Log.d(TAG, "Fetching patient name for userId: " + userId);
+        DatabaseReference usersRef = FirebaseDatabase.getInstance("https://dentalhub-1a0c0-default-rtdb.europe-west1.firebasedatabase.app").getReference("users").child(appointment.getAppointmentId());;
+
+        usersRef.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -125,8 +143,10 @@ public class DoctorActivity extends StaffMenuActivity {
                         appointment.setUserName("Unknown Patient");
                     }
                 } else {
+                    Log.d(TAG, "Patient name not found for userId: " + userId);
                     appointment.setUserName("Unknown Patient");
                 }
+
                 appointmentList.add(appointment);
                 updateUI();
             }
@@ -138,10 +158,13 @@ public class DoctorActivity extends StaffMenuActivity {
                 appointmentList.add(appointment);
                 updateUI();
             }
+
         });
+
     }
 
     private void updateUI() {
+
         if (appointmentList.isEmpty()) {
             textViewNoAppointments.setVisibility(View.VISIBLE);
             recyclerViewAppointments.setVisibility(View.GONE);
@@ -152,9 +175,11 @@ public class DoctorActivity extends StaffMenuActivity {
             adapter.notifyDataSetChanged();
             Log.d(TAG, "Appointments loaded, count: " + appointmentList.size());
         }
+
     }
 
     public void onAppointmentReschedule(Appointment appointment) {
+
         Intent intent = new Intent(this, Activity_SelectLocation.class);
         intent.putExtra("appointmentId", appointment.getAppointmentId());
         intent.putExtra("selectedLocation", appointment.getLocation());
@@ -163,19 +188,26 @@ public class DoctorActivity extends StaffMenuActivity {
         intent.putExtra("selectedDate", appointment.getDate());
         intent.putExtra("selectedTime", appointment.getTime());
         intent.putExtra("selectedInsurance", appointment.getInsurance());
+        intent.putExtra("selectedFirstName", appointment.getFirstName());
+        intent.putExtra("selectedLastName", appointment.getLastName());
+        intent.putExtra("userId", appointment.getUserId());
         startActivity(intent);
+
     }
 
     public void onAppointmentCancel(Appointment appointment) {
+
         new AlertDialog.Builder(this)
                 .setTitle("Cancel Appointment")
                 .setMessage("Are you sure you want to cancel this appointment?")
                 .setPositiveButton("Yes", (dialog, which) -> cancelAppointment(appointment))
                 .setNegativeButton("No", null)
                 .show();
+
     }
 
     private void cancelAppointment(Appointment appointment) {
+
         db.child(appointment.getAppointmentId()).removeValue()
                 .addOnSuccessListener(aVoid -> {
                     appointmentList.remove(appointment);
@@ -183,5 +215,7 @@ public class DoctorActivity extends StaffMenuActivity {
                     Log.d(TAG, "Appointment canceled successfully");
                 })
                 .addOnFailureListener(e -> Log.e(TAG, "Failed to cancel appointment", e));
+
     }
+
 }

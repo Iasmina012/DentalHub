@@ -108,6 +108,7 @@
     <string name="select_service">Which service are you looking for?</string>
     <string name="select_date_time">Select Date and Time</string>
     <string name="select_insurance">Select Insurance Type</string>
+    <string name="select_first_and_last_name">Please enter your full name</string>
     <string name="thanks_booking">Thanks for booking!</string>
     <string name="appointment_details">You booked an appointment with Dr. Name on Date at Time."</string>
     <string name="view_my_appointments_button">VIEW MY APPOINTMENTS</string>

@@ -12,10 +12,15 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +39,9 @@ public class Activity_SelectInsurance extends PromptMenuActivity {
     private String selectedDate;
     private String selectedTime;
     private String selectedInsurance;
+    private String selectedFirstName;
+    private String selectedLastName;
+    private String userId;
     private DatabaseReference db;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
@@ -70,6 +78,10 @@ public class Activity_SelectInsurance extends PromptMenuActivity {
         selectedTime = intent.getStringExtra("selectedTime");
         selectedInsurance = intent.getStringExtra("selectedInsurance");
 
+        selectedFirstName = intent.getStringExtra("selectedFirstName");
+        selectedLastName = intent.getStringExtra("selectedLastName");
+        userId = intent.getStringExtra("userId");
+
         addInsurancesOptions();
 
         for (int i = 0; i < radioGroupInsurance.getChildCount(); i++) {
@@ -82,6 +94,7 @@ public class Activity_SelectInsurance extends PromptMenuActivity {
         }
 
         buttonBook.setOnClickListener(v -> {
+
             int selectedId = radioGroupInsurance.getCheckedRadioButtonId();
             if (selectedId != -1) {
                 RadioButton selectedRadioButton = findViewById(selectedId);
@@ -92,10 +105,10 @@ public class Activity_SelectInsurance extends PromptMenuActivity {
             } else {
                 Toast.makeText(Activity_SelectInsurance.this, "Please select an insurance type!", Toast.LENGTH_SHORT).show();
             }
+
         });
 
         buttonBack.setOnClickListener(v -> onBackPressed());
-
     }
 
     private void addInsurancesOptions() {
@@ -140,35 +153,69 @@ public class Activity_SelectInsurance extends PromptMenuActivity {
             }
         }
 
-        Map<String, Object> appointment = new HashMap<>();
-        appointment.put("location", selectedLocation);
-        appointment.put("doctor", selectedDoctor);
-        appointment.put("service", selectedService);
-        appointment.put("date", selectedDate);
-        appointment.put("time", selectedTime);
-        appointment.put("insurance", selectedInsurance);
-        appointment.put("userId", currentUser.getUid());
+        String currentUserId = currentUser.getUid();
+        DatabaseReference userRef = FirebaseDatabase.getInstance("https://dentalhub-1a0c0-default-rtdb.europe-west1.firebasedatabase.app").getReference("users").child(currentUserId);
 
-        //Firebase
-        db.child("appointments").child(appointmentId).setValue(appointment)
-                .addOnSuccessListener(aVoid -> {
-                    //SQLite
-                    addAppointmentToSQLite();
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    Toast.makeText(Activity_SelectInsurance.this, "Appointment booked successfully!", Toast.LENGTH_SHORT).show();
-                    Log.d(TAG, "Appointment booked successfully");
+                if (dataSnapshot.exists()) {
+                    String email = dataSnapshot.child("email").getValue(String.class);
+                    boolean isAdmin = isAdmin(email);
+                    boolean isDoctor = isDoctor(email);
 
-                    Intent intent = new Intent(Activity_SelectInsurance.this, Activity_ConfirmationAppointment.class);
-                    intent.putExtra("selectedDoctor", selectedDoctor);
-                    intent.putExtra("selectedDate", selectedDate);
-                    intent.putExtra("selectedTime", selectedTime);
-                    intent.putExtra("selectedLocation", selectedLocation);
-                    startActivity(intent);
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(Activity_SelectInsurance.this, "Failed to book appointment!", Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "Failed to book appointment", e);
-                });
+                    String userIdToUse = userId;
+                    if (!isAdmin && !isDoctor) {
+                        userIdToUse = currentUserId;  //if the current user is a client, use their userId
+                    } else if (userId == null || userId.isEmpty()) {
+                        //set userId only if it's not already set
+                        userIdToUse = currentUserId;
+                    }
+
+                    Map<String, Object> appointment = new HashMap<>();
+                    appointment.put("location", selectedLocation);
+                    appointment.put("doctor", selectedDoctor);
+                    appointment.put("service", selectedService);
+                    appointment.put("date", selectedDate);
+                    appointment.put("time", selectedTime);
+                    appointment.put("insurance", selectedInsurance);
+                    appointment.put("firstName", selectedFirstName);
+                    appointment.put("lastName", selectedLastName);
+                    appointment.put("userId", userIdToUse);  //appropriate userId
+
+                    //Firebase
+                    db.child("appointments").child(appointmentId).setValue(appointment)
+                            .addOnSuccessListener(aVoid -> {
+                                // SQLite
+                                addAppointmentToSQLite();
+
+                                Toast.makeText(Activity_SelectInsurance.this, "Appointment booked successfully!", Toast.LENGTH_SHORT).show();
+                                Log.d(TAG, "Appointment booked successfully");
+
+                                Intent intent = new Intent(Activity_SelectInsurance.this, Activity_ConfirmationAppointment.class);
+                                intent.putExtra("selectedDoctor", selectedDoctor);
+                                intent.putExtra("selectedDate", selectedDate);
+                                intent.putExtra("selectedTime", selectedTime);
+                                intent.putExtra("selectedLocation", selectedLocation);
+                                intent.putExtra("selectedFirstName", selectedFirstName);
+                                intent.putExtra("selectedLastName", selectedLastName);
+                                startActivity(intent);
+                            })
+                            .addOnFailureListener(e -> {
+                                Toast.makeText(Activity_SelectInsurance.this, "Failed to book appointment!", Toast.LENGTH_SHORT).show();
+                                Log.e(TAG, "Failed to book appointment", e);
+                            });
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(Activity_SelectInsurance.this, "Failed to retrieve user role", Toast.LENGTH_SHORT).show();
+            }
+
+        });
 
     }
 
@@ -210,6 +257,30 @@ public class Activity_SelectInsurance extends PromptMenuActivity {
         }
 
         return -1; //cand un doctor nu e gasit
+
+    }
+
+    private boolean isAdmin(String email) {
+        return "admin@dentalhub.com".equals(email);
+    }
+
+    private boolean isDoctor(String email) {
+
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String query = "SELECT COUNT(*) FROM " + DatabaseHelper.TABLE_DOCTORS + " WHERE " + DatabaseHelper.COLUMN_DOCTOR_EMAIL + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{email});
+
+        boolean isDoctor = false;
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                isDoctor = cursor.getInt(0) > 0;
+            }
+            cursor.close();
+        }
+
+        db.close();
+        return isDoctor;
 
     }
 

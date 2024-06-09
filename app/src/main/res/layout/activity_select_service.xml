@@ -23,7 +23,7 @@
     <GridLayout
         android:id="@+id/gridLayoutServices"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:columnCount="2"
         android:rowCount="6"
         android:padding="16dp"

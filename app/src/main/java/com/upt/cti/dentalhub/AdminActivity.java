@@ -63,7 +63,6 @@ public class AdminActivity extends StaffMenuActivity {
     }
 
     private void loadAppointments() {
-
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -88,15 +87,25 @@ public class AdminActivity extends StaffMenuActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e(TAG, "Database error: " + databaseError.getMessage());
             }
+
         });
 
     }
 
     private void fetchPatientName(Appointment appointment) {
 
-        Log.d(TAG, "Fetching patient name for userId: " + appointment.getUserId());
-        DatabaseReference usersRef = FirebaseDatabase.getInstance("https://dentalhub-1a0c0-default-rtdb.europe-west1.firebasedatabase.app").getReference("users");
-        usersRef.child(appointment.getUserId()).addListenerForSingleValueEvent(new ValueEventListener() {
+        String userId = appointment.getUserId();
+        if (userId == null) {
+            Log.e(TAG, "User ID is null for appointment ID: " + appointment.getAppointmentId());
+            appointment.setUserName("Unknown Patient");
+            appointmentList.add(appointment);
+            updateUI();
+            return;
+        }
+
+        Log.d(TAG, "Fetching patient name for userId: " + userId);
+        DatabaseReference appointmentRef = FirebaseDatabase.getInstance("https://dentalhub-1a0c0-default-rtdb.europe-west1.firebasedatabase.app").getReference("appointments").child(appointment.getAppointmentId());
+        appointmentRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -109,7 +118,7 @@ public class AdminActivity extends StaffMenuActivity {
                         appointment.setUserName("Unknown Patient");
                     }
                 } else {
-                    Log.d(TAG, "Patient name not found for userId: " + appointment.getUserId());
+                    Log.d(TAG, "Patient name not found for userId: " + userId);
                     appointment.setUserName("Unknown Patient");
                 }
 
@@ -124,9 +133,11 @@ public class AdminActivity extends StaffMenuActivity {
                 appointmentList.add(appointment);
                 updateUI();
             }
+
         });
 
     }
+
 
     private void updateUI() {
 
@@ -153,6 +164,9 @@ public class AdminActivity extends StaffMenuActivity {
         intent.putExtra("selectedDate", appointment.getDate());
         intent.putExtra("selectedTime", appointment.getTime());
         intent.putExtra("selectedInsurance", appointment.getInsurance());
+        intent.putExtra("selectedFirstName", appointment.getFirstName());
+        intent.putExtra("selectedLastName", appointment.getLastName());
+        intent.putExtra("userId",appointment.getUserId());
         startActivity(intent);
 
     }

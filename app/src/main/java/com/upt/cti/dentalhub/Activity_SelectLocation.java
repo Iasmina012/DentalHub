@@ -22,6 +22,9 @@ public class Activity_SelectLocation extends PromptMenuActivity {
     private String selectedDate;
     private String selectedTime;
     private String selectedInsurance;
+    private String selectedFirstName;
+    private String selectedLastName;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,10 @@ public class Activity_SelectLocation extends PromptMenuActivity {
         selectedDate = intent.getStringExtra("selectedDate");
         selectedTime = intent.getStringExtra("selectedTime");
         selectedInsurance = intent.getStringExtra("selectedInsurance");
+
+        selectedFirstName = intent.getStringExtra("selectedFirstName");
+        selectedLastName = intent.getStringExtra("selectedLastName");
+        userId = intent.getStringExtra("userId");
 
         if (appointmentId != null) {
             Log.d("Activity_SelectLocation", "Appointment ID received: " + appointmentId);
@@ -66,6 +73,9 @@ public class Activity_SelectLocation extends PromptMenuActivity {
                 nextIntent.putExtra("selectedDate", selectedDate);
                 nextIntent.putExtra("selectedTime", selectedTime);
                 nextIntent.putExtra("selectedInsurance", selectedInsurance);
+                nextIntent.putExtra("selectedFirstName", selectedFirstName);
+                nextIntent.putExtra("selectedLastName", selectedLastName);
+                nextIntent.putExtra("userId", userId);
                 startActivity(nextIntent);
             } else {
                 Toast.makeText(Activity_SelectLocation.this, "Please select a location!", Toast.LENGTH_SHORT).show();

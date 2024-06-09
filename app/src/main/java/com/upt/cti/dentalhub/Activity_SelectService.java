@@ -27,6 +27,9 @@ public class Activity_SelectService extends PromptMenuActivity {
     private String selectedDate;
     private String selectedTime;
     private String selectedInsurance;
+    private String selectedFirstName;
+    private String selectedLastName;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,10 @@ public class Activity_SelectService extends PromptMenuActivity {
         selectedTime = intent.getStringExtra("selectedTime");
         selectedInsurance = intent.getStringExtra("selectedInsurance");
 
+        selectedFirstName = intent.getStringExtra("selectedFirstName");
+        selectedLastName = intent.getStringExtra("selectedLastName");
+        userId = intent.getStringExtra("userId");
+
         if (appointmentId != null) {
             Log.d("Activity_SelectService", "Appointment ID received: " + appointmentId);
         } else {
@@ -64,6 +71,7 @@ public class Activity_SelectService extends PromptMenuActivity {
         addServiceOptions();
 
         buttonNext.setOnClickListener(v -> {
+
             if (selectedService != null) {
                 Intent nextIntent = new Intent(Activity_SelectService.this, Activity_SelectDateTime.class);
                 nextIntent.putExtra("appointmentId", appointmentId);
@@ -75,10 +83,14 @@ public class Activity_SelectService extends PromptMenuActivity {
                 nextIntent.putExtra("selectedDate", selectedDate);
                 nextIntent.putExtra("selectedTime", selectedTime);
                 nextIntent.putExtra("selectedInsurance", selectedInsurance);
+                nextIntent.putExtra("selectedFirstName", selectedFirstName);
+                nextIntent.putExtra("selectedLastName", selectedLastName);
+                nextIntent.putExtra("userId", userId);
                 startActivity(nextIntent);
             } else {
                 Toast.makeText(Activity_SelectService.this, "Please select a service!", Toast.LENGTH_SHORT).show();
             }
+
         });
 
         buttonBack.setOnClickListener(v -> onBackPressed());
@@ -110,6 +122,7 @@ public class Activity_SelectService extends PromptMenuActivity {
                 button.setTextColor(ContextCompat.getColor(this, R.color.grey));
 
                 button.setOnClickListener(v -> {
+
                     if (button == previouslySelectedButton) {
                         deselectButton(button);
                         selectedService = null;
@@ -118,6 +131,7 @@ public class Activity_SelectService extends PromptMenuActivity {
                         selectedService = serviceName;
                         highlightSelectedButton(button);
                     }
+
                 });
 
                 GridLayout.LayoutParams params = new GridLayout.LayoutParams();

@@ -29,6 +29,9 @@ public class Activity_SelectDateTime extends PromptMenuActivity {
     private String selectedDate;
     private String selectedTime;
     private String selectedInsurance;
+    private String selectedFirstName;
+    private String selectedLastName;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +58,10 @@ public class Activity_SelectDateTime extends PromptMenuActivity {
         selectedTime = intent.getStringExtra("selectedTime");
         selectedInsurance = intent.getStringExtra("selectedInsurance");
 
+        selectedFirstName = intent.getStringExtra("selectedFirstName");
+        selectedLastName = intent.getStringExtra("selectedLastName");
+        userId = intent.getStringExtra("userId");
+
         if (appointmentId != null) {
             Log.d("Activity_SelectDateTime", "Appointment ID received: " + appointmentId);
         } else {
@@ -79,6 +86,7 @@ public class Activity_SelectDateTime extends PromptMenuActivity {
         }
 
         buttonNext.setOnClickListener(v -> {
+
             int day = datePicker.getDayOfMonth();
             int month = datePicker.getMonth();
             int year = datePicker.getYear();
@@ -92,7 +100,7 @@ public class Activity_SelectDateTime extends PromptMenuActivity {
             SQLiteDatabase db = dbHelper.getReadableDatabase();
 
             if (isDoctorAvailable(db, selectedDoctorId, selectedDate, selectedTime)) {
-                Intent nextIntent = new Intent(Activity_SelectDateTime.this, Activity_SelectInsurance.class);
+                Intent nextIntent = new Intent(Activity_SelectDateTime.this, Activity_SelectPatientName.class);
                 nextIntent.putExtra("appointmentId", appointmentId);
                 nextIntent.putExtra("selectedLocation", selectedLocation);
                 nextIntent.putExtra("selectedDoctor", selectedDoctor);
@@ -100,13 +108,17 @@ public class Activity_SelectDateTime extends PromptMenuActivity {
                 nextIntent.putExtra("selectedService", selectedService);
                 nextIntent.putExtra("selectedDate", selectedDate);
                 nextIntent.putExtra("selectedTime", selectedTime);
-                nextIntent.putExtra("selectedInsurance", selectedInsurance);
+                nextIntent.putExtra("selectedInsurance", selectedInsurance);;
+                nextIntent.putExtra("selectedFirstName", selectedFirstName);
+                nextIntent.putExtra("selectedLastName", selectedLastName);
+                nextIntent.putExtra("userId", userId);
                 startActivity(nextIntent);
             } else {
                 Toast.makeText(Activity_SelectDateTime.this, "Doctor is not available at the selected time!", Toast.LENGTH_SHORT).show();
             }
 
             db.close();
+
         });
 
         buttonBack.setOnClickListener(v -> onBackPressed());
@@ -118,6 +130,7 @@ public class Activity_SelectDateTime extends PromptMenuActivity {
         //parse date for the day of the week
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         Date parsedDate;
+
         try {
             parsedDate = dateFormat.parse(date);
         } catch (ParseException e) {
@@ -137,6 +150,7 @@ public class Activity_SelectDateTime extends PromptMenuActivity {
                 + DatabaseHelper.COLUMN_DAY_OF_WEEK + "=?";
         Cursor cursor = db.rawQuery(scheduleQuery, new String[]{String.valueOf(doctorId), dayOfWeek});
         boolean isWithinSchedule = false;
+
         if (cursor != null) {
             while (cursor.moveToNext()) {
                 String startTime = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_START_TIME));

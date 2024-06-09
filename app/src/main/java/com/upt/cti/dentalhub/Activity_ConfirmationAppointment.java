@@ -41,25 +41,68 @@ public class Activity_ConfirmationAppointment extends AppCompatActivity {
         String appointmentDate = intent.getStringExtra("selectedDate");
         String appointmentTime = intent.getStringExtra("selectedTime");
 
-        String confirmationText = "You booked an appointment with " + doctorName + " on " + appointmentDate + " at " + appointmentTime + ".";
+        String firstName = intent.getStringExtra("selectedFirstName");
+        String lastName = intent.getStringExtra("selectedLastName");
+
+        String confirmationText = firstName + " " + lastName + " booked an appointment with " + doctorName + " on " + appointmentDate + " at " + appointmentTime + ".";
         textViewConfirmation.setText(confirmationText);
 
-        buttonGoToAppointment.setOnClickListener(v -> {
-            Intent appointmentIntent = new Intent(Activity_ConfirmationAppointment.this, Activity_ViewAppointment.class);
-            startActivity(appointmentIntent);
-        });
+        buttonGoToAppointment.setOnClickListener(v -> checkUserRoleAndRedirect_buttonViewAppointments());
 
-        buttonClose.setOnClickListener(v -> checkUserRoleAndRedirect());
+        buttonClose.setOnClickListener(v -> checkUserRoleAndRedirect_buttonClose());
+
     }
 
-    private void checkUserRoleAndRedirect() {
+    private void checkUserRoleAndRedirect_buttonViewAppointments() {
+
         FirebaseUser user = mAuth.getCurrentUser();
+
         if (user != null) {
             String userId = user.getUid();
             DatabaseReference userRef = FirebaseDatabase.getInstance("https://dentalhub-1a0c0-default-rtdb.europe-west1.firebasedatabase.app").getReference("users").child(userId);
+
             userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    if (dataSnapshot.exists()) {
+                        String email = dataSnapshot.child("email").getValue(String.class);
+                        if (email != null) {
+                            if (isAdmin(email)) {
+                                goToAdminActivity();
+                            } else if (isDoctor(email)) {
+                                goToDoctorActivity();
+                            } else {
+                                gotToAppointmentsActivity();
+                            }
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Toast.makeText(Activity_ConfirmationAppointment.this, "Failed to retrieve user role", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            goToLogin();
+        }
+
+    }
+
+    private void checkUserRoleAndRedirect_buttonClose() {
+
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        if (user != null) {
+            String userId = user.getUid();
+            DatabaseReference userRef = FirebaseDatabase.getInstance("https://dentalhub-1a0c0-default-rtdb.europe-west1.firebasedatabase.app").getReference("users").child(userId);
+
+            userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
                     if (dataSnapshot.exists()) {
                         String email = dataSnapshot.child("email").getValue(String.class);
                         if (email != null) {
@@ -72,6 +115,7 @@ public class Activity_ConfirmationAppointment extends AppCompatActivity {
                             }
                         }
                     }
+
                 }
 
                 @Override
@@ -82,6 +126,7 @@ public class Activity_ConfirmationAppointment extends AppCompatActivity {
         } else {
             goToLogin();
         }
+
     }
 
     private boolean isAdmin(String email) {
@@ -89,6 +134,7 @@ public class Activity_ConfirmationAppointment extends AppCompatActivity {
     }
 
     private boolean isDoctor(String email) {
+
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String query = "SELECT COUNT(*) FROM " + DatabaseHelper.TABLE_DOCTORS + " WHERE " + DatabaseHelper.COLUMN_DOCTOR_EMAIL + " = ?";
@@ -104,33 +150,52 @@ public class Activity_ConfirmationAppointment extends AppCompatActivity {
 
         db.close();
         return isDoctor;
+
     }
 
     private void goToMainActivity() {
+
         Intent intent = new Intent(Activity_ConfirmationAppointment.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
+    }
+
+    private void gotToAppointmentsActivity() {
+
+        Intent intent = new Intent(Activity_ConfirmationAppointment.this, Activity_ViewAppointment.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
     }
 
     private void goToAdminActivity() {
+
         Intent intent = new Intent(Activity_ConfirmationAppointment.this, AdminActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
     }
 
     private void goToDoctorActivity() {
+
         Intent intent = new Intent(Activity_ConfirmationAppointment.this, DoctorActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
     }
 
     private void goToLogin() {
+
         Intent intent = new Intent(this, Activity_Login.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
     }
+
 }

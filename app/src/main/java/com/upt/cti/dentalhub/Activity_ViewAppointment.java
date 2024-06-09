@@ -117,6 +117,9 @@ public class Activity_ViewAppointment extends MainMenuActivity {
         intent.putExtra("selectedDate", appointment.getDate());
         intent.putExtra("selectedTime", appointment.getTime());
         intent.putExtra("selectedInsurance", appointment.getInsurance());
+        intent.putExtra("selectedFirstName", appointment.getFirstName());
+        intent.putExtra("selectedLastName", appointment.getLastName());
+        intent.putExtra("userId", appointment.getUserId());
         startActivity(intent);
 
     }
