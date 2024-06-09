@@ -228,6 +228,12 @@ public class Activity_SelectInsurance extends PromptMenuActivity {
         values.put(DatabaseHelper.COLUMN_APPOINTMENT_DOCTOR_ID, getDoctorIdByName(selectedDoctor, db));
         values.put(DatabaseHelper.COLUMN_APPOINTMENT_DATE, selectedDate);
         values.put(DatabaseHelper.COLUMN_APPOINTMENT_TIME, selectedTime);
+        values.put(DatabaseHelper.COLUMN_APPOINTMENT_INSURANCE, selectedInsurance);
+        values.put(DatabaseHelper.COLUMN_APPOINTMENT_FIRST_NAME, selectedFirstName);
+        values.put(DatabaseHelper.COLUMN_APPOINTMENT_LAST_NAME, selectedLastName);
+        values.put(DatabaseHelper.COLUMN_APPOINTMENT_USER_ID, userId);
+        values.put(DatabaseHelper.COLUMN_APPOINTMENT_LOCATION, selectedLocation);
+        values.put(DatabaseHelper.COLUMN_APPOINTMENT_SERVICE, selectedService);
 
         long newRowId = db.insert(DatabaseHelper.TABLE_APPOINTMENTS, null, values);
         if (newRowId == -1) {
