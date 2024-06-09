@@ -9,7 +9,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //DB (Name + Version)
     private static final String DATABASE_NAME = "dentalhub.db";
-    private static final int DATABASE_VERSION = 21;
+    private static final int DATABASE_VERSION = 22;
 
 
     //Table names
@@ -59,8 +59,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //Appointments: column names
     public static final String COLUMN_APPOINTMENT_DOCTOR_ID = "doctor_id";
+    public static final String COLUMN_APPOINTMENT_USER_ID = "user_id";
+    public static final String COLUMN_APPOINTMENT_LOCATION = "appointment_location";
+    public static final String COLUMN_APPOINTMENT_SERVICE = "appointment_service";
     public static final String COLUMN_APPOINTMENT_DATE = "appointment_date";
     public static final String COLUMN_APPOINTMENT_TIME = "appointment_time";
+    public static final String COLUMN_APPOINTMENT_FIRST_NAME = "appointment_first_name";
+    public static final String COLUMN_APPOINTMENT_LAST_NAME = "appointment_last_name";
+    public static final String COLUMN_APPOINTMENT_INSURANCE = "appointment_insurance";
 
 
     //Doctors: column names
@@ -133,6 +139,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + TABLE_APPOINTMENTS + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + COLUMN_APPOINTMENT_DATE + " TEXT," + COLUMN_APPOINTMENT_TIME + " TEXT,"
             + COLUMN_APPOINTMENT_DOCTOR_ID + " INTEGER,"
+            + COLUMN_APPOINTMENT_LOCATION + " TEXT,"
+            + COLUMN_APPOINTMENT_SERVICE + " TEXT,"
+            + COLUMN_APPOINTMENT_INSURANCE + " TEXT,"
+            + COLUMN_APPOINTMENT_FIRST_NAME + " TEXT,"
+            + COLUMN_APPOINTMENT_LAST_NAME + " TEXT,"
+            + COLUMN_APPOINTMENT_USER_ID + " TEXT,"
             + "FOREIGN KEY(" + COLUMN_APPOINTMENT_DOCTOR_ID + ") REFERENCES " + TABLE_DOCTORS + "(" + COLUMN_ID + "))";
 
     private static final String CREATE_TABLE_LOCATIONS = "CREATE TABLE "
