@@ -22,8 +22,8 @@
 
     <ImageView
         android:id="@+id/imageViewIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
         android:src="@drawable/teeth_helper"
@@ -48,6 +48,7 @@
         android:layout_below="@id/textViewThanks"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="70dp"
+        android:layout_marginBottom="50dp"
         android:text="@string/appointment_details"
         android:textSize="20sp"
         android:textColor="#666666"
@@ -57,10 +58,13 @@
         android:id="@+id/buttonGoToAppointment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="100dp"
+        android:layout_below="@id/textViewConfirmation"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
         android:text="@string/view_my_appointments_button"
         android:textColor="#FFFFFF"
-        android:textSize="16sp"/>
+        android:textSize="16sp"
+        android:background="@color/darkTeal"/>
+
 
 </RelativeLayout>

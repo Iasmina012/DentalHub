@@ -18,14 +18,14 @@
         android:textSize="35sp"
         android:textStyle="bold"
         android:textColor="@color/lightTeal"
-        android:layout_marginTop="70dp"/>
+        android:layout_marginTop="15dp"/>
 
     <ImageView
         android:id="@+id/imageViewTip"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="185dp"
+        android:layout_height="185dp"
         android:scaleType="centerCrop"
-        android:layout_marginTop="75dp"
+        android:layout_marginTop="20dp"
         android:contentDescription="@string/dental_article_icon_description"/>
 
     <View
