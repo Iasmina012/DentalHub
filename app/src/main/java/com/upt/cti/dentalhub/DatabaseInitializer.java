@@ -196,7 +196,7 @@ public class DatabaseInitializer {
         int[] images = {R.drawable.doctor01, R.drawable.doctor02, R.drawable.doctor03, R.drawable.doctor04, R.drawable.doctor05, R.drawable.doctors};
         String[] specializations = {"General Dentist", "Orthodontist", "Implantologist", "Pedodontist", "Prosthodontist", "Any Specialization"};
         String[] phone_numbers = {"0721122334", "0723456789", "0734567890", "0745678901", "0756789012", "0256986274"};
-        String[] emails = {"daniela@gmail.com", "ana@yahoo.com", "maria@yahoo.com", "andrei@gmail.com", "elena@gmail.com", "doctors@gmail.com"};
+        String[] emails = {"daniela@gmail.com", "ana@yahoo.com", "andrei@gmail.com", "maria@yahoo.com", "elena@gmail.com", "doctors@gmail.com"};
         String password = "Doctor123#";
 
         for (int i = 0; i < names.length; i++) {

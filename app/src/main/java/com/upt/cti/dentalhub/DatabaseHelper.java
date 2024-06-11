@@ -9,7 +9,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //DB (Name + Version)
     private static final String DATABASE_NAME = "dentalhub.db";
-    private static final int DATABASE_VERSION = 22;
+    private static final int DATABASE_VERSION = 23;
 
 
     //Table names
