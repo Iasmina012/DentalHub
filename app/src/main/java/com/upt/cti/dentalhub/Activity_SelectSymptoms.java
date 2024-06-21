@@ -15,7 +15,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import timber.log.Timber;
+import com.upt.cti.dentalhub.Adapters.SymptomAdapter;
+import com.upt.cti.dentalhub.Database.DatabaseHelper;
+import com.upt.cti.dentalhub.Menus.PromptMenuActivity;
+import com.upt.cti.dentalhub.Models.Symptom;
 
 public class Activity_SelectSymptoms extends PromptMenuActivity {
 

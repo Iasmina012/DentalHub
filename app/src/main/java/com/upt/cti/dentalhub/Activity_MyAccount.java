@@ -41,6 +41,8 @@ import java.util.regex.Pattern;
 
 import com.bumptech.glide.Glide;
 
+import com.upt.cti.dentalhub.Database.DatabaseHelper;
+
 public class Activity_MyAccount extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;

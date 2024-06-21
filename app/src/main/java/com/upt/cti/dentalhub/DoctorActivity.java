@@ -24,6 +24,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.upt.cti.dentalhub.Adapters.DoctorAppointmentAdapter;
+import com.upt.cti.dentalhub.Appointments.Activity_SelectLocation;
+import com.upt.cti.dentalhub.Database.DatabaseHelper;
+import com.upt.cti.dentalhub.Menus.StaffMenuActivity;
+import com.upt.cti.dentalhub.Models.Appointment;
+import com.upt.cti.dentalhub.Notifications.NotificationHelper;
+
 public class DoctorActivity extends StaffMenuActivity {
 
     private static final String TAG = "DoctorActivity";

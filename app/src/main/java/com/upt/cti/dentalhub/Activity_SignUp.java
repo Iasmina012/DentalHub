@@ -22,6 +22,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Date;
 import java.util.Objects;
 
+import com.upt.cti.dentalhub.Interfaces.UsernameCheckCallback;
+import com.upt.cti.dentalhub.Models.UserModel;
+
 public class Activity_SignUp extends AppCompatActivity {
 
     EditText userFirstName;

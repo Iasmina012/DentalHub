@@ -59,7 +59,6 @@
 
         </androidx.cardview.widget.CardView>
 
-
         <Button
             android:id="@+id/buttonBook"
             android:layout_width="wrap_content"

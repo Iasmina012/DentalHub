@@ -13,6 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.upt.cti.dentalhub.Adapters.DeviceAdapter;
+import com.upt.cti.dentalhub.Database.DatabaseHelper;
+import com.upt.cti.dentalhub.Menus.MainMenuActivity;
+import com.upt.cti.dentalhub.Models.Device;
+
 public class Activity_Tech extends MainMenuActivity {
 
     private RecyclerView recyclerView;

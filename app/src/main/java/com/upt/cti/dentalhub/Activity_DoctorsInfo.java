@@ -14,6 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.upt.cti.dentalhub.Adapters.DoctorAdapter;
+import com.upt.cti.dentalhub.Appointments.Activity_SelectLocation;
+import com.upt.cti.dentalhub.Database.DatabaseHelper;
+import com.upt.cti.dentalhub.Menus.MainMenuActivity;
+import com.upt.cti.dentalhub.Models.Doctor;
+
 public class Activity_DoctorsInfo extends MainMenuActivity {
 
     private RecyclerView recyclerView;

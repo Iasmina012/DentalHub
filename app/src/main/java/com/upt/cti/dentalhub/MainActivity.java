@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 
+import com.upt.cti.dentalhub.Appointments.Activity_SelectAppointments;
+import com.upt.cti.dentalhub.Menus.MainMenuActivity;
+
 public class MainActivity extends MainMenuActivity {
 
     LinearLayout DoctorsInfo;
@@ -16,6 +19,7 @@ public class MainActivity extends MainMenuActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -75,6 +79,7 @@ public class MainActivity extends MainMenuActivity {
             startActivity(i);
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         });
+
     }
 
 }

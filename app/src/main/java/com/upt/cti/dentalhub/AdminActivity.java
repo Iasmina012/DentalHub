@@ -24,6 +24,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.upt.cti.dentalhub.Adapters.AdminAppointmentAdapter;
+import com.upt.cti.dentalhub.Appointments.Activity_SelectLocation;
+import com.upt.cti.dentalhub.Menus.StaffMenuActivity;
+import com.upt.cti.dentalhub.Models.Appointment;
+import com.upt.cti.dentalhub.Notifications.NotificationHelper;
+
 public class AdminActivity extends StaffMenuActivity {
 
     private static final String TAG = "AdminActivity";
@@ -211,7 +217,7 @@ public class AdminActivity extends StaffMenuActivity {
                 .addOnSuccessListener(aVoid -> {
                     appointmentList.remove(appointment);
                     adapter.notifyDataSetChanged();
-                    String message = appointment.getFullName() + "'s appointment with Dr. " + appointment.getDoctor() +
+                    String message = appointment.getFullName() + "'s appointment with " + appointment.getDoctor() +
                             " for " + appointment.getService() + " on " + appointment.getDate() + " at " + appointment.getTime() + " was cancelled.";
                     NotificationHelper notificationHelper = new NotificationHelper(this);
                     notificationHelper.sendCancelNotification("Appointment Cancelled", message);
@@ -223,14 +229,10 @@ public class AdminActivity extends StaffMenuActivity {
     public void onAppointmentCheckIn(Appointment appointment) {
 
         new AlertDialog.Builder(this)
-                .setTitle("Check In Appointment")
+                .setTitle("Appointment Check In")
                 .setMessage("You are about to check in the patient. Are they present or missing?")
-                .setPositiveButton("Present", (dialog, which) -> {
-                    moveAppointmentToArchive(appointment, "present");
-                })
-                .setNegativeButton("Missing", (dialog, which) -> {
-                    moveAppointmentToArchive(appointment, "missed");
-                })
+                .setPositiveButton("Present", (dialog, which) -> moveAppointmentToArchive(appointment, "present"))
+                .setNegativeButton("Missing", (dialog, which) -> moveAppointmentToArchive(appointment, "missed"))
                 .show();
 
     }
@@ -262,12 +264,16 @@ public class AdminActivity extends StaffMenuActivity {
                             .addOnSuccessListener(aVoid1 -> {
                                 appointmentList.remove(appointment);
                                 adapter.notifyDataSetChanged();
-                                String message = appointment.getFullName() + (status.equals("present") ? " has been checked in for their appointment with Dr. " : " missed their appointment with Dr. ") + appointment.getDoctor();
+                                String message = appointment.getFullName() + (status.equals("present") ?
+                                        " has been checked in" +
+                                        " for their appointment with " : " missed their appointment with ")
+                                        + appointment.getDoctor() + ".";
                                 NotificationHelper notificationHelper = new NotificationHelper(this);
                                 if (status.equals("present")) {
                                     notificationHelper.sendCheckInNotification("Patient Checked In", message);
                                 } else {
-                                    notificationHelper.sendMissedNotification("Missed Appointment", message, appointment.getAppointmentId());
+                                    notificationHelper.sendMissedNotification("Missed Appointment", message,
+                                            appointment.getAppointmentId());
                                 }
                             })
                             .addOnFailureListener(e -> Log.e(TAG, "Failed to remove appointment from appointments node", e));

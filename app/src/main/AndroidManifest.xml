@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -26,15 +28,10 @@
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="default_channel_id"/>
+            android:value="default_channel_id" />
 
-        <service android:name=".MyFirebaseMessagingService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-        <receiver android:name=".NotificationReceiver" />
+        <receiver android:name=".Notifications.NotificationReceiver" />
+
         <activity
             android:name=".Activity_SplashScreen"
             android:exported="true">
@@ -45,7 +42,7 @@
         </activity>
 
         <activity
-            android:name=".Activity_SelectPatientName"
+            android:name=".Appointments.Activity_SelectPatientName"
             android:exported="false" />
         <activity
             android:name=".Activity_MyAccount"
@@ -66,25 +63,25 @@
             android:name=".Activity_SelectSymptoms"
             android:exported="false" />
         <activity
-            android:name=".Activity_SelectLocation"
+            android:name=".Appointments.Activity_SelectLocation"
             android:exported="false" />
         <activity
-            android:name=".Activity_SelectAppointments"
+            android:name=".Appointments.Activity_SelectAppointments"
             android:exported="false" />
         <activity
             android:name=".Activity_ViewAppointment"
             android:exported="false" />
         <activity
-            android:name=".Activity_SelectInsurance"
+            android:name=".Appointments.Activity_SelectInsurance"
             android:exported="false" />
         <activity
-            android:name=".Activity_SelectDateTime"
+            android:name=".Appointments.Activity_SelectDateTime"
             android:exported="false" />
         <activity
-            android:name=".Activity_SelectService"
+            android:name=".Appointments.Activity_SelectService"
             android:exported="false" />
         <activity
-            android:name=".Activity_SelectDoctor"
+            android:name=".Appointments.Activity_SelectDoctor"
             android:exported="false" />
         <activity
             android:name=".Activity_Tech"
@@ -104,7 +101,7 @@
             android:name=".Activity_Services"
             android:exported="false" />
         <activity
-            android:name=".Activity_ConfirmationAppointment"
+            android:name=".Appointments.Activity_ConfirmationAppointment"
             android:exported="false" />
         <activity
             android:name=".Activity_DoctorsInfo"

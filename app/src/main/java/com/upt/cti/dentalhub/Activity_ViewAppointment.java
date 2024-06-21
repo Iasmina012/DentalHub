@@ -25,6 +25,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.upt.cti.dentalhub.Adapters.AppointmentAdapter;
+import com.upt.cti.dentalhub.Appointments.Activity_SelectLocation;
+import com.upt.cti.dentalhub.Database.DatabaseHelper;
+import com.upt.cti.dentalhub.Menus.MainMenuActivity;
+import com.upt.cti.dentalhub.Models.Appointment;
+import com.upt.cti.dentalhub.Notifications.NotificationHelper;
+
 public class Activity_ViewAppointment extends MainMenuActivity {
 
     private static final String TAG = "ViewAppointments";
@@ -184,7 +191,7 @@ public class Activity_ViewAppointment extends MainMenuActivity {
 
             appointmentList.remove(appointment);
             adapter.notifyDataSetChanged();
-            Toast.makeText(Activity_ViewAppointment.this, "Appointment canceled successfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Activity_ViewAppointment.this, "Appointment cancelled successfully", Toast.LENGTH_SHORT).show();
 
             //send cancel notification
             String message = appointment.getFirstName() + "'s appointment with " + appointment.getDoctor() +
@@ -214,7 +221,7 @@ public class Activity_ViewAppointment extends MainMenuActivity {
             return doctorId;
         }
 
-        return -1; // When a doctor is not found
+        return -1; //cand un doctor nu e gasit
 
     }
 

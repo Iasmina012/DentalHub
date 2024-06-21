@@ -15,7 +15,10 @@ import com.google.firebase.auth.FirebaseUser;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import com.upt.cti.dentalhub.Database.DatabaseHelper;
+
 public class Activity_ChangePassword extends AppCompatActivity {
+
     private EditText newPassword, confirmNewPassword;
     private Button changePasswordButton;
     private String email, role;
@@ -24,7 +27,7 @@ public class Activity_ChangePassword extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_change_password_roles);
+        setContentView(R.layout.activity_change_password);
 
         newPassword = findViewById(R.id.editTextNewPassword);
         confirmNewPassword = findViewById(R.id.editTextConfirmPassword);

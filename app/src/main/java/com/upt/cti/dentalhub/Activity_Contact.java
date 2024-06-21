@@ -32,6 +32,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
+import com.upt.cti.dentalhub.Database.DatabaseHelper;
+import com.upt.cti.dentalhub.Menus.MainMenuActivity;
+
 public class Activity_Contact extends MainMenuActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;

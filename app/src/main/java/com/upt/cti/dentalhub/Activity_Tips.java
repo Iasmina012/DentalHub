@@ -11,6 +11,9 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.Objects;
 
+import com.upt.cti.dentalhub.Adapters.TipFragmentAdapter;
+import com.upt.cti.dentalhub.Menus.MainMenuActivity;
+
 public class Activity_Tips extends MainMenuActivity {
 
     private ViewPager2 viewPager;

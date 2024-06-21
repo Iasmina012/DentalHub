@@ -32,6 +32,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Objects;
 
+import com.upt.cti.dentalhub.Database.DatabaseHelper;
+import com.upt.cti.dentalhub.Database.DatabaseInitializer;
+
 import timber.log.Timber;
 
 public class Activity_Login extends AppCompatActivity {

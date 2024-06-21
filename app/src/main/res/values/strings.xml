@@ -137,6 +137,7 @@
     <string name="clock_icon_description">Clock/Time Icon</string>
     <string name="location_icon_description">Location Icon</string>
 
+
     <!-- Contact -->
     <string name="search_hint">Search for an office here …</string>
     <string name="headquarters">Headquarters</string>
@@ -167,6 +168,7 @@
     <string name="diagnosis_results">Diagnosis Results</string>
     <string name="result">You may have…</string>
 
+
     <!-- Care -->
     <!-- Content Description -->
     <string name="left_arrow_description">Swipe or click left (arrow) for the previous tab</string>
@@ -175,6 +177,5 @@
     <string name="title">Title</string>
     <string name="text">Text</string>
     <string name="dental_article_icon_description">Dental Care Article\'s Image</string>
-
 
 </resources>
