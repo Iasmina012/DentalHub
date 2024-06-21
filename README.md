@@ -8,8 +8,9 @@ Cod sursă: https://github.com/Iasmina012/DentalHub
 
 Pentru a putea clona proiectul de pe GitHub trebuie să deschideți un terminal și să rulați comanda următoare:
 
-- git clone https://github.com/Iasmina012/DentalHub
-
+```bash
+git clone https://github.com/Iasmina012/DentalHub
+```
 ### Deschiderea proiectului în Android Studio
 
 - Deschideți Android Studio;
@@ -18,11 +19,12 @@ Pentru a putea clona proiectul de pe GitHub trebuie să deschideți un terminal 
 - După ce ați deschis proiectul, Android Studio va arăta mesajul pentru a-l putea sincroniza cu Gradle, trebuie să apăsați pe "Sync Now" sau pe "File > Sync Project with Gradle Files".
 
 ### Configurare Firebase
-- Creați propriul proiect Firebase aici https://console.firebase.google.com;
+- Creați propriul proiect Firebase aici https://console.firebase.google.com urmând pașii de acolo;
 - Asigurați-va că proiectul este conectat la Firebase corect (vezi pașii în Android Studio la "Tools > Firebase");
 - Descărcați fișierul "google-services.json" din setările proiectului în cadrul Firebase;
 - Adăugați fișierul "google-services.json" în directorul principal al aplicației;
-- Adăugați dependențele corespunzătoare Firebase în fișierul "build.gradle" dacă este cazul.
+- Adăugați dependențele corespunzătoare Firebase în fișierul "build.gradle" dacă este cazul;
+- Trebuie să înlocuiți peste tot în cod unde găsiți link-ul "https://dentalhub-1a0c0-default-rtdb.europe-west1.firebasedatabase.app" cu cel din baza dvs. de date Firebase.
 
 ## Compilare
 Folosiți "Build > Make Project" ca să compilați aplicația.
