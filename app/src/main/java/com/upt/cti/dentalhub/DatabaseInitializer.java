@@ -233,7 +233,7 @@ public class DatabaseInitializer {
                 {"Tuesday", "Thursday"},
                 {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"},
                 {"Monday", "Wednesday", "Friday"},
-                {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"}
+                {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"}
         };
 
         String[][] startTimes = {
@@ -242,7 +242,7 @@ public class DatabaseInitializer {
                 {"10:00", "10:00"},
                 {"12:00", "12:00", "12:00", "12:00", "12:00"},
                 {"08:00", "08:00", "08:00"},
-                {"08:00", "08:00", "08:00", "08:00", "08:00"}
+                {"08:00", "08:00", "08:00", "08:00", "08:00", "08:00", "08:00"}
         };
 
         String[][] endTimes = {
@@ -251,7 +251,7 @@ public class DatabaseInitializer {
                 {"14:00", "14:00"},
                 {"15:00", "15:00", "15:00", "15:00", "15:00"},
                 {"12:00", "12:00", "12:00"},
-                {"20:00", "20:00", "20:00", "20:00", "20:00"}
+                {"22:00", "22:00", "22:00", "22:00", "22:00", "22:00", "22:00"}
         };
 
         for (int i = 0; i < schedules[doctorIndex].length; i++) {

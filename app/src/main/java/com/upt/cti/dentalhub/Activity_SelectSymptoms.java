@@ -34,13 +34,6 @@ public class Activity_SelectSymptoms extends PromptMenuActivity {
         recyclerViewSymptoms = findViewById(R.id.recyclerViewSymptoms);
         buttonGetResults = findViewById(R.id.buttonGetResults);
 
-        //initialize the database
-        try {
-            new DatabaseInitializer(this).insertInitialData();
-        } catch (Exception e) {
-            Timber.e(e, "Error initializing database");
-        }
-
         List<Symptom> symptomList = getSymptomsFromDatabase();
         symptomAdapter = new SymptomAdapter(symptomList);
         recyclerViewSymptoms.setLayoutManager(new LinearLayoutManager(this));
