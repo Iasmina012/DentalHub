@@ -1,10 +1,14 @@
 package com.upt.cti.dentalhub;
 
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -27,6 +31,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Objects;
 
+import timber.log.Timber;
+
 public class Activity_Login extends AppCompatActivity {
 
     EditText userEmail;
@@ -38,6 +44,9 @@ public class Activity_Login extends AppCompatActivity {
     private static final String ADMIN_EMAIL = "admin@dentalhub.com";
     private static final String ADMIN_DEFAULT_PASSWORD = "Admin123#";
     private static final String DOCTOR_DEFAULT_PASSWORD = "Doctor123#";
+    private static final String CHANNEL_ID = "default_channel_id";
+    private static final String CHANNEL_NAME = "Default Channel";
+    private static final int REQUEST_CODE_POST_NOTIFICATIONS = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +67,13 @@ public class Activity_Login extends AppCompatActivity {
         newUser.setOnClickListener(v -> goToRegisterActivity());
 
         forgotPassword.setOnClickListener(v -> forgotYourPassword());
+
+        //initialize the database
+        try {
+            new DatabaseInitializer(this).insertInitialData();
+        } catch (Exception e) {
+            Timber.e(e, "Error initializing database");
+        }
 
     }
 
