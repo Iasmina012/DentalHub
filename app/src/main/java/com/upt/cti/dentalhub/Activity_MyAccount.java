@@ -347,7 +347,7 @@ public class Activity_MyAccount extends AppCompatActivity {
 
         imageUri = null;
         isDefaultImage = true;
-        profileImage.setImageResource(R.drawable.username_icon);  // Setează imaginea implicită
+        profileImage.setImageResource(R.drawable.username_icon);
         profileImage.setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.lightTeal), PorterDuff.Mode.SRC_IN));
         buttonRemovePicture.setVisibility(View.GONE);
 

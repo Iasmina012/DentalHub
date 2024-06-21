@@ -51,7 +51,6 @@ public class Activity_SelectService extends PromptMenuActivity {
         selectedDate = intent.getStringExtra("selectedDate");
         selectedTime = intent.getStringExtra("selectedTime");
         selectedInsurance = intent.getStringExtra("selectedInsurance");
-
         selectedFirstName = intent.getStringExtra("selectedFirstName");
         selectedLastName = intent.getStringExtra("selectedLastName");
         userId = intent.getStringExtra("userId");

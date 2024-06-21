@@ -49,7 +49,6 @@ public class Activity_SelectDoctor extends PromptMenuActivity {
         selectedDate = intent.getStringExtra("selectedDate");
         selectedTime = intent.getStringExtra("selectedTime");
         selectedInsurance = intent.getStringExtra("selectedInsurance");
-
         selectedFirstName = intent.getStringExtra("selectedFirstName");
         selectedLastName = intent.getStringExtra("selectedLastName");
         userId = intent.getStringExtra("userId");
