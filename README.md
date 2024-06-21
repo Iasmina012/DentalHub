@@ -79,7 +79,7 @@ Odată ce aplicația e instalată pe dispozitivul dvs. urmați pașii de mai jos
 ### Linux:
 - Distribuție recentă de 64-bit, cum ar fi Ubuntu 18.04+
 - GNU C Library (glibc) 2.31 sau mai recent
-- 4 GB RAM minim (8 GB RAM recomandat)
+- 4 GB RAM minim (8 GB RAM recomandat) 
 - 2 GB spațiu liber pe disc minim (4 GB recomandat)
 - Rezoluție ecran de minim 1280 x 800
 - Procesor cu suport pentru virtualizare
