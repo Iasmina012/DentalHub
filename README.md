@@ -90,4 +90,6 @@ Odată ce aplicația e instalată pe dispozitivul dvs. urmați pașii de mai jos
 - Versiunea Android Studio 8.0 sau mai recentă
 - Android SDK 26 sau mai recentă
 
-* Această aplicație a fost dezvoltată pe macOS Ventura 13.5.1 în Android Studio Iguana 2023.2.1 Patch 2 cu JDK 17.0.2.
+---
+
+_Această aplicație a fost dezvoltată pe macOS Ventura 13.5.1 în Android Studio Iguana 2023.2.1 Patch 2 cu JDK 17.0.2_
