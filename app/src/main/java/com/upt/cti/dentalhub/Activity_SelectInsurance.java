@@ -1,6 +1,9 @@
 package com.upt.cti.dentalhub;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -22,7 +25,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class Activity_SelectInsurance extends PromptMenuActivity {
@@ -42,6 +50,8 @@ public class Activity_SelectInsurance extends PromptMenuActivity {
     private String selectedFirstName;
     private String selectedLastName;
     private String userId;
+    private String oldDate;
+    private String oldTime;
     private DatabaseReference db;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
@@ -77,10 +87,14 @@ public class Activity_SelectInsurance extends PromptMenuActivity {
         selectedDate = intent.getStringExtra("selectedDate");
         selectedTime = intent.getStringExtra("selectedTime");
         selectedInsurance = intent.getStringExtra("selectedInsurance");
-
         selectedFirstName = intent.getStringExtra("selectedFirstName");
         selectedLastName = intent.getStringExtra("selectedLastName");
         userId = intent.getStringExtra("userId");
+
+        if (appointmentId != null) {
+            oldDate = intent.getStringExtra("oldDate");
+            oldTime = intent.getStringExtra("oldTime");
+        }
 
         addInsurancesOptions();
 
@@ -94,7 +108,6 @@ public class Activity_SelectInsurance extends PromptMenuActivity {
         }
 
         buttonBook.setOnClickListener(v -> {
-
             int selectedId = radioGroupInsurance.getCheckedRadioButtonId();
             if (selectedId != -1) {
                 RadioButton selectedRadioButton = findViewById(selectedId);
@@ -105,10 +118,10 @@ public class Activity_SelectInsurance extends PromptMenuActivity {
             } else {
                 Toast.makeText(Activity_SelectInsurance.this, "Please select an insurance type!", Toast.LENGTH_SHORT).show();
             }
-
         });
 
         buttonBack.setOnClickListener(v -> onBackPressed());
+
     }
 
     private void addInsurancesOptions() {
@@ -143,6 +156,8 @@ public class Activity_SelectInsurance extends PromptMenuActivity {
 
     private void bookAppointment() {
 
+        boolean isReschedule = appointmentId != null;
+
         if (appointmentId == null) {
             //generate new appointment ID
             appointmentId = db.child("appointments").push().getKey();
@@ -161,13 +176,14 @@ public class Activity_SelectInsurance extends PromptMenuActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 if (dataSnapshot.exists()) {
+
                     String email = dataSnapshot.child("email").getValue(String.class);
                     boolean isAdmin = isAdmin(email);
                     boolean isDoctor = isDoctor(email);
 
                     String userIdToUse = userId;
                     if (!isAdmin && !isDoctor) {
-                        userIdToUse = currentUserId;  //if the current user is a client, use their userId
+                        userIdToUse = currentUserId; //if the current user is a client, use their userId
                     } else if (userId == null || userId.isEmpty()) {
                         //set userId only if it's not already set
                         userIdToUse = currentUserId;
@@ -182,16 +198,27 @@ public class Activity_SelectInsurance extends PromptMenuActivity {
                     appointment.put("insurance", selectedInsurance);
                     appointment.put("firstName", selectedFirstName);
                     appointment.put("lastName", selectedLastName);
-                    appointment.put("userId", userIdToUse);  //appropriate userId
+                    appointment.put("userId", userIdToUse); //appropriate userId
 
                     //Firebase
                     db.child("appointments").child(appointmentId).setValue(appointment)
                             .addOnSuccessListener(aVoid -> {
-                                // SQLite
+                                //SQLite
                                 addAppointmentToSQLite();
 
                                 Toast.makeText(Activity_SelectInsurance.this, "Appointment booked successfully!", Toast.LENGTH_SHORT).show();
                                 Log.d(TAG, "Appointment booked successfully");
+
+                                //send reschedule notification if it was a reschedule
+                                if (isReschedule) {
+                                    String message = selectedFirstName + " " + selectedLastName + "'s appointment with " + selectedDoctor +
+                                            " for " + selectedService + " was modified.";
+                                    NotificationHelper notificationHelper = new NotificationHelper(Activity_SelectInsurance.this);
+                                    notificationHelper.sendRescheduleNotification("Appointment Rescheduled", message, appointmentId);
+                                }
+
+                                //schedule the 24 hours reminder
+                                scheduleReminder(selectedDate, selectedTime, appointmentId, selectedFirstName, selectedDoctor, selectedService);
 
                                 Intent intent = new Intent(Activity_SelectInsurance.this, Activity_ConfirmationAppointment.class);
                                 intent.putExtra("selectedDoctor", selectedDoctor);
@@ -206,6 +233,7 @@ public class Activity_SelectInsurance extends PromptMenuActivity {
                                 Toast.makeText(Activity_SelectInsurance.this, "Failed to book appointment!", Toast.LENGTH_SHORT).show();
                                 Log.e(TAG, "Failed to book appointment", e);
                             });
+
                 }
 
             }
@@ -214,7 +242,6 @@ public class Activity_SelectInsurance extends PromptMenuActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText(Activity_SelectInsurance.this, "Failed to retrieve user role", Toast.LENGTH_SHORT).show();
             }
-
         });
 
     }
@@ -263,12 +290,9 @@ public class Activity_SelectInsurance extends PromptMenuActivity {
         }
 
         return -1; //cand un doctor nu e gasit
-
     }
 
-    private boolean isAdmin(String email) {
-        return "admin@dentalhub.com".equals(email);
-    }
+    private boolean isAdmin(String email) { return "admin@dentalhub.com".equals(email); }
 
     private boolean isDoctor(String email) {
 
@@ -287,6 +311,38 @@ public class Activity_SelectInsurance extends PromptMenuActivity {
 
         db.close();
         return isDoctor;
+
+    }
+
+    private void scheduleReminder(String date, String time, String appointmentId, String firstName, String doctor, String service) {
+
+        SimpleDateFormat dateTimeFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+
+        try {
+            Date appointmentDate = dateTimeFormat.parse(date + " " + time);
+            if (appointmentDate != null) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(appointmentDate);
+                calendar.add(Calendar.DAY_OF_YEAR, -1); // 24 hours before
+
+                Log.d("Reminder", "Reminder set for: " + calendar.getTime());
+
+                Intent intent = new Intent(this, NotificationReceiver.class);
+                intent.putExtra("title", "Appointment Reminder");
+                intent.putExtra("message", firstName + "'s appointment with Dr. " + doctor + " for " + service + " is tomorrow.");
+                intent.putExtra("appointmentId", appointmentId);
+                intent.putExtra("isReminder", true);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(this, appointmentId.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
+                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                if (alarmManager != null) {
+                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                    Log.d("Reminder", "Alarm set for: " + calendar.getTime());
+                }
+            }
+        } catch (ParseException e) {
+        Log.e("Reminder", "Failed to parse date and time: " + date + " " + time, e);
+        }
 
     }
 

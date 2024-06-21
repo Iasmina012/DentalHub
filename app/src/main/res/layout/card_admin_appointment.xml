@@ -10,14 +10,21 @@
     android:layout_margin="12dp"
     android:background="@drawable/rounded_bg_light_pink">
 
+    <Button
+        android:id="@+id/buttonCheckIn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/check_in_button"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/darkPink"/>
+
     <TextView
         android:id="@+id/textViewPatient"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/patient"
         android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="8dp"/>
+        android:text="@string/patient"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textViewDoctor"
@@ -115,6 +122,7 @@
             android:text="@string/location"
             android:textSize="16sp"
             android:textStyle="bold"/>
+
     </LinearLayout>
 
     <LinearLayout

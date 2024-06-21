@@ -120,45 +120,42 @@ public class DoctorActivity extends StaffMenuActivity {
 
         String userId = appointment.getUserId();
         if (userId == null) {
-            Log.e(TAG, "User ID is null for appointment ID: " + appointment.getAppointmentId());
             appointment.setUserName("Unknown Patient");
             appointmentList.add(appointment);
             updateUI();
             return;
         }
 
-        Log.d(TAG, "Fetching patient name for userId: " + userId);
-        DatabaseReference usersRef = FirebaseDatabase.getInstance("https://dentalhub-1a0c0-default-rtdb.europe-west1.firebasedatabase.app").getReference("users").child(appointment.getAppointmentId());;
-
-        usersRef.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference usersRef = FirebaseDatabase.getInstance("https://dentalhub-1a0c0-default-rtdb.europe-west1.firebasedatabase.app").getReference("users").child(userId);
+        usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                 if (dataSnapshot.exists()) {
                     String firstName = dataSnapshot.child("firstName").getValue(String.class);
                     String lastName = dataSnapshot.child("lastName").getValue(String.class);
                     if (firstName != null && lastName != null) {
-                        String patientName = firstName + " " + lastName;
-                        appointment.setUserName(patientName);
+                        appointment.setUserName(firstName + " " + lastName);
                     } else {
                         appointment.setUserName("Unknown Patient");
                     }
                 } else {
-                    Log.d(TAG, "Patient name not found for userId: " + userId);
                     appointment.setUserName("Unknown Patient");
                 }
 
                 appointmentList.add(appointment);
                 updateUI();
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e(TAG, "Failed to fetch patient name: " + databaseError.getMessage());
+
                 appointment.setUserName("Unknown Patient");
                 appointmentList.add(appointment);
                 updateUI();
-            }
 
+            }
         });
 
     }
@@ -168,12 +165,39 @@ public class DoctorActivity extends StaffMenuActivity {
         if (appointmentList.isEmpty()) {
             textViewNoAppointments.setVisibility(View.VISIBLE);
             recyclerViewAppointments.setVisibility(View.GONE);
-            Log.d(TAG, "No appointments available");
         } else {
             textViewNoAppointments.setVisibility(View.GONE);
             recyclerViewAppointments.setVisibility(View.VISIBLE);
+            handleIntent(getIntent());
             adapter.notifyDataSetChanged();
-            Log.d(TAG, "Appointments loaded, count: " + appointmentList.size());
+        }
+
+    }
+
+    private void handleIntent(Intent intent) {
+
+        if (intent != null) {
+
+            boolean isRescheduled = intent.getBooleanExtra("isRescheduled", false);
+            boolean isReminder = intent.getBooleanExtra("isReminder", false);
+            String appointmentId = intent.getStringExtra("appointmentId");
+
+            if ((isRescheduled || isReminder) && appointmentId != null) {
+
+                recyclerViewAppointments.post(() -> {
+                    for (int i = 0; i < appointmentList.size(); i++) {
+                        if (appointmentList.get(i).getAppointmentId().equals(appointmentId)) {
+                            Appointment rescheduledAppointment = appointmentList.remove(i);
+                            appointmentList.add(0, rescheduledAppointment);
+                            adapter.notifyDataSetChanged();
+                            recyclerViewAppointments.scrollToPosition(0);
+                            break;
+                        }
+                    }
+                });
+
+            }
+
         }
 
     }
@@ -212,7 +236,10 @@ public class DoctorActivity extends StaffMenuActivity {
                 .addOnSuccessListener(aVoid -> {
                     appointmentList.remove(appointment);
                     adapter.notifyDataSetChanged();
-                    Log.d(TAG, "Appointment canceled successfully");
+                    String message = appointment.getFirstName() + " " + appointment.getLastName() + "'s appointment with " + appointment.getDoctor() +
+                            " for " + appointment.getService() + " on " + appointment.getDate() + " at " + appointment.getTime() + " was cancelled.";
+                    NotificationHelper notificationHelper = new NotificationHelper(this);
+                    notificationHelper.sendCancelNotification("Appointment Cancelled", message);
                 })
                 .addOnFailureListener(e -> Log.e(TAG, "Failed to cancel appointment", e));
 

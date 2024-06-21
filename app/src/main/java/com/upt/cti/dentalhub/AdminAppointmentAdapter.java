@@ -57,6 +57,12 @@ public class AdminAppointmentAdapter extends RecyclerView.Adapter<AdminAppointme
             }
         });
 
+        holder.buttonCheckIn.setOnClickListener(v -> {
+            if (context instanceof AdminActivity) {
+                ((AdminActivity) context).onAppointmentCheckIn(appointment);
+            }
+        });
+
     }
 
     @Override
@@ -67,7 +73,7 @@ public class AdminAppointmentAdapter extends RecyclerView.Adapter<AdminAppointme
     static class AppointmentViewHolder extends RecyclerView.ViewHolder {
 
         TextView textViewPatient, textViewDoctor, textViewService, textViewInsurance, textViewDate, textViewTime, textViewLocation;
-        Button buttonReschedule, buttonCancel;
+        Button buttonReschedule, buttonCancel, buttonCheckIn;
 
         public AppointmentViewHolder(@NonNull View itemView) {
 
@@ -81,6 +87,7 @@ public class AdminAppointmentAdapter extends RecyclerView.Adapter<AdminAppointme
             textViewLocation = itemView.findViewById(R.id.textViewLocation);
             buttonReschedule = itemView.findViewById(R.id.buttonReschedule);
             buttonCancel = itemView.findViewById(R.id.buttonCancel);
+            buttonCheckIn = itemView.findViewById(R.id.buttonCheckIn);
 
         }
 

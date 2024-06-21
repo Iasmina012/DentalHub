@@ -14,12 +14,13 @@ public class Appointment {
     private String userName;
     private String firstName;
     private String lastName;
+    private String status;
 
     public Appointment() {
         //Constructor necesar pentru Firebase
     }
 
-    public Appointment(String appointmentId, String location, String doctor, int doctorId, String service, String date, String time, String insurance, String userId, String userName, String firstName, String lastName) {
+    public Appointment(String appointmentId, String location, String doctor, int doctorId, String service, String date, String time, String insurance, String userId, String userName, String firstName, String lastName, String status) {
 
         this.appointmentId = appointmentId;
         this.location = location;
@@ -33,6 +34,7 @@ public class Appointment {
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.status = status;
 
     }
 
@@ -121,5 +123,9 @@ public class Appointment {
     public void setLastName(String lastName) { this.lastName = lastName; }
 
     public String getFullName() { return firstName + " " + lastName; }
+
+    public String getStatus() { return status; }
+
+    public void setStatus(String status) { this.status = status; }
 
 }

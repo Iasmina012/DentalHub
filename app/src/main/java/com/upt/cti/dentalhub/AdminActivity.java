@@ -20,7 +20,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AdminActivity extends StaffMenuActivity {
 
@@ -63,31 +65,28 @@ public class AdminActivity extends StaffMenuActivity {
     }
 
     private void loadAppointments() {
+
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                appointmentList.clear();
-                Log.d(TAG, "DataSnapshot: " + dataSnapshot);
 
+                appointmentList.clear();
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Appointment currentAppointment = snapshot.getValue(Appointment.class);
                         if (currentAppointment != null) {
                             currentAppointment.setAppointmentId(snapshot.getKey());
-                            Log.d(TAG, "Appointment ID: " + currentAppointment.getAppointmentId());
                             fetchPatientName(currentAppointment);
                         }
                     }
                 } else {
                     updateUI();
                 }
+
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e(TAG, "Database error: " + databaseError.getMessage());
-            }
-
+            public void onCancelled(@NonNull DatabaseError databaseError) { Log.e(TAG, "Database error: " + databaseError.getMessage()); }
         });
 
     }
@@ -96,62 +95,86 @@ public class AdminActivity extends StaffMenuActivity {
 
         String userId = appointment.getUserId();
         if (userId == null) {
-            Log.e(TAG, "User ID is null for appointment ID: " + appointment.getAppointmentId());
             appointment.setUserName("Unknown Patient");
             appointmentList.add(appointment);
             updateUI();
             return;
         }
 
-        Log.d(TAG, "Fetching patient name for userId: " + userId);
-        DatabaseReference appointmentRef = FirebaseDatabase.getInstance("https://dentalhub-1a0c0-default-rtdb.europe-west1.firebasedatabase.app").getReference("appointments").child(appointment.getAppointmentId());
-        appointmentRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference usersRef = FirebaseDatabase.getInstance("https://dentalhub-1a0c0-default-rtdb.europe-west1.firebasedatabase.app").getReference("users").child(userId);
+        usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                 if (dataSnapshot.exists()) {
                     String firstName = dataSnapshot.child("firstName").getValue(String.class);
                     String lastName = dataSnapshot.child("lastName").getValue(String.class);
                     if (firstName != null && lastName != null) {
-                        String patientName = firstName + " " + lastName;
-                        appointment.setUserName(patientName);
+                        appointment.setUserName(firstName + " " + lastName);
                     } else {
                         appointment.setUserName("Unknown Patient");
                     }
                 } else {
-                    Log.d(TAG, "Patient name not found for userId: " + userId);
                     appointment.setUserName("Unknown Patient");
                 }
 
                 appointmentList.add(appointment);
                 updateUI();
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e(TAG, "Failed to fetch patient name: " + databaseError.getMessage());
+
                 appointment.setUserName("Unknown Patient");
                 appointmentList.add(appointment);
                 updateUI();
-            }
 
+            }
         });
 
     }
-
 
     private void updateUI() {
 
         if (appointmentList.isEmpty()) {
             textViewNoAppointments.setVisibility(View.VISIBLE);
             recyclerViewAppointments.setVisibility(View.GONE);
-            Log.d(TAG, "No appointments available");
         } else {
             textViewNoAppointments.setVisibility(View.GONE);
             recyclerViewAppointments.setVisibility(View.VISIBLE);
+            handleIntent(getIntent());
             adapter.notifyDataSetChanged();
-            Log.d(TAG, "Appointments loaded, count: " + appointmentList.size());
         }
 
+    }
+
+    private void handleIntent(Intent intent) {
+
+        if (intent != null) {
+
+            boolean isRescheduled = intent.getBooleanExtra("isRescheduled", false);
+            boolean isReminder = intent.getBooleanExtra("isReminder", false);
+            boolean isMissed = intent.getBooleanExtra("isMissed", false);
+            String appointmentId = intent.getStringExtra("appointmentId");
+
+            if ((isRescheduled || isReminder || isMissed) && appointmentId != null) {
+
+                recyclerViewAppointments.post(() -> {
+                    for (int i = 0; i < appointmentList.size(); i++) {
+                        if (appointmentList.get(i).getAppointmentId().equals(appointmentId)) {
+                            Appointment rescheduledAppointment = appointmentList.remove(i);
+                            appointmentList.add(0, rescheduledAppointment);
+                            adapter.notifyDataSetChanged();
+                            recyclerViewAppointments.scrollToPosition(0);
+                            break;
+                        }
+                    }
+                });
+
+            }
+
+        }
     }
 
     public void onAppointmentReschedule(Appointment appointment) {
@@ -166,7 +189,7 @@ public class AdminActivity extends StaffMenuActivity {
         intent.putExtra("selectedInsurance", appointment.getInsurance());
         intent.putExtra("selectedFirstName", appointment.getFirstName());
         intent.putExtra("selectedLastName", appointment.getLastName());
-        intent.putExtra("userId",appointment.getUserId());
+        intent.putExtra("userId", appointment.getUserId());
         startActivity(intent);
 
     }
@@ -188,9 +211,68 @@ public class AdminActivity extends StaffMenuActivity {
                 .addOnSuccessListener(aVoid -> {
                     appointmentList.remove(appointment);
                     adapter.notifyDataSetChanged();
-                    Log.d(TAG, "Appointment canceled successfully");
+                    String message = appointment.getFullName() + "'s appointment with Dr. " + appointment.getDoctor() +
+                            " for " + appointment.getService() + " on " + appointment.getDate() + " at " + appointment.getTime() + " was cancelled.";
+                    NotificationHelper notificationHelper = new NotificationHelper(this);
+                    notificationHelper.sendCancelNotification("Appointment Cancelled", message);
                 })
                 .addOnFailureListener(e -> Log.e(TAG, "Failed to cancel appointment", e));
+
+    }
+
+    public void onAppointmentCheckIn(Appointment appointment) {
+
+        new AlertDialog.Builder(this)
+                .setTitle("Check In Appointment")
+                .setMessage("You are about to check in the patient. Are they present or missing?")
+                .setPositiveButton("Present", (dialog, which) -> {
+                    moveAppointmentToArchive(appointment, "present");
+                })
+                .setNegativeButton("Missing", (dialog, which) -> {
+                    moveAppointmentToArchive(appointment, "missed");
+                })
+                .show();
+
+    }
+
+    private void moveAppointmentToArchive(Appointment appointment, String status) {
+
+        DatabaseReference archiveRef = FirebaseDatabase.getInstance("https://dentalhub-1a0c0-default-rtdb.europe-west1.firebasedatabase.app")
+                .getReference().child("archived_appointments");
+
+        //map for only relevant fields
+        Map<String, Object> appointmentMap = new HashMap<>();
+        appointmentMap.put("date", appointment.getDate());
+        appointmentMap.put("doctor", appointment.getDoctor());
+        appointmentMap.put("firstName", appointment.getFirstName());
+        appointmentMap.put("insurance", appointment.getInsurance());
+        appointmentMap.put("lastName", appointment.getLastName());
+        appointmentMap.put("location", appointment.getLocation());
+        appointmentMap.put("service", appointment.getService());
+        appointmentMap.put("time", appointment.getTime());
+        appointmentMap.put("userId", appointment.getUserId());
+        appointmentMap.put("status", status);
+
+        //Firebase
+        //move the appointment to the archived_appointments node
+        archiveRef.child(appointment.getAppointmentId()).setValue(appointmentMap)
+                .addOnSuccessListener(aVoid -> {
+                    //remove the appointment from the appointments node
+                    db.child(appointment.getAppointmentId()).removeValue()
+                            .addOnSuccessListener(aVoid1 -> {
+                                appointmentList.remove(appointment);
+                                adapter.notifyDataSetChanged();
+                                String message = appointment.getFullName() + (status.equals("present") ? " has been checked in for their appointment with Dr. " : " missed their appointment with Dr. ") + appointment.getDoctor();
+                                NotificationHelper notificationHelper = new NotificationHelper(this);
+                                if (status.equals("present")) {
+                                    notificationHelper.sendCheckInNotification("Patient Checked In", message);
+                                } else {
+                                    notificationHelper.sendMissedNotification("Missed Appointment", message, appointment.getAppointmentId());
+                                }
+                            })
+                            .addOnFailureListener(e -> Log.e(TAG, "Failed to remove appointment from appointments node", e));
+                })
+                .addOnFailureListener(e -> Log.e(TAG, "Failed to archive appointment", e));
 
     }
 

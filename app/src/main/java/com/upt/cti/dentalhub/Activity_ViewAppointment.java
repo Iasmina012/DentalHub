@@ -69,10 +69,8 @@ public class Activity_ViewAppointment extends MainMenuActivity {
 
         db.orderByChild("userId").equalTo(currentUser.getUid())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
-
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                         appointmentList.clear();
 
                         if (dataSnapshot.exists()) {
@@ -95,19 +93,53 @@ public class Activity_ViewAppointment extends MainMenuActivity {
                         } else {
                             textViewNoAppointments.setVisibility(View.GONE);
                             recyclerViewAppointments.setVisibility(View.VISIBLE);
-                            adapter.notifyDataSetChanged();
-                            Log.d(TAG, "Appointments loaded, count: " + appointmentList.size());
+                            handleIntent(getIntent());  //call after appointments are loaded
                         }
 
+                        adapter.notifyDataSetChanged();
                     }
 
                     @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) { Log.e(TAG, "Database error: " + databaseError.getMessage()); }
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.e(TAG, "Database error: " + databaseError.getMessage());
+                    }
                 });
 
     }
 
+    private void handleIntent(Intent intent) {
+
+        if (intent != null) {
+
+            boolean isRescheduled = intent.getBooleanExtra("isRescheduled", false);
+            boolean isReminder = intent.getBooleanExtra("isReminder", false);
+            String appointmentId = intent.getStringExtra("appointmentId");
+
+            if ((isRescheduled || isReminder) && appointmentId != null) {
+
+                recyclerViewAppointments.post(() -> {
+                    for (int i = 0; i < appointmentList.size(); i++) {
+                        if (appointmentList.get(i).getAppointmentId().equals(appointmentId)) {
+                            //move the rescheduled appointment to the top of the list
+                            Appointment rescheduledAppointment = appointmentList.remove(i);
+                            appointmentList.add(0, rescheduledAppointment);
+                            adapter.notifyDataSetChanged();
+                            recyclerViewAppointments.scrollToPosition(0);
+                            break;
+                        }
+                    }
+                });
+
+            }
+
+        }
+
+    }
+
     public void onAppointmentReschedule(Appointment appointment) {
+
+        String oldDate = appointment.getDate();
+        String oldTime = appointment.getTime();
 
         Intent intent = new Intent(this, Activity_SelectLocation.class);
         intent.putExtra("appointmentId", appointment.getAppointmentId());
@@ -120,6 +152,8 @@ public class Activity_ViewAppointment extends MainMenuActivity {
         intent.putExtra("selectedFirstName", appointment.getFirstName());
         intent.putExtra("selectedLastName", appointment.getLastName());
         intent.putExtra("userId", appointment.getUserId());
+        intent.putExtra("oldDate", oldDate);
+        intent.putExtra("oldTime", oldTime);
         startActivity(intent);
 
     }
@@ -137,27 +171,31 @@ public class Activity_ViewAppointment extends MainMenuActivity {
 
     private void cancelAppointment(Appointment appointment) {
 
-        //Firebase
         db.child(appointment.getAppointmentId()).removeValue().addOnSuccessListener(aVoid -> {
+            //SQLite
+            DatabaseHelper dbHelper = new DatabaseHelper(this);
+            SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+            sqLiteDatabase.delete(DatabaseHelper.TABLE_APPOINTMENTS,
+                    DatabaseHelper.COLUMN_APPOINTMENT_DOCTOR_ID + "=? AND " +
+                            DatabaseHelper.COLUMN_APPOINTMENT_DATE + "=? AND " +
+                            DatabaseHelper.COLUMN_APPOINTMENT_TIME + "=?",
+                    new String[]{String.valueOf(getDoctorIdByName(appointment.getDoctor(), sqLiteDatabase)), appointment.getDate(), appointment.getTime()});
+            sqLiteDatabase.close();
 
-                    //SQLite
-                    DatabaseHelper dbHelper = new DatabaseHelper(this);
-                    SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
-                    sqLiteDatabase.delete(DatabaseHelper.TABLE_APPOINTMENTS,
-                            DatabaseHelper.COLUMN_APPOINTMENT_DOCTOR_ID + "=? AND " +
-                                    DatabaseHelper.COLUMN_APPOINTMENT_DATE + "=? AND " +
-                                    DatabaseHelper.COLUMN_APPOINTMENT_TIME + "=?",
-                            new String[]{String.valueOf(getDoctorIdByName(appointment.getDoctor(), sqLiteDatabase)), appointment.getDate(), appointment.getTime()});
-                    sqLiteDatabase.close();
+            appointmentList.remove(appointment);
+            adapter.notifyDataSetChanged();
+            Toast.makeText(Activity_ViewAppointment.this, "Appointment canceled successfully", Toast.LENGTH_SHORT).show();
 
-                    appointmentList.remove(appointment);
-                    adapter.notifyDataSetChanged();
-                    Toast.makeText(Activity_ViewAppointment.this, "Appointment canceled successfully", Toast.LENGTH_SHORT).show();
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(Activity_ViewAppointment.this, "Failed to cancel appointment", Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "Failed to cancel appointment", e);
-                });
+            //send cancel notification
+            String message = appointment.getFirstName() + "'s appointment with " + appointment.getDoctor() +
+                    " for " + appointment.getService() + " on " + appointment.getDate() + " at " + appointment.getTime() + " was cancelled.";
+            NotificationHelper notificationHelper = new NotificationHelper(this);
+            notificationHelper.sendCancelNotification("Appointment Cancelled", message);
+        }).addOnFailureListener(e -> {
+            Toast.makeText(Activity_ViewAppointment.this, "Failed to cancel appointment", Toast.LENGTH_SHORT).show();
+            Log.e(TAG, "Failed to cancel appointment", e);
+        });
+
     }
 
     private int getDoctorIdByName(String doctorName, SQLiteDatabase db) {
@@ -176,7 +214,7 @@ public class Activity_ViewAppointment extends MainMenuActivity {
             return doctorId;
         }
 
-        return -1; //cand un doctor nu e gasit
+        return -1; // When a doctor is not found
 
     }
 
