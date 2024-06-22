@@ -194,7 +194,7 @@ public class Activity_ViewAppointment extends MainMenuActivity {
             Toast.makeText(Activity_ViewAppointment.this, "Appointment cancelled successfully", Toast.LENGTH_SHORT).show();
 
             //send cancel notification
-            String message = appointment.getFirstName() + "'s appointment with " + appointment.getDoctor() +
+            String message = appointment.getFirstName() + " " + appointment.getLastName() + "'s appointment with " + appointment.getDoctor() +
                     " for " + appointment.getService() + " on " + appointment.getDate() + " at " + appointment.getTime() + " was cancelled.";
             NotificationHelper notificationHelper = new NotificationHelper(this);
             notificationHelper.sendCancelNotification("Appointment Cancelled", message);
