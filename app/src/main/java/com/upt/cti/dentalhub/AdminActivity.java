@@ -161,10 +161,9 @@ public class AdminActivity extends StaffMenuActivity {
 
             boolean isRescheduled = intent.getBooleanExtra("isRescheduled", false);
             boolean isReminder = intent.getBooleanExtra("isReminder", false);
-            boolean isMissed = intent.getBooleanExtra("isMissed", false);
             String appointmentId = intent.getStringExtra("appointmentId");
 
-            if ((isRescheduled || isReminder || isMissed) && appointmentId != null) {
+            if ((isRescheduled || isReminder) && appointmentId != null) {
 
                 recyclerViewAppointments.post(() -> {
                     for (int i = 0; i < appointmentList.size(); i++) {

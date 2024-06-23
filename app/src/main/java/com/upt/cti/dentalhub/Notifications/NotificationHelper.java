@@ -99,7 +99,6 @@ public class NotificationHelper {
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         notificationManager.notify((int) System.currentTimeMillis(), builder.build());
-
     }
 
     private Intent getUserIntent(String appointmentId, boolean isRescheduled, boolean isReminder, boolean isMissed, boolean isCheckIn) {
