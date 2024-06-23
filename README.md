@@ -2,6 +2,9 @@
 
 Cod sursă: https://github.com/Iasmina012/DentalHub
 
+## Descriere
+Acest proiect dorește dezvoltarea unei aplicații mobile intuitive și ușor de utilizat de către utilizatorii ei, indiferent de rolul pe care aceștia îl au (pacient, doctor sau admin). Utilizatorii pot să efectueze programări la dentist, să le modifice, să le anuleze, să acceseze informații detaliate despre serviciile oferite de către echipa cabinetului (despre doctori, servicii, tehnologii utilizare în tratamentul pacienților, metode de contactare) și să primească sfaturi utile despre igiena dentară. De asemenea, pentru o mai bună informare a pacientului, aplicația va include o funcționalitate de auto-diagnosticare, unde utilizatorii pot selecta dintr-o lista simptomele care îi supără și pot primi un diagnostic provizoriu bazat pe acestea până la întâlnirea cu medicul specialist. În plus, adminul are rolul de a marca prezența sau absența pacientului la programarea respectivă. Toate acestea aduc trimiterea unor notificări automate în cazul anulării, modificării și un memento cu 24 de ore înaintea unei programări, dar și pentru prezența sau absența pacientului.
+
 ## Instalare
 
 ### Clonarea proiectului
