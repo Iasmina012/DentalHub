@@ -1,5 +1,7 @@
 # DentalHub
 
+#RO
+
 Cod sursă: https://github.com/Iasmina012/DentalHub
 
 ## Descriere
@@ -98,3 +100,107 @@ Odată ce aplicația e instalată pe dispozitivul dvs. urmați pașii de mai jos
 ---
 
 _Această aplicație a fost dezvoltată pe macOS Ventura 13.5.1 în Android Studio Iguana 2023.2.1 Patch 2 cu JDK 17.0.2_
+
+# EN
+
+Source Code: https://github.com/Iasmina012/DentalHub
+
+## Description
+This project aims to develop an intuitive and user-friendly mobile application for its users, regardless of their role (patient, doctor, or admin). Users can schedule dentist appointments, modify or cancel them, access detailed information about the services offered by the dental office team (doctors, services, technologies used in patient treatment, contact methods), and receive useful advice on dental hygiene.
+
+Additionally, to better inform the patient, the application will include a self-diagnosis feature where users can select symptoms from a list and receive a preliminary diagnosis based on them until they meet with a specialist. Furthermore, the admin has the role of marking the patient's presence or absence at the scheduled appointment. All these actions trigger automatic notifications in case of cancellations, modifications, and a reminder 24 hours before an appointment, as well as notifications regarding the patient's presence or absence.
+
+## Installation
+
+### Cloning the Project
+To clone the project from GitHub, open a terminal and run the following command:
+
+```bash
+git clone https://github.com/Iasmina012/DentalHub
+```
+
+### Opening the Project in Android Studio
+
+- Open Android Studio;
+- Select "File > Open an existing Android Studio project";
+- Navigate to the directory where the project was cloned;
+- After opening the project, Android Studio will prompt you to sync it with Gradle. Click on "Sync Now" or go to "File > Sync Project with Gradle Files".
+
+### Configuring Firebase
+- Create your own Firebase project here: https://console.firebase.google.com by following the steps provided;
+- Ensure that the project is correctly connected to Firebase (check the steps in Android Studio under "Tools > Firebase");
+- Download the "google-services.json" file from your Firebase project's settings;
+- Add the "google-services.json" file to the root directory of the application;
+- Add the necessary Firebase dependencies in the "build.gradle" file if required;
+- Replace every occurrence of the link "https://dentalhub-1a0c0-default-rtdb.europe-west1.firebasedatabase.app" in the code with the one from your Firebase database.
+
+## Compilation
+Use "Build > Make Project" to compile the application.
+
+## Running the Application
+The application can be run on a personal Android device or by creating an emulator in Android Studio:
+
+1. _Android Device_
+- On your device, go to "Settings > About phone > Software information > More" and tap "Build number" seven times to enable Developer mode;
+- On your device, go to "Settings > Developer options" and enable "USB Debugging";
+- Connect your device to your computer/laptop using a USB cable;
+- Select your connected device from the list of available devices;
+- In Android Studio, click on the "Run" button.
+
+2. _Android Emulator_
+- In Android Studio, navigate to "Tools > AVD Manager";
+- Click on "Create Virtual Device";
+- Choose a device from the list of available devices (e.g., Pixel 4) and click "Next";
+- Select an Android version for the emulator, preferably one of the latest versions (> Android 11);
+- If the system image is not already downloaded, click "Download" to install it;
+- Customize the emulator settings if necessary (RAM, storage space, etc.);
+- Click "Finish" to create the emulator;
+- Select the emulator as the primary device;
+- Click "Run," and the application will be automatically installed and launched on the emulator.
+
+## Launch
+Once the application is installed on your device, follow these steps:
+
+- On your Android device, locate the application icon;
+- Tap on the application icon to launch it;
+- You can now start using the app and all its features.
+
+## Minimum System Requirements
+
+### Windows:
+- Windows 8/10/11 (64-bit)
+- 4 GB RAM minimum (8 GB RAM recommended)
+- 2 GB free disk space minimum (4 GB recommended)
+- Minimum screen resolution of 1280 x 800
+- Processor with virtualization support
+- GPU: OpenGL ES 2.0 compatible GPU
+
+### macOS:
+- macOS 10.14 Mojave or later
+- 4 GB RAM minimum (8 GB RAM recommended)
+- 2 GB free disk space minimum (4 GB recommended)
+- Minimum screen resolution of 1280 x 800
+- Processor with virtualization support
+- GPU: OpenGL ES 2.0 compatible GPU
+
+### Linux:
+- A recent 64-bit Linux distribution, such as Ubuntu 18.04+
+- GNU C Library (glibc) 2.31 or later
+- 4 GB RAM minimum (8 GB RAM recommended)
+- 2 GB free disk space minimum (4 GB recommended)
+- Minimum screen resolution of 1280 x 800
+- Processor with virtualization support
+- GPU: OpenGL ES 2.0 compatible GPU
+
+### Java Development Kit (JDK)
+- JDK 8 or later (JDK 11 recommended)
+
+### Android Studio
+- Android Studio version 8.0 or later
+- Android SDK 26 or later
+
+---
+
+_This application was developed on macOS Ventura 13.5.1 in Android Studio Iguana 2023.2.1 Patch 2 with JDK 17.0.2._
+
+
