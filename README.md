@@ -1,6 +1,4 @@
-# DentalHub
-
-# RO
+# DentalHub - RO
 
 Cod sursă: https://github.com/Iasmina012/DentalHub
 
@@ -101,7 +99,7 @@ Odată ce aplicația e instalată pe dispozitivul dvs. urmați pașii de mai jos
 
 _Această aplicație a fost dezvoltată pe macOS Ventura 13.5.1 în Android Studio Iguana 2023.2.1 Patch 2 cu JDK 17.0.2_
 
-# EN
+# DentalHub - EN
 
 Source Code: https://github.com/Iasmina012/DentalHub
 
